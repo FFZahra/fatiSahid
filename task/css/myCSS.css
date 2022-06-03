@@ -75,13 +75,32 @@ p {
     font-style: italic;
 }
 
-#form1 {
-    display: none;
+fieldset {
+    max-width: 30%;
+    margin-top: 20px;
 }
 
-#cntry {
+legend {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+sup {
+    font-weight: bold;
+    color: red;
+}
+
+#ftnote {
+    float: right;
+}
+
+/*#form1 {
+    display: none;
+}*/
+
+/*#cntry {
     margin-top: 30px;
     margin-left: 500px;
     display:inline-block;
-}
+}*/
 

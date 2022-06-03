@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="keywords" content="oceans, street names, lookup, neighbouring countries">
         <title>API Services</title>
-        <link rel="stylesheet" href="css/myCSS.css">
+        <link rel="stylesheet" href="../css/myCSS.css">
     </head>
     <body>
         <div>
@@ -19,9 +19,9 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="col1s">1. Country Neighbours</td>
-                        <td><p>Accepts a country name and returns a list of countries in its neighbourhood.</p></td>
-                        <td class="col3s"><input class="btns" id="btn1" type="submit"></td>
+                        <td class="col1s">1. Nearby Postal Codes</td>
+                        <td><p>Accepts a country name, a postal code, and a radius and returns a list of postal codes and their place names, within the given radius.</p></td>
+                        <td class="col3s"><form action="postal.html"><input class="btns" id="btn1" type="submit"></form></td>
                     </tr>
                     <tr>
                         <td class="col1s">2. Street Names</td>
@@ -29,29 +29,21 @@
                             Results are currently available only for <span><strong>Australia, Iceland, Norway, Singapore & Spain.</strong></span>
                             </p>
                         </td>
-                        <td class="col3s"><input class="btns" id="btn2" type="submit"></td>
+                        <td class="col3s"><form action="streetForm.html"><input class="btns" id="btn2" type="submit"></form></td>
                     </tr>
                     <tr><td class="col1s">3. Oceans</td>
                         <td><p>Accepts a longitude and latitude value, and returns the name of any ocean(s) in the given location.</p></td>
-                        <td class="col3s"><input class="btns" id="btn3" type="submit"></td>
+                        <td class="col3s"><form action="oceanForm.html"><input class="btns" id="btn3" type="submit"></form></td>
                     </tr>
                     <tr>
-                        <td id="resultBox" rowspan="5" colspan="3"></td>
+                        <td id="resultBox" rowspan="10" colspan="3"></td>
                     </tr>                
                 </tbody>
             </table>
         </div>
-        <div id="form1">
-            <select id="cntry" name="cntry"> 
-                <option value="" selected>Select a Country</option>
-                <option value="IT">Italy</option>
-                <option value="NG">Nigeria</option>
-                <option value="DE">Germany</option>
-            </select>
-            <input id="form1btn" type="submit" name="form1btn">
-        </div>
         
-        <script src="js/jquery-3.6.0.min.js" type="application/javascript"></script>
-        <script src="js/api.js" type="application/javascript"></script>
+        
+        <script src="../js/jquery-3.6.0.min.js" type="application/javascript"></script>
+        <script src="../js/api.js" type="application/javascript"></script>
     </body>
 </html>
