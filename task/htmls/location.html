@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>API Services</title>
+        <link rel="stylesheet" href="../css/myCSS.css">
+    </head>
+    <body>
+        <div>
+            <fieldset>
+                <legend>Enter an address to search on: </legend><br><br>
+                <label for="addr">Address: </label><input type="text" id="addr" name="addr" required><br><br>
+                    <select id="cntrnm" name="cntrnm"> 
+                        <option value="" selected>Select a Country </option>
+                        <option value="AT"> Austria</option>
+                        <option value="AU"> Australia</option>
+                        <option value="AX"> Aland Islands</option>
+                        <option value="CC"> Cocos Islands</option>
+                        <option value="CH"> Switzerland</option>
+                        <option value="CX"> Christmas Island</option>
+                        <option value="CZ"> Czech Republic</option>
+                        <option value="DK"> Denmark</option>
+                        <option value="EE"> Estonia</option>
+                        <option value="ES"> Spain</option>
+                        <option value="FI"> Finland</option>
+                        <option value="FR"> France</option>
+                        <option value="GF"> French Guiana</option>
+                        <option value="GP"> Guadeloupe</option>
+                        <option value="IS"> Iceland</option>
+                        <option value="LU"> Luxembourg</option>
+                        <option value="MQ"> Martinique</option>
+                        <option value="NF"> Norfolk Island</option>
+                        <option value="NL"> Netherlands</option>
+                        <option value="NO"> Norway</option>
+                        <option value="PL"> Poland</option>
+                        <option value="PR"> Puerto Rico</option>
+                        <option value="RE"> Reunion</option>
+                        <option value="SG"> Singapore</option>
+                        <option value="SI"> Slovenia</option>
+                        <option value="SJ"> Svalbard and Jan Mayen</option>
+                        <option value="SK"> Slovakia</option>
+                        <option value="US"> United States</option>
+                        <option value="YT"> Mayotte</option>
+                    </select><br><br>
+                    <input id="form2btn" class="btns" type="submit" name="form2btn" value="Get Location">                           
+            </fieldset>
+        </div>
+        
+        <div>
+            <p class="answerArea" id="answerArea2">
+                <label for="uAddr">Address:   </label><input id="uAddr" name="uAddr"><br><br>
+                <label for="ansLat">Latitude:   </label><input id="ansLat" name="ansLat"><br><br>
+                <label for="ansLng">Longitude:   </label><input id="ansLng" name="ansLng"><br><br>
+                <label for="ctry">Country:   </label><input id="ctry" name="ctry">                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+            </p>
+        </div>
+
+        <script src="../js/jquery-3.6.0.min.js" type="application/javascript"></script>
+        <script src="../js/api.js" type="application/javascript"></script>
+    </body>
+</html>

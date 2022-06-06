@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>API Services</title>
+        <link rel="stylesheet" href="../css/myCSS.css">
+    </head>
+    <body>
+        <div id="form3">
+            <fieldset>
+                <legend>Specify a latitude and longitude to search on: </legend><br>
+                <p><label for="latd">Enter Latitude: </label><input id="latd" name="latd" type="text" required>&nbsp; (N or S)</p><br>
+                <p><label for="longtd">Enter Longitude: </label><input id="longtd" name="longtd" type="text" required>&nbsp; (E or W)</p><br>
+                <input id="form3btn" class="btns" type="submit" name="form3btn" value="Lookup Nearest Address">
+            </fieldset>
+        </div>
+        <div>
+            <p class="answerArea" id="answerArea3"></p>
+        </div>
+
+        <script src="../js/jquery-3.6.0.min.js" type="application/javascript"></script>
+        <script src="../js/api.js" type="application/javascript"></script>
+    </body>
+</html>

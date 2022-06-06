@@ -9,7 +9,6 @@ table {
     width: 70%;
     margin-left: auto;
     margin-right: auto;
-
 }
 
 table, th, td {
@@ -70,18 +69,33 @@ p {
     margin: auto;
 }
 
-#resultBox {
-    text-align: center;
+#form1btn {
+    float: right;
+}
+
+.answerArea {
     font-style: italic;
+    margin-top: 10px;
+    max-width: 80%;
+    display: block;
 }
 
-#form1 {
-    display: none;
+fieldset {
+    max-width: 30%;
+    margin-top: 20px;
 }
 
-#cntry {
-    margin-top: 30px;
-    margin-left: 500px;
-    display:inline-block;
+legend {
+    font-size: 1rem;
+    font-weight: bold;
 }
 
+aside {
+    font-style: italic;
+    font-weight: 500;
+    color: #30c;
+}
+
+div>p {
+    margin-top: 20px;
+}

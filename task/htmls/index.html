@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="keywords" content="latitude, longitude, postalcode, 'nearest address', 'street names', lookup, radius, 'nearest postal codes', 'place names'">
+        <title>API Services</title>
+        <link rel="stylesheet" href="../css/myCSS.css">
+    </head>
+    <body>
+        <div>
+            <table border="3">
+                <caption>Available API Services</caption>
+                <thead>
+                    <tr>
+                        <th>API Name</th>
+                        <th>API Description</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="col1s">1. Nearby Postal Codes</td>
+                        <td><p>Accepts a country name, a postal code, and a radius and returns a list of postal codes and their place names, within the given radius.</p></td>
+                        <td class="col3s"><form action="postals.html"><input class="btns" id="btn1" type="submit"></form></td>
+                    </tr>
+                    <tr>
+                        <td class="col1s">2. Location Lookup </td>
+                        <td><p>Accepts an address(or part of an address) and an optional country name, and returns the latitude and longitude data for the given location.
+                                <aside>This service is currently available for the listed countries only.</aside>
+                            </p>
+                        </td>
+                        <td class="col3s"><form action="location.html"><input class="btns" id="btn2" type="submit"></form></td>
+                    </tr>
+                    <tr><td class="col1s">3. Address Lookup</td>
+                        <td><p>Accepts a longitude and latitude value, and returns the nearest address to the given location.
+                            <aside>This service is currently available for the listed countries only.</aside>
+                        </p></td>
+                        <td class="col3s"><form action="address.html"><input class="btns" id="btn3" type="submit"></form></td>
+                    </tr>
+                    <tr>
+                        <td id="resultBox" rowspan="3" colspan="3"></td>
+                    </tr>                
+                </tbody>
+            </table>
+        </div>
+        
+        
+        <script src="../js/jquery-3.6.0.min.js" type="application/javascript"></script>
+        <script src="../js/api.js" type="application/javascript"></script>
+    </body>
+</html>
