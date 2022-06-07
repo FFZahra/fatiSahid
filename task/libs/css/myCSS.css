@@ -9,7 +9,6 @@ table {
     width: 70%;
     margin-left: auto;
     margin-right: auto;
-
 }
 
 table, th, td {
@@ -54,9 +53,20 @@ th, td {
     padding: 10px;
 }
 
+#answerArea {
+    background-color: #9cf;
+    font-style: italic; 
+    text-align: center;   
+}
+
+aside {
+    font-style: italic;
+    font-weight: 500;
+    color: #30c;
+}
+
 p {
     font-family: Verdana, Tahoma, sans-serif;
-    /*font-weight: bold;*/
     font-size: 1rem;
     max-width: 800px;
 }
@@ -70,18 +80,30 @@ p {
     margin: auto;
 }
 
-#resultBox {
-    text-align: center;
-    font-style: italic;
+#form1btn, #form2btn, #form3btn {
+    float: right;
 }
 
-#form1 {
-    display: none;
+#api1, #api2, #api3 {
+    display: none;   
 }
 
-#cntry {
-    margin-top: 30px;
-    margin-left: 500px;
-    display:inline-block;
+div>fieldset:visible {
+    margin:auto;
+    display: block;
 }
 
+fieldset {
+    max-width: 30%;
+    margin-top: 20px;
+}
+
+legend {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+/*div>p {
+    margin-top: 20px;
+}
+*/
