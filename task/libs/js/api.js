@@ -4,12 +4,14 @@ $(document).ready(function(){
     $("#btn1").click(function(){
         $("#api2").hide();
         $("#api3").hide();
+        $('#answerArea').html("");
         $("#api1").show();
         $("#cntrycd").focus();
     })
 })
 $('#form1btn').click(function() {
-    $.ajax({url: "../php/getPostals.php",
+
+    $.ajax({url: "libs/php/getPostals.php",
     type: 'POST',
     dataType: 'json',
     data: {
@@ -17,20 +19,23 @@ $('#form1btn').click(function() {
         country: $('#cntrycd').val(),
         radius: $('#radius').val()
     },
+
     success: function(result) {
-        console.log(result);
+
+        console.log(result); 
 
         if (result.status.name == "ok") {
             const innerList = result["postalCodes"][0];
             $('#answerArea').html(function() {
                 `Placenames\t\tPostal Codes\n ${innerList.filter(i, placeName, postalCode => innerList[i]["placeName"] + "\t\t" + innerList[i]["postalCode"] + "\n")}`;
-            });             
+            });      
         }
     },
+
     error: function(jqXHR, textStatus, errorThrown) {
-        $('#answerArea').html("Sorry, no data available for this request.");
-    }
-    
+        $('#answerArea').html("Sorry, no data available for this request.\n " + `${jqXHR} ${textStatus} ${errorThrown}`);
+        console.log(jqXHR);
+        }  
     })
 })
 
@@ -40,10 +45,11 @@ $(document).ready(function(){
         $("#api3").hide();
         $("#api2").show();
         $("#addr").focus();
+        $('#answerArea').html("");
     })
 })
 $('#form2btn').click(function() {
-    $.ajax({url: "../php/getLocation.php",
+    $.ajax({url: "libs/php/getLocation.php",
     type: 'POST',
     dataType: 'json',
     data: {
@@ -59,8 +65,9 @@ $('#form2btn').click(function() {
         };
     },
     error: function(jqXHR, textStatus, errorThrown) {
-        $('#answerArea').html("Sorry, no data available for this request.");
-    }
+        $('#answerArea').html("Sorry, no data available for this request.\n " + `${jqXHR} ${textStatus} ${errorThrown}`);
+        console.log(jqXHR);        
+        }
  
     })
 })
@@ -71,12 +78,13 @@ $(document).ready(function(){
         $("#api1").hide();
         $("#api2").hide();
         $("#api3").show();
+        $('#answerArea').html("");
         $("#latd").focus();
     })
 })
 $('#form3btn').click(function() {      
     $.ajax({
-        url: "../php/getAddress.php",
+        url: "libs/php/getAddress.php",
         type: 'POST',
         dataType: 'json',
         data: {
@@ -92,10 +100,11 @@ $('#form3btn').click(function() {
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            $('answerArea').html("Sorry, no data available for this request.");
+            $('#answerArea').html("Sorry, no data available for this request.\n " + `${jqXHR} ${textStatus} ${errorThrown}`);
+            console.log(jqXHR);
         }
         
-    });
-});
+    })
+})
 
 

@@ -4,7 +4,8 @@
 
 table {
     border-color: #30c;
-    color: #30c;
+    color: black;
+    background-color: white;
     margin-top: 50px;
     width: 70%;
     margin-left: auto;
@@ -19,13 +20,13 @@ tr {
     color:black;
 }
 
-tr:nth-of-type(even) {
+/* tr:nth-of-type(even) {
     background-color: #9cf;
 }
 
 tr:nth-of-type(odd) {
     background-color: #ccc;
-}
+} */
 
 caption {
     font-family:Georgia, 'Times New Roman', Times, serif;
@@ -33,9 +34,7 @@ caption {
     font-size: 1.5rem;
 }
 
-th {
-    background-color: #30c;
-    color:#fff;
+th {    
     font-size: 1.5rem;
 }
 
@@ -54,7 +53,6 @@ th, td {
 }
 
 #answerArea {
-    background-color: #9cf;
     font-style: italic; 
     text-align: center;   
 }

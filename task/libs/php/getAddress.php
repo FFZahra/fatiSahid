@@ -6,7 +6,7 @@
 
     $executionStartTime = microtime(true);
 
-    $url = "http://api.geonames.org/addressJSON?lat=".$_REQUEST['lat']."&lng=".$_REQUEST['lng']."&username=fatimahS";
+    $url = "http://api.geonames.org/addressJSON?lat=".$_REQUEST['lat']."&lng=".$_REQUEST['lng']."&username=fatimahs";
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
