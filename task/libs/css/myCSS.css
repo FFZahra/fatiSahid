@@ -20,14 +20,6 @@ tr {
     color:black;
 }
 
-/* tr:nth-of-type(even) {
-    background-color: #9cf;
-}
-
-tr:nth-of-type(odd) {
-    background-color: #ccc;
-} */
-
 caption {
     font-family:Georgia, 'Times New Roman', Times, serif;
     font-weight: bold;
@@ -54,7 +46,10 @@ th, td {
 
 #answerArea {
     font-style: italic; 
-    text-align: center;   
+    text-align: center;  
+    font-size: 1rem; 
+    font-weight: bold;
+    white-space: pre-wrap;
 }
 
 aside {
@@ -100,8 +95,3 @@ legend {
     font-size: 1rem;
     font-weight: bold;
 }
-
-/*div>p {
-    margin-top: 20px;
-}
-*/
