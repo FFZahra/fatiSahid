@@ -29,22 +29,19 @@ $('#form1btn').click(function() {
         if (result.status.name == "ok") {
             const innerList = result.data;
 
-            if (innerList.length == 0) {
-                $('#answerArea').html("Sorry, no data available for this request.\n");
-            } else {
-                let innerStrg = `Nearby Postal Codes: \nPlacenames\t\tPostal Codes\n`;
-                innerList.forEach(itm => {
-                    innerStrg = innerStrg + `${itm.placeName}\t\t${itm.postalCode}\n`;                
-                });
+            let innerStrg = `Nearby Postal Codes: \nPlacenames\t\tPostal Codes\n`;
 
-                $('#answerArea').html(innerStrg);
-            };
+            innerList.forEach(itm => {
+                innerStrg = innerStrg + `${itm.placeName}\t\t${itm.postalCode}\n`;                
+            });
+
+            $('#answerArea').html(innerStrg);           
 
         };            
     },
 
-    error: function(jqXHR, textStatus, errorThrown) {
-        $('#answerArea').html("System Error: \n " + `${jqXHR} ${textStatus} ${errorThrown}`);
+    error: function(jqXHR) {
+        $('#answerArea').html("Sorry, no data available for this request. ");
         console.log(jqXHR);
         }  
     })
@@ -69,16 +66,11 @@ $('#form2btn').click(function() {
         },
         success: function(result) {
             console.log(result);
-
-            if (Object.keys(result.data).length == 0){
-                $('#answerArea').html("Sorry, no data available for this request. ");
-            } else {                  
-                rsltArr = result.data;       
-                $('#answerArea').html(`For address: ${rsltArr.houseNumber} ${rsltArr.street}, ${rsltArr.locality}, ${rsltArr.postalcode}\n Latitude is: ${rsltArr.lat}\n Longitude is: ${rsltArr.lng}\n Country: ${cntryCodesArr[rsltArr.countryCode]}.`);                    
-            };
+            rsltArr = result.data;       
+            $('#answerArea').html(`For address: ${rsltArr.houseNumber} ${rsltArr.street}, ${rsltArr.locality}, ${rsltArr.postalcode}\n Latitude is: ${rsltArr.lat}\n Longitude is: ${rsltArr.lng}\n Country: ${cntryCodesArr[rsltArr.countryCode]}.`);                                
         },
-        error: function(jqXHR, textStatus, errorThrown) {
-            $('#answerArea').html("System Error: \n " + `${jqXHR} ${textStatus} ${errorThrown}`);
+        error: function(jqXHR) {
+            $('#answerArea').html("Sorry, no data available for this request. ");
             console.log(jqXHR);        
         }
  
@@ -106,18 +98,13 @@ $('#form3btn').click(function() {
         },
         success: function(result) {
             console.log(result);
-
-            if (Object.keys(result.data).length == 0){
-                $('#answerArea').html("Sorry, no data available for this request.")
-            } else {            
-                rsltArr = result.data;
-                if (result.status.name == "ok") {
-                    $('#answerArea').html(`The nearest address is: ${rsltArr.houseNumber} ${rsltArr.street}, ${rsltArr.locality}, ${rsltArr.postalcode}, ${cntryCodesArr[rsltArr.countryCode]}.`);  // ${rsltArr.countryCode}              
-                }
-            }
+            rsltArr = result.data;
+            if (result.status.name == "ok") {
+                $('#answerArea').html(`The nearest address is: ${rsltArr.houseNumber} ${rsltArr.street}, ${rsltArr.locality}, ${rsltArr.postalcode}, ${cntryCodesArr[rsltArr.countryCode]}.`);  // ${rsltArr.countryCode}              
+            }            
         },
-        error: function(jqXHR, textStatus, errorThrown) {
-            $('#answerArea').html("System Error: \n " + `${jqXHR} ${textStatus} ${errorThrown}`);
+        error: function(jqXHR){
+             $('#answerArea').html("Sorry, no data available for this request.");
             console.log(jqXHR);
         }
         

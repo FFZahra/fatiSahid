@@ -6,7 +6,7 @@
 
     $executionStartTime = microtime(true);
 
-    $url = "http://api.geonames.org/geoCodeAddressJSON?q=".$_REQUEST['q']."&username=fatimahs";
+    $url = "http://api.geonames.org/geoCodeAddressJSON?q=".$_REQUEST['q']."&username=fatimahs"; 
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -18,6 +18,8 @@
     curl_close($ch);
 
     $decode = json_decode($result, true);
+
+    $output = array();
 
     $output['status']['code'] = "200";
     $output['status']['name'] = "ok";

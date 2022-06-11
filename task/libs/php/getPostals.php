@@ -19,6 +19,8 @@
 
     $decode = json_decode($result, true);
 
+    $output = array();
+
     $output['status']['code'] = "200";
     $output['status']['name'] = "ok";
     $output['status']['description'] = "success";

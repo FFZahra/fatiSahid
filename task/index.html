@@ -26,8 +26,11 @@
                     <tr>
                         <td class="col1s">2. Location Lookup </td>
                         <td>
-                            <p>Accepts an address(or part of an address) and an optional country name, and returns the latitude and longitude data for the given location.
+                            <p>Accepts part of an address in the form <span>'Street name+house number+locality'</span>, and returns the latitude and longitude data for the given location.
                                 <aside>This service is currently available for the listed countries only.</aside>
+                            </p>
+                            <p id="note">
+                                <span><sup class="bigr">*</sup></span>NOTE: <span>Separate</span> street name, house number, and locality with a <span class="bigr">'+'</span> and no spaces between. 
                             </p>
                         </td>
                         <td class="col3s"><input class="btns" id="btn2" type="submit"></td>
@@ -41,7 +44,7 @@
                         <td class="col3s"><input class="btns" id="btn3" type="submit"></td>
                     </tr>
                     <tr>
-                        <td rowspan="10" colspan="3"><div id="answerArea"></div></td>
+                        <td rowspan="12" colspan="3"><div id="answerArea"></div></td>
                     </tr>                
                 </tbody>
             </table>
@@ -66,8 +69,8 @@
             <fieldset>
                 <legend>Enter an address to search on: </legend><br>
                 <label for="addr">Address: </label><input type="text" id="addr" name="addr" required><br><br>
-                    <select id="cntrnm" name="cntrnm"> 
-                        <option value="" selected>Select a Country </option>
+                    <select id="cntrnm" name="cntrnm">Countries service is available for:  
+                        <option value="" selected>Countries service is available for: </option>
                         <option value="AT"> Austria</option>
                         <option value="AU"> Australia</option>
                         <option value="AX"> Aland Islands</option>
@@ -107,6 +110,38 @@
                 <legend>Specify a latitude and longitude to search on: </legend><br>
                 <p><label for="latd">Enter Latitude: </label><input id="latd" name="latd" type="text" required>&nbsp; (N or S)</p><br>
                 <p><label for="longtd">Enter Longitude: </label><input id="longtd" name="longtd" type="text" required>&nbsp; (E or W)</p><br>
+                <p>Countries service is available for: </p>
+                <select id="avctry" name="avctry">
+                    <option value="AT"> Austria</option>
+                    <option value="AU"> Australia</option>
+                    <option value="AX"> Aland Islands</option>
+                    <option value="CC"> Cocos Islands</option>
+                    <option value="CH"> Switzerland</option>
+                    <option value="CX"> Christmas Island</option>
+                    <option value="CZ"> Czech Republic</option>
+                    <option value="DK"> Denmark</option>
+                    <option value="EE"> Estonia</option>
+                    <option value="ES"> Spain</option>
+                    <option value="FI"> Finland</option>
+                    <option value="FR"> France</option>
+                    <option value="GF"> French Guiana</option>
+                    <option value="GP"> Guadeloupe</option>
+                    <option value="IS"> Iceland</option>
+                    <option value="LU"> Luxembourg</option>
+                    <option value="MQ"> Martinique</option>
+                    <option value="NF"> Norfolk Island</option>
+                    <option value="NL"> Netherlands</option>
+                    <option value="NO"> Norway</option>
+                    <option value="PL"> Poland</option>
+                    <option value="PR"> Puerto Rico</option>
+                    <option value="RE"> Reunion</option>
+                    <option value="SG"> Singapore</option>
+                    <option value="SI"> Slovenia</option>
+                    <option value="SJ"> Svalbard and Jan Mayen</option>
+                    <option value="SK"> Slovakia</option>
+                    <option value="US"> United States</option>
+                    <option value="YT"> Mayotte</option>
+                </select><br><br>
                 <input id="form3btn" class="btns" type="submit" name="form3btn" value="Lookup Nearest Address">
             </fieldset>
         </div>

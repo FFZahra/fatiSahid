@@ -38,6 +38,7 @@ th {
 
 .col3s {
     text-align: center;
+    min-width: auto; 
 }
 
 th, td {
@@ -52,16 +53,31 @@ th, td {
     white-space: pre-wrap;
 }
 
-aside {
-    font-style: italic;
-    font-weight: 500;
-    color: #30c;
-}
-
 p {
     font-family: Verdana, Tahoma, sans-serif;
     font-size: 1rem;
-    max-width: 800px;
+    max-width: 900px; 
+}
+
+aside {
+    font-style: italic;
+    font-weight: 800;
+    color: #30c;
+    /*font-size: 1.2em;*/
+}
+
+span {
+    font-style: italic;
+    font-weight: bolder;
+    font-size: 0.9rem;
+}
+
+#note {
+    font-size: 00.9rem;
+}
+
+.bigr {
+    font-size: 1rem;
 }
 
 .btns {
@@ -95,3 +111,4 @@ legend {
     font-size: 1rem;
     font-weight: bold;
 }
+
