@@ -1,3 +1,22 @@
+$(document).ready(function() {
+    $("#introbtn").click(function() {
+        $("#introbtn").css({
+            "border-width": "10px"
+        });
+        setTimeout(function(){
+            $("#introbtn").css({
+                "border-width": "1px"})
+        }, 500);
+        setTimeout(function(){
+            $("#mid").hide();
+            $("#intro").hide();
+            $("#main").show();  
+        }, 700)
+              
+    })
+})
+
+// ---------------------------------------------------------------------
 $('#answerArea').html("This is where results get displayed");
 
 const cntryCodesArr = {"AT": 'Austria', "AU": 'Australia', "AX": 'Aland Islands', "CC": 'Cocos Islands', "CH": 'Switzerland', "CX": 'Christmas Island', "CZ": 'Czech Republic', "DK": 'Denmark', "EE": 'Estonia', "ES": 'Spain', "FI": 'Finland', "FR": 'France', "GF": 'French Guiana', "GP": 'Guadeloupe', "IS": 'Iceland', "LU": 'Luxembourg', "MQ": 'Martinique', "NF": 'Norfolk Island', "NL": 'Netherlands', "NO": 'Norway', "PL": 'Poland', "PR": 'Puerto Rico', "RE": 'Reunion', "SG": 'Singapore', "SI": 'Slovenia', "SJ": 'Svalbard and Jan Mayen', "SK": 'Slovakia', "US": 'United States', "YT": 'Mayotte'};
@@ -57,12 +76,21 @@ $(document).ready(function(){
     })
 })
 $('#form2btn').click(function() {
-    $.ajax({
+    var qstr = $("#str").val();
+    var qhsn = $("#hsnum").val();
+    var qloc = $("#loc").val();
+    // if (qloc.trim().length == 0){
+    //     qloc = "";    
+    // }
+    
+    var qrystrng = qstr + "+" + qhsn + "+" + qloc;
+
+    $.ajax({        
         url: "libs/php/getLocation.php",
         type: 'POST',
         dataType: 'json',
         data: {
-            q: $("#addr").val()
+            q: qrystrng
         },
         success: function(result) {
             console.log(result);

@@ -2,6 +2,13 @@
     box-sizing: border-box;
 }
 
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
 table {
     border-color: #30c;
     color: black;
@@ -24,6 +31,7 @@ caption {
     font-family:Georgia, 'Times New Roman', Times, serif;
     font-weight: bold;
     font-size: 1.5rem;
+    margin-bottom: 5px;
 }
 
 th {    
@@ -72,18 +80,10 @@ span {
     font-size: 0.9rem;
 }
 
-#note {
-    font-size: 00.9rem;
-}
-
-.bigr {
-    font-size: 1rem;
-}
-
 .btns {
     background-color: #30c;
     border-color: #30c;
-    border-radius: 10%;
+    border-radius: 30px;
     color: #fff;;
     text-align: center;
     margin: auto;
@@ -93,14 +93,82 @@ span {
     float: right;
 }
 
-#api1, #api2, #api3 {
-    display: none;   
+#main, #api1, #api2, #api3 {
+    display: none; 
 }
 
-div>fieldset:visible {
+/* css for intro page here */
+
+#mid {
+    background-color: blue;
+    height: 100vh;
+    z-index: 5;
+}
+
+#intro {
+    position: relative;
+    text-align: center;      
+    color: white;
+    font-weight: bold;
+    font-size: 3rem;
+    width: 100%;
+    height: 100vh;
+    z-index: 9
+}
+
+#intro::after {
+    content: ""; 
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background-color: blue;
+    background-image: url("../../world\ map.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    opacity: 0.20;
+    z-index: -1;
+}
+
+#line1, #pbtn, #line2, #line3  {
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto; 
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-size: 3rem;
+    z-index: 9;
+}
+
+#introbtn {
+    text-align: center;  
+    background-color: white;
+    color: blue;
+    border-radius: 30px;
+    border-style: solid;
+    border-color: blue;
+    border-width: 1px;
+    padding: 20px;
+    margin-top: 50px;  
+    font-size: 1.5rem;       
+}
+
+
+#line1 {
+    padding-top: 10%; 
+    font-size: 2.8rem;
+}
+
+#line2 {
+    font-size: 2rem;
+} 
+/* 
+div > fieldset:visible {
     margin:auto;
     display: block;
-}
+} */
 
 fieldset {
     max-width: 30%;
@@ -112,3 +180,14 @@ legend {
     font-weight: bold;
 }
 
+#cntrnm, #avlbl {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div select {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+}

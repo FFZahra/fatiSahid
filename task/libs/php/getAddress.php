@@ -9,31 +9,38 @@
     $url = "http://api.geonames.org/addressJSON?lat=".$_REQUEST['lat']."&lng=".$_REQUEST['lng']."&username=fatimahs";
 
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt_array($ch, [
+        CURLOPT_SSL_VERIFYPEER => false,
+        CURLOPT_RETURNTRANSFER => true,        
+        CURLOPT_URL => $url
+    ]);
 
     $result = curl_exec($ch);
-
-    curl_close($ch);
-
-    $decode = json_decode($result, true);
+    $err = curl_errno($ch);
+    $errmsg = curl_error($ch);
+    $errname = curl_strerror($err);
+       
+    curl_close($ch);  
+    
+    $infoarr = json_decode($result, true);
 
     $output = array();
 
-    // if ($decode['address'] === null){
-    //     $output['status']['name'] = "err";
-    //     $output['status']['code'] = "404";
-    // } else {
+    
+    if ($err) {
+        echo $err, $errname, $errmsg;
+    } else {
+
         $output['status']['code'] = "200";
         $output['status']['name'] = "ok";
         $output['status']['description'] = "success";
         $output['status']['returnedIn'] = intval((microtime(true) - $executionStartTime) * 1000)." ms";
-        $output['data'] = $decode['address'];
-  //  }
+        $output['data'] = $infoarr['address'];
+        
+        header('Content-Type: application/json; charset=UTF-8');
 
-    header('Content-Type: application/json; charset=UTF-8');
+        echo json_encode($output);    
 
-    echo json_encode($output);    
+    }
 
 ?>
