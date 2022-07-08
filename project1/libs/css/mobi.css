@@ -13,3 +13,14 @@ html, body {
     width: 100vw;
     height: 94.7vh;
 }
+
+.my-div-icon {
+    height: 100;
+    width: 200;
+}
+
+leaflet-bar button {
+    width: 100px;
+    height: 100px;
+    /* line-height: 30px; */
+  }

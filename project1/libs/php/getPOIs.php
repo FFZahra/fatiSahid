@@ -1,12 +1,12 @@
 <?php
-    // Lookup country code for location:
+    // Retrieve Country data:
 
     ini_set('display_errors', 'On');
     error_reporting(E_ALL);
 
     $executionStartTime = microtime(true);
 
-    $url = "https://api.opencagedata.com/geocode/v1/json?key=87d21371a2e74dffb29193dbbda7b9d2&q=".$_REQUEST['q']."&pretty=1";
+    $url = "http://api.geonames.org/findNearbyPOIsOSMJSON?lat=".$_REQUEST['lat']."&lng=".$_REQUEST['lng']."&username=fatimahs";
 
     $ch = curl_init();
     curl_setopt_array($ch, [
@@ -26,7 +26,7 @@
     $infoArr = json_decode($response, true);
 
     $output = array();
-
+    
     if ($err) {
         echo $err, $errname, $errmsg;
     } else {
@@ -34,11 +34,11 @@
         $output['status']['name'] = "ok";
         $output['status']['description'] = "success";
         $output['status']['returnedIn'] = intval((microtime(true) - $executionStartTime) * 1000)." ms";
-        $output['data'] = $infoArr['results'];
+        $output['data'] = $infoArr['poi'];
         
         header('Content-Type: application/json; charset=UTF-8');
 
         echo json_encode($output);    
-
     };
+
 ?>

@@ -6,175 +6,58 @@ L.tileLayer('https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=d5aa
 	maxZoom: 22
 }).addTo(map);
 
+var flagsUrl = "https://countryflagsapi.com/svg/" + $('#cntry').val();
+$('#flags').html("<img width=100 height=45 src=" + flagsUrl + ">");
+
+$('#cntry').change(function(){
+    getOtherData();
+});
+
+
 function onLocationFound(e) {
 
     var positn = e.latlng;
-    console.log(positn + ' chk1');  //passed
+    console.log(positn);  
 
     plat = positn.lat;
-    plng = positn.lng;
-
-    var ctrcd, tmzn, drvStyl, qbl, currNotes, currCoins, areacd;
-
+    plng = positn.lng;  
+    
     function getCntryCode(clat, clng){
-      var datt =  $.ajax({
-                        url: "libs/php/getCntryCode.php",       // access OpenCage API - for country code
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {
-                            'q': clat + ',' + clng
-                            },  
-                        success: function(result){ 
-                            console.log(result.status.code);  // passed - 200
-
-                            if ((result.status.name).toUpperCase() == "OK"){
-                                dats = result.data[0];                        // Extract country code info
-
-                                // ctrcd = dat.components.country_code;
-                                // tmzn = dat.annotations.timezone.offset_string;
-                                // drvStyl = dat.annotations.roadinfo.drive_on;                                
-                                // currNotes = dat.annotations.currency.name;
-                                // currCoins = dat.annotations.currency.subunit;
-                                // areacd = dat.annotations.callingcode;
-
-                                // console.log(ctrcd, tmzn, 'extracted');  // passed                    
-                            }
-                        },
-                        error: function(jqXHR){
-                            console.log(jqXHR, "Something is wrong");
-                        }
-                    }).done(function(dats){
-                        return dats;
-                    });  
-        return datt;
-    }
-
-    alert(plat + ", " + plng + 'chk1a');   // passed
-    var opcgDat = getCntryCode(plat, plng);
-
-    ctrcd = opcgDat.components.country_code;
-    tmzn = opcgDat.annotations.timezone.offset_string;
-
-    console.log(ctrcd, tmzn, ' outside');
-
-
-    $('#cntry').change(function(){
-        ccode = $('#cntry').val();
-
-        // API data sourcing:
         $.ajax({
-            url: "libs/php/getCountryInfo.php",       // access Geonames API - countryInfo
-            type: 'GET',
-            dataType: 'json',            
-            success: function(result){
-                console.log(result.status.code);
+              url: "libs/php/getCntryCode.php",       // access OpenCage API - for country code
+              type: 'POST',
+              dataType: 'json',
+              data: {
+                  'q': clat + ',' + clng
+                  },  
+              success: function(result){ 
+                  console.log(result.status.code);  
+    
+                  if ((result.status.name).toUpperCase() == "OK"){
+                      var dat = result.data[0];                        // Extract country code info
+    
+                      var ctrcd = dat.components.country_code;
+                    //   var tmzn = dat.annotations.timezone.offset_string;
+                    //   var drvStyl = dat.annotations.roadinfo.drive_on;          
+                    //   var currNotes = dat.annotations.currency.name;
+                    //   var currCoins = dat.annotations.currency.subunit;
+                    //   var areacd = dat.annotations.callingcode;                   
+                  }              
+    
+                  ctrcd = ctrcd.toUpperCase();
+    
+                  $('#cntry').val(ctrcd);
+                  getOtherData();
+    
+              },
+              error: function(jqXHR){
+                  console.log(jqXHR, "Something is wrong");     // error for getCountryCode ajax.
+              }       
+        });  
+    }
+    
+    getCntryCode(plat, plng);   
 
-                if (result.status.name.upper() == "OK"){
-                    cntrydat = result.data;                    
-
-                    for (let i = 0; i < cntrydat.length(); i++) {
-                        if (cntrydat[i].countryCode.upper() == ccode.upper()){
-                            cntrnm = cntrydat[i].countryName;
-                            cpcity = cntrydat[i].capital;
-                            cnti = cntrydat[i].continentName;
-                            cpop = cntrydat[i].population;
-                            ctrcd2 = ccode;
-                            ctrcd3 = cntrydat[i].isoAlpha3
-                            // cWiki = {{ctrcd3}};
-                            cntryArea = cntrydat[i].areaInSqKm;
-                            cbn = cntrydat[i].north;
-                            cbs = cntrydat[i].south;
-                            cbe = cntrydat[i].east;
-                            cbw = cntrydat[i].west;
-                            clat = ((cbn - cbs) / 2) + cbs;
-                            clng = ((cbe - cbw) / 2) + cbw;
-                            console.log("I found the country code for " + cntrnm + " it is: " + ccode, 'chk2');
-                            alert("I found the country code for " + cntrnm + " it is: " + ccode + " chk3.");
-
-                            break;
-                        }
-                    }
-
-                    $.ajax({
-                        url: "libs/php/getWeather.php",             // access OpenWeather API using clat, clng values
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {
-                            lat: clat,
-                            lon: clng
-                        },
-                        success: function(result){
-                            if (result.status.name.upper() == "OK"){
-                                var dat = result.data;
-
-                                wDescrp = dat.weather.description;
-                                wIcon = dat.weather.icon;
-                                wIconUrl = "http://oopenweathermap.org/img/wn/" + wIcon + "@2x.png";
-                                nowTemp = dat.main.temp;
-                                minTemp = dat.main.temp_min;
-                                maxTemp = dat.main.temp_max;
-                                vizi = dat.visibility / 1000;           // distance in km
-
-                                var weatherPop = L.popup()
-                                    .setLatLng([clat, clng])
-                                    .setContent(cpcity + ", " + ctrcd2 + "<br>" + wIcon + "&nbsp;&nbsp;&nbsp;" + nowTemp + "&deg;C" + 
-                                    "<br><br>" + "Expected Weather"+
-                                    "<br><br>" + wDescrp + "<br><br>" + 
-                                    "Temp high: " + maxTemp + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + "Temp Low: " + minTemp + "&deg;C" +
-                                    "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Visibility: " + vizi + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")
-                                    .opennOn(map);
-                                
-                                var wtoggle = L.easyButton({
-                                    states: [{
-                                        stateName: 'show-weather',
-                                        icon: 'fa-cloud-sun',
-                                        title: 'view weather report',
-                                        onClick: function(control){
-                                            weatherPop.show();
-                                            control.state('hide-weather');
-                                        }
-                                    }, 
-                                    {
-                                        stateName: 'hide-weather',
-                                        icon: 'fa-close',
-                                        title: 'close weather report',
-                                        onClick: function(control) {
-                                            weatherPop.hide();
-                                            control.state('show-weather')
-                                        }
-                                    }]
-                                });
-                                wtoggle.addTo(map);
-
-
-                                // ajxCallNeighbours();
-
-
-                            }                            
-
-                        },
-                        error: function(jqXHR){
-                            console.log(jqXHR);
-                        }
-
-                    });  
-                    
-                    var notesMark = L.marker(plat, plng, {alt: 'General country notes'}).addTo(map)
-                    .bindPopup("<h3>Country Info</h3><br><br>Country name: " + ctrnm + "<br>Country Code: " + ctrcd + "<br><br><hr><br>Country's Flag: "+ flg).openPopup();
-                    // .bindPopup("<h3>Country Info</h3><br><br>Country name: + ctrnm + <br>Country Code: <br><br> + Country Flag: + ctrcd<br><br>Country's flag: + flg + Area Code: + areacd + &nbsp:&nbsp;&nbspTime zone: +tmzn<br><br><hr><br><br>" + "In " +  ctrnm + ", driving is on the " + drvstyl +".").openPopup();               
-                    
-                }
-
-            },
-            error: function(jqXHR){
-                console.log("Sorry no data available for this position.");
-                console.log(jqXHR);
-            }
-        });
-    })
-
-    alert(ctrcd + ' is here');
-    $('#cntry').val(ctrcd);
 }
 
 function onLocationError(e) {
@@ -185,7 +68,156 @@ map.on('locationfound', onLocationFound);
 map.on('locationerror', onLocationError);
 
 map.locate({setView: true, maxZoom: 16});
-// $('#cntry').val(ctrcd);
+
+
+
+
+function getOtherData(){                    
+    var ccode = $('#cntry').val();
+    console.log(ccode);
+
+    var flagsUrl = "https://countryflagsapi.com/svg/" + ccode;
+        
+    // API data sourcing:
+    $.ajax({
+        url: "libs/php/getCountryInfo.php",       // access Geonames API - countryInfo
+        type: 'POST',
+        dataType: 'json',     
+        data: {
+            country: ccode
+        },       
+        success: function(result){
+            console.log(result.status.code);
+            console.log(result);
+
+            if (result.status.name.toUpperCase() == "OK"){
+                var cntrydat = result.data[0]; 
+
+                var cntrynm = cntrydat.countryName;
+                var cpcity = cntrydat.capital;
+                var cnti = cntrydat.continentName;
+                var cpop = cntrydat.population;
+                var gnmId = cntrydat.geonameId;
+                var ctrcd2 = ccode;
+                var ctrcd3 = cntrydat.isoAlpha3
+                // cWiki = {{ctrcd3}};
+                var cntryArea = cntrydat.areaInSqKm;
+                var cbn = cntrydat.north;
+                var cbs = cntrydat.south;
+                var cbe = cntrydat.east;
+                var cbw = cntrydat.west;
+                clat = Number.parseFloat(((cbn - cbs) / 2) + cbs).toFixed(2);
+                clng = Number.parseFloat(((cbe - cbw) / 2) + cbw).toFixed(2);
+                // $('#flags').html("<img width=100 height=45 src=" + flagsUrl + ">");
+                $('#flags').html("<img width=100 height=45 src=" + flagsUrl + " alt=\"flag of \"" + cntrynm + ">");
+             
+                $.ajax({
+                    url: "libs/php/getWeather.php",             // access OpenWeather API using clat, clng values
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        lat: clat,
+                        lon: clng
+                    },
+                    success: function(result){
+                        if (result.status.name.toUpperCase() == "OK"){
+                            console.log(result.status.code);
+                            var dat = result.data;
+
+                            wDescrp = dat.weather[0].description;
+                            wIcon = dat.weather[0].icon;
+                            wIconUrl = "http://openweathermap.org/img/w/" + wIcon + ".png";
+                            nowTemp = dat.main.temp;
+                            vizi = Number.parseFloat(dat.visibility / 1000).toFixed(2);           // distance in km                                        
+                            
+                            var clatt = Number.parseFloat(clat + 0.001).toFixed(3);
+                            var clngg = Number.parseFloat(clng + 0.001).toFixed(3);
+
+                            var weatherPop = L.popup()
+                                .setLatLng([clatt, clngg])
+                                .setLatLng(map.getCenter())
+                                .setContent("<br><p><center><big><big><b>" + cpcity + ", " + ctrcd2.toUpperCase() + "</b></big></big></center></p><hr><p><center><big><big><big><img src=" + wIconUrl + "><b>&ensp;&nbsp;<big>" + nowTemp + 
+                                "&nbsp;&degC</big></big></big></big></b></center></p><hr><p><center><b><i>Expected Today:</i></b></center></p><p><center><b>" + wDescrp + "</b></center></p><p><center>Visibility: " + vizi + " km(s)</center></p>")
+                                .openOn(map);                                                
+                            
+                            var wtoggle = L.easyButton({
+                                states: [{
+                                    stateName: 'show-weather',
+                                    icon: 'fa-cloud-sun',
+                                    title: 'view weather report',
+                                    onClick: function(control){
+                                        weatherPop.openOn(map);
+                                        control.state('hide-weather');
+                                    }
+                                }, 
+                                {
+                                    stateName: 'hide-weather',
+                                    icon: 'fa-close',
+                                    title: 'close weather report',
+                                    onClick: function(control) {
+                                        // map.remove(weatherPop);      when I use this, it removes the whole map
+                                        control.state('show-weather')
+                                    }
+                                }]
+                            });
+
+                            wtoggle.addTo(map);
+
+
+                            $.ajax({
+                                url: "libs/php/getPOIs.php",
+                                type: 'POST',
+                                dataType: 'json',
+                                data: {
+                                    lat: clatt,
+                                    lng: clngg
+                                },
+                                success: function(result){
+                                    if (result.status.code == "200"){
+                                        console.log(result.status.code);
+                                        console.log(result.data[0]);
+                                        
+                                        var pois = result.data;
+                                        
+                                        pointList = [];
+                                        for (let i = 0; i < pois.length; i++){
+                                            ltt = pois[i].lat;
+                                            lgg = pois[i].lng;
+                                            L.marker([lat, lng]).addTo(map).bindPopup("<p>" + pois.name + "</p><p>" + pois.typeName + "</p>");
+                                        }
+                                    };   
+                                    
+                                    
+
+                                    // map.setLatLng([clatt, clngg]);
+                                    // map.locate({setView: true, maxZoom: 16});
+                                },
+                                error: function(jqXHR){
+                                  console.log(jqXHR);             // error for getPOIs ajax
+                                }
+                            });          
+
+                        }                            
+
+                    },
+                    error: function(jqXHR){
+                        console.log(jqXHR);                   // error for getWeather ajax
+                    }
+
+                });  
+               
+            }
+
+        },
+        error: function(jqXHR){
+            console.log("Sorry no data available for this position.");        // error for getCountryInfo ajax
+            console.log(jqXHR);
+        }
+    });
+    
+    // map.setLatLng([clatt, clngg]);
+    // map.locate({setView: true, maxZoom: 16});
+}
 
 
 
