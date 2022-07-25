@@ -6,7 +6,7 @@
 
     $executionStartTime = microtime(true);
 
-    $url = "http://api.geonames.org/countryInfoJSON?country=".$_REQUEST['country']."&username=fatimahs";
+    $url = "http://api.geonames.org/earthquakesJSON?north=".$_REQUEST['north']."&south=".$_REQUEST['south']."&east=".$_REQUEST['east']."&west=".$_REQUEST['west']."&username=fatimahs";
 
     $ch = curl_init();
     curl_setopt_array($ch, [
@@ -34,7 +34,7 @@
         $output['status']['name'] = "ok";
         $output['status']['description'] = "success";
         $output['status']['returnedIn'] = intval((microtime(true) - $executionStartTime) * 1000)." ms";
-        $output['data'] = $infoArr['geonames'];
+        $output['data'] = $infoArr['earthquakes'];
         
         header('Content-Type: application/json; charset=UTF-8');
 

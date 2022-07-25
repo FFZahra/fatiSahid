@@ -1,5 +1,5 @@
 <?php
-    // Lookup nearest address data:
+    // Retrieve weather data:
 
     ini_set('display_errors', 'On');
     error_reporting(E_ALL);

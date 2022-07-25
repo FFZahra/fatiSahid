@@ -6,7 +6,7 @@
 
     $executionStartTime = microtime(true);
 
-    $url = "http://api.geonames.org/findNearbyPOIsOSMJSON?lat=".$_REQUEST['lat']."&lng=".$_REQUEST['lng']."&username=fatimahs";
+    $url = "http://api.geonames.org/citiesJSON?north=".$_REQUEST['north']."&south=".$_REQUEST['south']."&east=".$_REQUEST['east']."&west=".$_REQUEST['west']."&lang=".$_REQUEST['lang']."&username=fatimahs";
 
     $ch = curl_init();
     curl_setopt_array($ch, [
@@ -34,7 +34,7 @@
         $output['status']['name'] = "ok";
         $output['status']['description'] = "success";
         $output['status']['returnedIn'] = intval((microtime(true) - $executionStartTime) * 1000)." ms";
-        $output['data'] = $infoArr['poi'];
+        $output['data'] = $infoArr['geonames'];
         
         header('Content-Type: application/json; charset=UTF-8');
 
