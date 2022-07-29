@@ -1,3 +1,33 @@
+$('document').ready(function(){
+
+    $.ajax({
+        url: "libs/php/countriesDropdown.php",
+        type: "GET",
+        dataType: 'json',    
+        success: function(response){
+            console.log(response.status.name);
+            console.log(response.data);
+            var dat = response.data;            
+
+            // clear current dropdown contents:
+            if (dat.length > 0) {
+                $('#cntry').html('');                
+            }
+
+            var choices = "";
+            for (var i = 0; i < dat.length; i++){
+                choices = choices + '<option value = "' + dat[i].iso_a2 + '">' + dat[i].name + '</option>';
+            }
+            
+            $('#cntry').html(choices);           
+            
+        },
+        error: function(error){
+            console.log(error.status);
+        }
+    })
+});
+
 var map = L.map('map').fitWorld();  // shows the whole world.
 
 var mapBase = L.tileLayer('https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=d5aae97cbf674c4e89e1d5c82d548dba', {
@@ -6,18 +36,15 @@ var mapBase = L.tileLayer('https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.p
 	maxZoom: 22
 }).addTo(map);
 
+
+
 var flagsUrl = "https://countryflagsapi.com/svg/" + $('#cntry').val();
 $('#flags').html("<img width=100 height=45 src=" + flagsUrl + ">");
 
 
 $('#cntry').change(function(){
-     // clear Controls from map;
-
-    if (map.hasControl()) {
-        removeControl(map, layCtrl);
-        // map.remove(wBtn);
-        // map.remove(ctryBtn);
-    }   
+    // clear Controls from map;
+    // ( code to go here)
 
     getOtherData();
 });

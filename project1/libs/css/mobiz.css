@@ -1,0 +1,156 @@
+* {
+    box-sizing: border-box;
+}
+
+
+html, body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+} 
+/* 
+/* ................................... Preloader ........................ 
+.preloader {
+    position: fixed;
+    z-index: 99;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#loadBtn {
+    
+    border: 10px solid #48d1cc;
+    border-top-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border-top: 10px solid #00ffff;
+    padding: 20px;
+    font-weight: bold;
+
+    -webkit-animation: changeColor 5s infinite;
+    animation: changeColor 5s infinite;
+
+}
+
+@-webkit-keyframes changeColor {
+    0% { 
+        border: 10px solid #48d1cc;
+        border-top: 10px solid #00ffff;
+        }
+    25% {         
+        border: 10px solid #00ffff;
+        border-top: 10px solid #008080;
+        }
+    50% { 
+        border: 10px solid #48d1cc;
+        border-top: 10px solid #00ffff;
+        }
+    100% { 
+        border: 10px solid #00ffff;
+        border-top: 10px solid #008080;
+        }
+}
+
+@keyframes changeColor {
+    0% { 
+        border: 10px solid #48d1cc;
+        border-top: 10px solid #00ffff;
+        }
+    25% {         
+        border: 10px solid #00ffff;
+        border-top: 10px solid #008080;
+        }
+    50% { 
+        border: 10px solid #48d1cc;
+        border-top: 10px solid #00ffff;
+        }
+    100% { 
+        border: 10px solid #00ffff;
+        border-top: 10px solid #008080;
+        }
+}
+
+................................. end preloader .............................. */
+
+#map {
+    width: 100vw;
+    height: 94.7vh;
+}
+
+.my-div-icon {
+    height: 100;
+    width: 200;
+}
+
+.modal-header {
+    text-align: center;
+}
+
+#capCd, #tmpImg, #xpct, #wDescrp {
+    text-align: center;
+    font-weight: bold;
+}
+
+#capCd {
+    font-size: 2rem;
+}
+
+#xpct {
+    font-style: italic;
+}
+
+#vizi {
+    text-align: center;
+}
+
+#tmpImg, #nowTemp {
+    font-size: 1.5rem;
+}
+
+#ctryBtn, #weatherBtn {
+    height: 45px;
+    width: 45px;
+    font-size: 1.5rem;
+    color: purple;
+    background-color: lightcyan;
+}
+
+.fa-cloud-sun {
+    color: gold;
+}
+
+
+#flgTxt {    
+    text-align: right;
+    font-weight: bold;
+}
+
+#flg img {
+    border: 1px solid lightgrey;
+}
+
+.bg-info {
+    color: lightcyan;
+}
+
+.modal-footer {
+    background-color: lightcyan;
+    font-style: italic;
+}
+
+.modal-footer span {
+    color: limegreen;
+    font-size: 1.5em;
+} 
+
+#ctryWiki {
+    font-style: italic;
+}  
