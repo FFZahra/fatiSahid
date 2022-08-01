@@ -22,8 +22,8 @@ $('document').ready(function(){
             $('#cntry').html(choices);           
             
         },
-        error: function(error){
-            console.log(error.status);
+        error: function(jqXHR){
+            console.log(jqXHR, 'Something is wrong');           
         }
     })
 });
@@ -76,7 +76,7 @@ function onLocationFound(e) {
                   }              
     
                   ctrcd = ctrcd.toUpperCase();
-    
+                  
                   $('#cntry').val(ctrcd);
                   getOtherData();
     
@@ -143,19 +143,38 @@ function getOtherData(){
                 $('#flags').html("<img width=100 height=45 src=" + flagsUrl + " alt=\"flag of \"" + cntrynm + ">");
 
                 // map out the country bounds:
-                var ctryBounds = [
-                    [cbn, cbw],
-                    [cbn, cbe],
-                    [cbs, cbe],
-                    [cbs, cbw]
-                ];
-                var ctryOutline = L.polygon(ctryBounds, {color: 'purple', fillColor: 'purple', fillOpacity: 0.25});
-               
-                // map.fitBounds([[cbn, cbe], [cbs, cbw]]);
-                map.setView([clat, clng], 5);
-                
+                $.ajax({
+                    url: 'libs/php/countriesBorder.php',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        iso: ctrcd2
+                    },
+                    success: function(response) {
+                        console.log('Type: ', response.data.type);
+                        var bnds = response.data.coordinates;
+                        var ctryBounds = [];
+                        
+                        if (response.data.type.toUpperCase() == "POLYGON") {
+                            for (var i = 0; i < bnds.length; i++){
+                                ctryBounds.push(bnds[i]);
+                            }
+                        } else if (response.data.type.toUpperCase() == "MULTIPOLYGON") {
+                            for (var i = 0; i < bnds.length; i++){
+                                for (var j = 0; j < bnds[i].length; j++){
+                                    ctryBounds.push(bnds[i][j]);
+                                }
+                            }
+                        }
+                           
+                        var ctryOutline = L.polygon(ctryBounds, {color: 'purple', fillColor: 'purple', fillOpacity: 0.50, transform: true});
+                        ctryOutline.addTo(map);
 
-                // Create markers:
+                        // ctryOutline.transform.enable({rotation: true, scaling:false});
+
+                        // ctryOutline.rotate(45 * Math.PI / 180);
+
+                         // Create markers:
 
                 var eqkMarker = L.ExtraMarkers.icon({
                     icon: 'fa-explosion',               // for earthquakes    
@@ -180,8 +199,7 @@ function getOtherData(){
                     shape: 'penta',
                     markerColor: 'pink',
                     prefix: 'fa'
-                });
-                
+                });                
 
                 $.ajax({
                     url: "libs/php/getNeighbours.php",
@@ -206,7 +224,7 @@ function getOtherData(){
                                 var nghbMrk = L.marker([nlat, nlng], {icon: ngbhrMarker}).bindPopup('<center><big><b>' + nghbNm + '</b></big></center><br><center><big>' + nghbCode + '</big></center>').openPopup();
                                 nghbs.push(nghbMrk);
                             }
-                            nghbs.push(ctryOutline);
+                          // nghbs.push(ctryOutline);
                             
 
                             var neighbours = L.layerGroup(nghbs);                                                    
@@ -417,7 +435,19 @@ function getOtherData(){
                     error: function(jqXHR){
                         console.log(jqXHR);             // error for getNeighbours ajax
                     }
-                });                  
+                });          
+
+
+
+                        map.fitBounds([[cbn, cbe], [cbs, cbw]]);
+                        map.setView([clat, clng], 5);
+
+
+                    },
+                    error: function(jqXHR) {
+                        console.log(jqXHR, "Something is wrong");     // error for countriesBound ajax.
+                    }
+                  });                                   
             }
         },
         error: function(jqXHR){
