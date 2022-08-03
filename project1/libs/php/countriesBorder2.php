@@ -9,18 +9,27 @@
 
     $result = file_get_contents("countryBorders.geo.json");
 
+
+
 	$decode = json_decode($result,true);
 
-	$countryBorder = [];
 
 
-	foreach($decode['features'] as $country_data){
+	$countryBorder;
 
-        if($country_data['properties']["iso_a2"] == $_REQUEST['country_code'] ){
-            $countryBorder = $country_data;
-            break;
+
+
+	for ($i = 0; $i < count($decode['features']); $i++) {
+
+        if($decode['features'][$i]['properties']['iso_a2'] == $_REQUEST['iso']){
+            $countryBorder = $decode['features'][$i]['geometry'];
         }
-    }
+
+		
+	};
+
+
+
 
 	$output['status']['code'] = "200";
 	$output['status']['name'] = "ok";
