@@ -1,3 +1,8 @@
+$(window).on('load', function() {
+   $('.preloader').hide();
+});
+
+/* -------------------------------------------------------------------------------------------- */
 $('document').ready(function(){
 
     $.ajax({
@@ -28,7 +33,10 @@ $('document').ready(function(){
     })
 });
 
-var map = L.map('map').fitWorld();  // shows the whole world.
+var map = L.map('map', {
+    minZoom: 0,
+    maxZoom: 5
+}).fitWorld();  // shows the whole world.
 
 var mapBase = L.tileLayer('https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=d5aae97cbf674c4e89e1d5c82d548dba', {
 	attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -69,7 +77,7 @@ var ngbhrMarker = L.ExtraMarkers.icon({
 // Create button controls:
 var wBtn = L.easyButton('fa-cloud-sun', function(){
     $("#weatherModal").modal("show");
-}, 'view weather information', 'weatherBtn');
+}, 'view weather information', 'wthBtn');
 
 wBtn.addTo(map);
 
@@ -79,6 +87,11 @@ var ctryBtn = L.easyButton('fa-building-flag', function(){
 
 ctryBtn.addTo(map);
 
+var wikiBtn = L.easyButton('fa-bullhorn', function(){
+    $("#wikiModal").modal("show");                             
+}, 'view country wiki', 'wikiBtn');
+
+wikiBtn.addTo(map);
 
 // Create layer control:
 map.layers = [mapBase];
@@ -91,10 +104,8 @@ var ctryOutline = L.geoJSON().addTo(map);
 var layCtrl = L.control.layers(baseMap, overMap).addTo(map);
 
 
-
 $('#cntry').change(function(){
-    // Clear controls from map;
-    // ( code to go here)
+    // Clear previous country's controls from map:
     layCtrl.removeLayer(neighbours);
     layCtrl.removeLayer(earthquakes);
     layCtrl.removeLayer(nearbyCities);
@@ -102,8 +113,7 @@ $('#cntry').change(function(){
     map.removeLayer(earthquakes);
     map.removeLayer(nearbyCities);
 
-
-    ctryOutline.remove(map);       // still not removing the country outline
+    ctryOutline.remove(map);      
 
     getOtherData();
 });
@@ -221,10 +231,9 @@ function getOtherData(){
 
                         ctryOutline = L.geoJSON(response.data, {
                             style: ctryOutlineStyle                      
-                        }).addTo(map);    
-                                                
-                        map.setView([clat, clng], 5);
-                        map.fitBounds([[cbn, cbe], [cbs, cbw]]);
+                        }).addTo(map);   
+
+                        map.fitBounds(ctryOutline.getBounds());;
 
 
                         $.ajax({
@@ -341,8 +350,10 @@ function getOtherData(){
                                                                 wikiCtrnm = wikiCtrnm.replace(' ', '_');
                                                             }
                                                             var wikiUrl = "https://en.wikipedia.org/wiki/" + wikiCtrnm;
-                                                            $('#ctryWiki').html('More about&ensp;' + cntrynm + '<span id="wikiSpan">&emsp;.&emsp;.&emsp;.&emsp;</span><a id="wikiLnk" href=' + wikiUrl + '>here</a>');
-                                                            
+
+                                                            // for Wiki modal:
+                                                            $('#wikiBd').html('<iframe src=' + wikiUrl + ' title="Country Wikipedia"></iframe>')
+
                                                             $.ajax({
                                                                 url: "libs/php/getCntryCode.php",       // access OpenCage API - for additional country info
                                                                 type: 'POST',
@@ -367,11 +378,11 @@ function getOtherData(){
                                                                     }    
                                                                     
                                                                     // More country info:
-                                                                    $('#drvg').html('<span class="text-dark">Driving Style:&emsp;</span>' + drv + ' hand drive&emsp;<i class="fa-solid fa-car fa-fw text-dark"></i>');
-                                                                    $('#tmzn').html('<span class="text-dark">Time zone:&emsp;</span>' + tmzn + ' GMT/UTC&emsp;<i class="fa-solid fa-globe fa-fw text-dark"></i>');
-                                                                    $('#currency').html('<span class="text-dark">Currency&ensp;<i class="fa-solid fa-money-bill-wave fa-fw"></i><i class="fa-solid fa-coins fa-fw"></i></span>');
-                                                                    $('#notes').html('<span class="text-dark">Notes:&emsp;</span>' + currNotes);
-                                                                    $('#coins').html('<span class="text-dark">Coins:&emsp;</span>' + currCoins);
+                                                                    $('#drvg').html('<span class="text-dark"><i class="fa-solid fa-car fa-fw"></i>&nbsp;Driving Style:&emsp;</span>' + drv + ' hand drive');
+                                                                    $('#tmzn').html('<span class="text-dark"><i class="fa-solid fa-globe fa-fw"></i>&nbsp;Time zone:&emsp;</span>' + tmzn + ' GMT/UTC');
+                                                                    $('#currency').html('<span class="text-dark"><i class="fa-solid fa-money-bill-wave fa-fw"></i><i class="fa-solid fa-coins fa-fw"></i>&nbsp;Currency</span>');
+                                                                    $('#notes').html('<span class="text-dark"><i class="fa-solid fa-money-bill-wave fa-fw"></i>&nbsp;Notes:&emsp;</span>' + currNotes);
+                                                                    $('#coins').html('<span class="text-dark"><i class="fa-solid fa-coins fa-fw"></i>&nbsp;Coins:&emsp;</span>' + currCoins);
                                                                     $('#phnCd').html('<i class="fa-solid fa-phone fa-fw text-success"></i>&ensp;<span class="text-dark">Area Code:&emsp;+</span>' + areacd);
                                                                     $('#flg').html("<img width=50 height=25 src=" + flagsUrl + " alt=\"flag of \"" + cntrynm + ">");
                                                                     $('#qbl').html('<span class="text-dark">Qibla direction:&ensp;&nbsp;</span>' + qbl + '&ensp;<i class="fa-solid fa-kaaba fa-fw text-dark"></i>');
@@ -443,14 +454,7 @@ function getOtherData(){
                             error: function(jqXHR){
                                 console.log(jqXHR);             // error for getNeighbours ajax
                             }
-                        });          
-
-
-
-                                map.fitBounds([[cbn, cbe], [cbs, cbw]]);
-                                map.setView([clat, clng], 5);
-
-
+                        });    
                     },
                     error: function(jqXHR) {
                         console.log(jqXHR, "Something is wrong");     // error for countriesBound ajax.

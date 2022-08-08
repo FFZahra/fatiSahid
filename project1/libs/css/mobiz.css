@@ -2,83 +2,46 @@
     box-sizing: border-box;
 }
 
-
 html, body {
     width: 100%;
     margin: 0;
     padding: 0;
     overflow: hidden;
 } 
-/* 
-/* ................................... Preloader ........................ 
-.preloader {
+
+/* ................................... Preloader ........................ */
+.preloader {    
     position: fixed;
-    z-index: 99;
+    z-index: 99999;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
     width: 100vw;
     height: 100vh;
-    overflow: hidden;
+    background-color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#loadBtn {
-    
-    border: 10px solid #48d1cc;
-    border-top-left-radius: 50%;
-    border-bottom-right-radius: 50%;
-    border-top: 10px solid #00ffff;
-    padding: 20px;
-    font-weight: bold;
-
-    -webkit-animation: changeColor 5s infinite;
-    animation: changeColor 5s infinite;
-
+.preloader > img {
+    width: 100px;
+    height: 100px;
 }
 
-@-webkit-keyframes changeColor {
-    0% { 
-        border: 10px solid #48d1cc;
-        border-top: 10px solid #00ffff;
-        }
-    25% {         
-        border: 10px solid #00ffff;
-        border-top: 10px solid #008080;
-        }
-    50% { 
-        border: 10px solid #48d1cc;
-        border-top: 10px solid #00ffff;
-        }
-    100% { 
-        border: 10px solid #00ffff;
-        border-top: 10px solid #008080;
-        }
+.preloader.hidden {
+    animation: fadeOut 1s;
+    animation-fill-mode: forwards;
 }
 
-@keyframes changeColor {
-    0% { 
-        border: 10px solid #48d1cc;
-        border-top: 10px solid #00ffff;
-        }
-    25% {         
-        border: 10px solid #00ffff;
-        border-top: 10px solid #008080;
-        }
-    50% { 
-        border: 10px solid #48d1cc;
-        border-top: 10px solid #00ffff;
-        }
-    100% { 
-        border: 10px solid #00ffff;
-        border-top: 10px solid #008080;
-        }
+@keyframes fadeOut {
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
 }
 
-................................. end preloader .............................. */
+
+/* ................................. end preloader ..............................  */
 
 #map {
     width: 100vw;
@@ -90,9 +53,13 @@ html, body {
     width: 200;
 }
 
+#header {
+    width: 100vw;
+}
+/* 
 .modal-header {
     text-align: center;
-}
+} */
 
 #capCd, #tmpImg, #xpct, #wDescrp {
     text-align: center;
@@ -101,6 +68,10 @@ html, body {
 
 #capCd {
     font-size: 2rem;
+}
+hr {
+    background-color: darkturquoise;
+    border-color: darkturquoise;
 }
 
 #xpct {
@@ -115,7 +86,11 @@ html, body {
     font-size: 1.5rem;
 }
 
-#ctryBtn, #weatherBtn {
+#wDescrp {
+    font-size: 1.2rem;
+}
+
+#wikiBtn, #ctryBtn, #wthBtn {
     height: 45px;
     width: 45px;
     font-size: 1.5rem;
@@ -125,6 +100,10 @@ html, body {
 
 .fa-cloud-sun {
     color: gold;
+}
+
+.fa-bullhorn {
+    color: blue;
 }
 
 
@@ -137,8 +116,25 @@ html, body {
     border: 1px solid lightgrey;
 }
 
-.bg-info {
-    color: lightcyan;
+#rtside {
+    color: teal;
+    background-color: darkturquoise;
+}
+
+.fa-globe {
+    color: #800080;
+}
+
+.fa-car {
+    color: navy;
+}
+
+.fa-money-bill-wave {
+    color: green;
+}
+
+.fa-coins {
+    color: goldenrod;
 }
 
 .modal-footer {
@@ -151,6 +147,15 @@ html, body {
     font-size: 1.5em;
 } 
 
-#ctryWiki {
-    font-style: italic;
-}  
+#wikiBtn >tooltip {
+    font-weight: bold;
+}
+
+#wikiBd {
+    text-align: center;
+}
+
+iframe {
+    width: 90%;
+    height: 70vh;
+}
