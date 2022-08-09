@@ -324,17 +324,41 @@ function getOtherData(){
                                                             console.log(result.status.code);
                                                             var dat = result.data;
                                 
-                                                            wDescrp = dat.weather[0].description;
-                                                            wIcon = dat.weather[0].icon;
-                                                            wIconUrl = "http://openweathermap.org/img/w/" + wIcon + ".png";
-                                                            nowTemp = dat.main.temp;
-                                                            vizi = Number.parseFloat(dat.visibility / 1000).toFixed(2);           // distance in km                                        
+                                                            var wDescrp = dat.weather[0].description;
+                                                            var wIcon = dat.weather[0].icon;
+                                                            var wIconUrl = "http://openweathermap.org/img/w/" + wIcon + ".png";
+                                                            var nowTemp = dat.main.temp;
+                                                            var sunrise = dat.sys.sunrise;
+                                                            var sunset = dat.sys.sunset;                           
                                                             
                                                             // For weather info:
                                                             $('#capCd').html(cpcity + ", " + ctrcd2.toUpperCase());
-                                                            $('#tmpImg').html("<img src=" + wIconUrl + ">&ensp;&nbsp;" + nowTemp);
+                                                            $('#tmpImg').html("<img src=" + wIconUrl + ">&ensp;&nbsp;" + nowTemp + "&deg;C");
                                                             $('#wDescrp').text(wDescrp);
-                                                            $('#vizi').text('Visibility: ' + vizi + ' km(s)');
+
+                                                            var rise = new Date(sunrise * 1000);
+                                                            var down = new Date(sunset * 1000);
+
+                                                            function setZero(mins){
+                                                                if (mins < 10){
+                                                                    mins = '0'+ mins;
+                                                                };
+                                                                return mins;
+                                                            }
+
+                                                            riseMins = setZero(rise.getMinutes());
+                                                            downMins = setZero(down.getMinutes());
+
+                                                            function getBracket2End(strg){
+                                                                var idx = strg.indexOf('(');
+                                                                return strg.slice(idx);
+                                                            }
+                                                            
+                                                            $('#riseImg').html('<i class="fa-solid fa-sun fa-fw"></i>');
+                                                            $('#risetm').html(rise.getHours() + ':' + riseMins);
+                                                            $('#stdTmTxt').html(getBracket2End(rise.toTimeString()));
+                                                            $('#dwnImg').html('<i class="fa-solid fa-moon fa-fw"></i><i class="fa-solid fa-star fa-fw"></i>');
+                                                            $('#dwntm').html(down.getHours() + ':' + downMins);
 
                                                             // For country info:
                                                             $('#conti').html('<span class="text-dark">Continent:&emsp;</span>' + cnti);
@@ -385,7 +409,7 @@ function getOtherData(){
                                                                     $('#coins').html('<span class="text-dark"><i class="fa-solid fa-coins fa-fw"></i>&nbsp;Coins:&emsp;</span>' + currCoins);
                                                                     $('#phnCd').html('<i class="fa-solid fa-phone fa-fw text-success"></i>&ensp;<span class="text-dark">Area Code:&emsp;+</span>' + areacd);
                                                                     $('#flg').html("<img width=50 height=25 src=" + flagsUrl + " alt=\"flag of \"" + cntrynm + ">");
-                                                                    $('#qbl').html('<span class="text-dark">Qibla direction:&ensp;&nbsp;</span>' + qbl + '&ensp;<i class="fa-solid fa-kaaba fa-fw text-dark"></i>');
+                                                                    $('#qbl').html('<span class="text-dark"><i class="fa-solid fa-kaaba fa-fw"></i>&ensp;Qibla direction:&ensp;&nbsp;</span>' + qbl);
 
                                                                     $.ajax({
                                                                         url: "libs/php/getCities.php",       // access Geonames API - for country cities

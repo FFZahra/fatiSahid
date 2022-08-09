@@ -56,10 +56,6 @@ html, body {
 #header {
     width: 100vw;
 }
-/* 
-.modal-header {
-    text-align: center;
-} */
 
 #capCd, #tmpImg, #xpct, #wDescrp {
     text-align: center;
@@ -67,7 +63,7 @@ html, body {
 }
 
 #capCd {
-    font-size: 2rem;
+    font-size: 2.5rem;
 }
 hr {
     background-color: darkturquoise;
@@ -78,23 +74,84 @@ hr {
     font-style: italic;
 }
 
-#vizi {
-    text-align: center;
-}
-
-#tmpImg, #nowTemp {
-    font-size: 1.5rem;
+#tmpImg {
+    font-size: 2rem;
 }
 
 #wDescrp {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+}
+
+#suns {
+    border-color: blue;
+    border-width: 10px;;
+}
+
+#sunUp {
+    background-color: skyblue;    
+    justify-content: center;
+    align-items: center;
+}
+
+#sunDwn {
+    background-color: navy;
+}
+
+h4 {
+    font-style: italic;
+}
+
+#riseImg, #dwnImg {
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+}
+
+.fa-sun {
+    color: gold;
+    font-size: 2.5rem;
+}
+
+.fa-moon {
+    color: yellow;
+    font-size: 2.5rem;
+    
+}
+
+.fa-star, #hdgDwn, #dwntm {
+    color:ivory;
+}
+
+#riseTime, #dwnTime {
+    height: 70px;
+    padding-left: 15px;
+    padding-right: 15px;    
+    font-size: 1.8rem;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+}
+
+#hdgUp, #risetm {
+    color: navy;
+}
+
+.hdg {
+    justify-content: center;
+    align-items: center;
+}
+
+#stdTm {
+    color: navy;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5px;
 }
 
 #wikiBtn, #ctryBtn, #wthBtn {
     height: 45px;
     width: 45px;
     font-size: 1.5rem;
-    color: purple;
     background-color: lightcyan;
 }
 
@@ -106,7 +163,6 @@ hr {
     color: blue;
 }
 
-
 #flgTxt {    
     text-align: right;
     font-weight: bold;
@@ -116,12 +172,13 @@ hr {
     border: 1px solid lightgrey;
 }
 
-#rtside {
+.rtside {
     color: teal;
     background-color: darkturquoise;
+    font-weight: bold;
 }
 
-.fa-globe {
+.fa-globe, .fa-building-flag {
     color: #800080;
 }
 
@@ -139,17 +196,11 @@ hr {
 
 .modal-footer {
     background-color: lightcyan;
-    font-style: italic;
 }
 
-.modal-footer span {
-    color: limegreen;
-    font-size: 1.5em;
-} 
-
-#wikiBtn >tooltip {
+/* #wikiBtn > .tooltip {
     font-weight: bold;
-}
+} */
 
 #wikiBd {
     text-align: center;
