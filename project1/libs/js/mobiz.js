@@ -311,6 +311,7 @@ function getOtherData(){
                                                 
                                                 layCtrl.addOverlay(earthquakes, "Earthquake history"); 
 
+
                                                 $.ajax({
                                                     url: "libs/php/getWeather.php",             // access OpenWeather API using clat, clng values
                                                     type: 'POST',
@@ -333,7 +334,7 @@ function getOtherData(){
                                                             
                                                             // For weather info:
                                                             $('#capCd').html(cpcity + ", " + ctrcd2.toUpperCase());
-                                                            $('#tmpImg').html("<img src=" + wIconUrl + ">&ensp;&nbsp;" + nowTemp + "&deg;C");
+                                                            $('#tmpImg').html("<img src=" + wIconUrl + ">&ensp;&nbsp;" + nowTemp.toFixed(0) + "&deg;C");
                                                             $('#wDescrp').text(wDescrp);
 
                                                             var rise = new Date(sunrise * 1000);
@@ -429,6 +430,7 @@ function getOtherData(){
                                                                                 var cityDat = result.data;
 
                                                                                 var cities = [];
+                                                                                var ctClusters = L.markerClusterGroup();
 
                                                                                 for (let i = 0; i < cityDat.length; i++){
                                                                                     
@@ -437,8 +439,9 @@ function getOtherData(){
                                                                                     var cityNm = cityDat[i].name;  
                                                     
                                                                                     var ctMrk = L.marker([ctLat, ctLng], {icon: citiesMarker}).bindPopup('<b>' + cityNm + '</b>');
-                                        
+                                                                                    
                                                                                     cities.push(ctMrk);
+                                                                                    ctClusters.addLayer(ctMrk);
                                                                                 }
                                                     
                                                                                 nearbyCities = L.layerGroup(cities);
@@ -446,9 +449,11 @@ function getOtherData(){
                                                                                 // include in layer control:
                                                                                 
                                                                                 layCtrl.addOverlay(nearbyCities, "Nearby Cities"); 
+
+                                                                                // add cluster to map:
+                                                                                map.addLayer(ctClusters);
                                                                             }
-                                                                    
-                                                                        },
+                                                                         },
                                                                         error: function(jqXHR){
                                                                             console.log(jqXHR, "Something is wrong");     // error for getCities ajax.
                                                                         }       
