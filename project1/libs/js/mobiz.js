@@ -35,7 +35,7 @@ $('document').ready(function(){
 
 var map = L.map('map', {
     minZoom: 0,
-    maxZoom: 5
+    zoom: 5
 }).fitWorld();  // shows the whole world.
 
 var mapBase = L.tileLayer('https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=d5aae97cbf674c4e89e1d5c82d548dba', {
@@ -102,6 +102,7 @@ var neighbours, earthquakes, nearbyCities;
 var ctryOutline = L.geoJSON().addTo(map);
 
 var layCtrl = L.control.layers(baseMap, overMap).addTo(map);
+var ctClusters = L.markerClusterGroup();
 
 
 $('#cntry').change(function(){
@@ -112,6 +113,10 @@ $('#cntry').change(function(){
     map.removeLayer(neighbours);
     map.removeLayer(earthquakes);
     map.removeLayer(nearbyCities);
+
+    if (ctClusters){
+        map.removeLayer(ctClusters);
+    }
 
     ctryOutline.remove(map);      
 
@@ -430,7 +435,7 @@ function getOtherData(){
                                                                                 var cityDat = result.data;
 
                                                                                 var cities = [];
-                                                                                var ctClusters = L.markerClusterGroup();
+                                                                                // var ctClusters = L.markerClusterGroup();
 
                                                                                 for (let i = 0; i < cityDat.length; i++){
                                                                                     
@@ -443,6 +448,8 @@ function getOtherData(){
                                                                                     cities.push(ctMrk);
                                                                                     ctClusters.addLayer(ctMrk);
                                                                                 }
+
+                                                                                // ctClusters.addLayer(cities);
                                                     
                                                                                 nearbyCities = L.layerGroup(cities);
                                                     
