@@ -35,7 +35,7 @@ $('document').ready(function(){
 
 var map = L.map('map', {
     minZoom: 0,
-    zoom: 5
+    zoom: 3
 }).fitWorld();  // shows the whole world.
 
 var mapBase = L.tileLayer('https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=d5aae97cbf674c4e89e1d5c82d548dba', {
@@ -103,7 +103,12 @@ var ctryOutline = L.geoJSON().addTo(map);
 
 var layCtrl = L.control.layers(baseMap, overMap).addTo(map);
 var ctClusters = L.markerClusterGroup();
+var eqClusters = L.markerClusterGroup();
+var nghbClusters = L.markerClusterGroup();
 
+ctClusters;
+eqClusters;
+nghbClusters;
 
 $('#cntry').change(function(){
     // Clear previous country's controls from map:
@@ -114,10 +119,15 @@ $('#cntry').change(function(){
     map.removeLayer(earthquakes);
     map.removeLayer(nearbyCities);
 
-    if (ctClusters){
+    if (map.hasLayer(ctClusters) || map.hasLayer(eqClusters) || map.hasLayer(nghbClusters)){
         map.removeLayer(ctClusters);
+        map.removeLayer(eqClusters);
+        map.removeLayer(nghbClusters);
+        ctClusters = L.markerClusterGroup();
+        eqClusters = L.markerClusterGroup();
+        nghbClusters = L.markerClusterGroup();
     }
-
+    
     ctryOutline.remove(map);      
 
     getOtherData();
@@ -263,6 +273,8 @@ function getOtherData(){
 
                                         var nghbMrk = L.marker([nlat, nlng], {icon: ngbhrMarker}).bindPopup('<center><big><b>' + nghbNm + '</b></big></center><br><center><big>' + nghbCode + '</big></center>').openPopup();
                                         nghbs.push(nghbMrk);
+
+                                        nghbClusters.addLayer(nghbMrk);
                                     }
 
                                     neighbours = L.layerGroup(nghbs);         
@@ -271,7 +283,9 @@ function getOtherData(){
                                     overMap = {"Neighbouring Countries": neighbours};
 
                                     layCtrl.addOverlay(neighbours, "Neighbouring Countries");  
-                                    
+
+                                    // add cluster to map:
+                                    map.addLayer(nghbClusters);                                    
 
                                     $.ajax({
                                         url: "libs/php/getEarthqks.php",             
@@ -308,13 +322,16 @@ function getOtherData(){
                                                     var eqMrk = L.marker([eqLat, eqLng], {icon: eqkMarker}, 'eqks').bindPopup('<b>Occurred on: ' + eqDate + '<br>Magnitude: ' + eqSize + '<br>Depth: ' + eqDepth + '</b>');
 
                                                     quakes.push(eqMrk);
+                                                    eqClusters.addLayer(eqMrk);
                                                 }
                     
                                                 earthquakes = L.layerGroup(quakes);
                     
-                                                // include in layer control:
-                                                
+                                                // include in layer control:                                                
                                                 layCtrl.addOverlay(earthquakes, "Earthquake history"); 
+
+                                                // add cluster to map:
+                                                map.addLayer(eqClusters);
 
 
                                                 $.ajax({
@@ -435,7 +452,6 @@ function getOtherData(){
                                                                                 var cityDat = result.data;
 
                                                                                 var cities = [];
-                                                                                // var ctClusters = L.markerClusterGroup();
 
                                                                                 for (let i = 0; i < cityDat.length; i++){
                                                                                     
@@ -448,13 +464,10 @@ function getOtherData(){
                                                                                     cities.push(ctMrk);
                                                                                     ctClusters.addLayer(ctMrk);
                                                                                 }
-
-                                                                                // ctClusters.addLayer(cities);
                                                     
                                                                                 nearbyCities = L.layerGroup(cities);
                                                     
-                                                                                // include in layer control:
-                                                                                
+                                                                                // include in layer control:                                                                                
                                                                                 layCtrl.addOverlay(nearbyCities, "Nearby Cities"); 
 
                                                                                 // add cluster to map:

@@ -47,14 +47,22 @@ html, body {
     width: 100vw;
     height: 94.7vh;
 }
-
+/* 
 .my-div-icon {
     height: 100;
     width: 200;
-}
+} */
 
 #header {
-    width: 100vw;
+    width: 100vw;    
+}
+
+#ctryBody, #wthBody, #wikiBd {
+    min-width: 365px;
+}
+
+#cntry {
+    max-width: 250px;
 }
 
 #capCd, #tmpImg, #xpct, #wDescrp {
@@ -194,13 +202,15 @@ h4 {
     color: goldenrod;
 }
 
+@media (max-width: 768px) {
+    #currency {
+        display: none;
+    }
+}
+
 .modal-footer {
     background-color: lightcyan;
 }
-
-/* #wikiBtn > .tooltip {
-    font-weight: bold;
-} */
 
 #wikiBd {
     text-align: center;
