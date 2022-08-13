@@ -43,19 +43,29 @@ html, body {
 
 /* ................................. end preloader ..............................  */
 
+#plate {
+    min-width: 400px;
+}
+
 #map {
     width: 100vw;
     height: 94.7vh;
 }
-/* 
-.my-div-icon {
-    height: 100;
-    width: 200;
-} */
 
 #header {
     width: 100vw;    
 }
+
+#hdrCol {
+    align-items: center;
+}
+
+#selectLbl {
+    display: inline;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
 
 #ctryBody, #wthBody, #wikiBd {
     min-width: 365px;
@@ -63,6 +73,11 @@ html, body {
 
 #cntry {
     max-width: 250px;
+    display: inline;
+}
+
+#flags {
+   float: right;
 }
 
 #capCd, #tmpImg, #xpct, #wDescrp {
