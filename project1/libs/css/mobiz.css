@@ -68,7 +68,7 @@ html, body {
 
 
 #ctryBody, #wthBody, #wikiBd {
-    min-width: 365px;
+    min-width: 435px;
 }
 
 #cntry {
@@ -88,6 +88,7 @@ html, body {
 #capCd {
     font-size: 2.5rem;
 }
+
 hr {
     background-color: darkturquoise;
     border-color: darkturquoise;
@@ -186,19 +187,50 @@ h4 {
     color: blue;
 }
 
+#plains {
+    color: darkcyan;
+    font-weight: bold;
+    text-align: center;
+}
+
+#icns {
+    background-color: darkturquoise;
+    padding: 10px;
+    
+}
+
+.rspTxt {
+    color: navy;
+    font-weight: bold;
+}
+
+.titles {
+    font-weight: bold;
+    color: black;
+}
+
+#currency, #notes, #coins, #drvg, #tmzn, #phnCd, #flg {
+    text-align: center;
+}
+
+#hr2 {
+    background-color: navy;
+    border-color: navy;
+}
+
 #flgTxt {    
     text-align: right;
     font-weight: bold;
 }
 
-#flg img {
-    border: 1px solid lightgrey;
+#flg {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
 }
 
-.rtside {
-    color: teal;
-    background-color: darkturquoise;
-    font-weight: bold;
+#flg img {
+    border: 1px solid lightgrey;
 }
 
 .fa-globe, .fa-building-flag {
@@ -206,7 +238,7 @@ h4 {
 }
 
 .fa-car {
-    color: navy;
+    color: blue;
 }
 
 .fa-money-bill-wave {
@@ -216,12 +248,12 @@ h4 {
 .fa-coins {
     color: goldenrod;
 }
-
+/* 
 @media (max-width: 768px) {
     #currency {
         display: none;
     }
-}
+} */
 
 .modal-footer {
     background-color: lightcyan;

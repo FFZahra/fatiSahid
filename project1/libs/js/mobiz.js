@@ -384,13 +384,13 @@ function getOtherData(){
                                                             $('#dwntm').html(down.getHours() + ':' + downMins);
 
                                                             // For country info:
-                                                            $('#conti').html('<span class="text-dark">Continent:&emsp;</span>' + cnti);
-                                                            $('#ctrNm').html('<span class="text-dark">Country:&emsp;</span>' + cntrynm);
-                                                            $('#capCty').html('<span class="text-dark">Capital City:&emsp;</span>' + cpcity);
+                                                            $('#conti').html('<span class="titles">Continent:&emsp;</span>' + cnti);
+                                                            $('#ctrNm').html('<span class="titles">Country:&emsp;</span>' + cntrynm);
+                                                            $('#capCty').html('<span class="titles">Capital City:&emsp;</span>' + cpcity);
 
                                                             cpop = parseInt(cpop).toLocaleString("en-GB");
-                                                            $('#pop').html('<span class="text-dark">Estimated Population:&emsp;</span>' + cpop);
-                                                            $('#area').html('<span class="text-dark">Area(sq/km):&emsp;</span>' + cntryArea);
+                                                            $('#pop').html('<span class="titles">Estimated Population:&emsp;</span>' + cpop);
+                                                            $('#area').html('<span class="titles">Area(sq/km):&emsp;</span>' + cntryArea);
 
                                                             var wikiCtrnm = cntrynm;
                                                             while (wikiCtrnm.indexOf(' ') !== -1){
@@ -425,14 +425,14 @@ function getOtherData(){
                                                                     }    
                                                                     
                                                                     // More country info:
-                                                                    $('#drvg').html('<span class="text-dark"><i class="fa-solid fa-car fa-fw"></i>&nbsp;Driving Style:&emsp;</span>' + drv + ' hand drive');
-                                                                    $('#tmzn').html('<span class="text-dark"><i class="fa-solid fa-globe fa-fw"></i>&nbsp;Time zone:&emsp;</span>' + tmzn + ' GMT/UTC');
-                                                                    $('#currency').html('<span class="text-dark"><i class="fa-solid fa-money-bill-wave fa-fw"></i><i class="fa-solid fa-coins fa-fw"></i>&nbsp;Currency</span>');
-                                                                    $('#notes').html('<span class="text-dark"><i class="fa-solid fa-money-bill-wave fa-fw"></i>&nbsp;Notes:&emsp;</span>' + currNotes);
-                                                                    $('#coins').html('<span class="text-dark"><i class="fa-solid fa-coins fa-fw"></i>&nbsp;Coins:&emsp;</span>' + currCoins);
-                                                                    $('#phnCd').html('<i class="fa-solid fa-phone fa-fw text-success"></i>&ensp;<span class="text-dark">Area Code:&emsp;+</span>' + areacd);
-                                                                    $('#flg').html("<img width=50 height=25 src=" + flagsUrl + " alt=\"flag of \"" + cntrynm + ">");
-                                                                    $('#qbl').html('<span class="text-dark"><i class="fa-solid fa-kaaba fa-fw"></i>&ensp;Qibla direction:&ensp;&nbsp;</span>' + qbl);
+                                                                    $('#drvg').html('<span class="titles"><i class="fa-solid fa-car fa-fw"></i>&nbsp;Driving Style:&emsp;</span>' + drv + ' hand drive');
+                                                                    $('#tmzn').html('<span class="titles"><i class="fa-solid fa-globe fa-fw"></i>&nbsp;Time zone:&emsp;</span>' + tmzn + ' GMT/UTC');
+                                                                    $('#currency').html('<span class="titles">Currency</span>');
+                                                                    $('#notes').html('<span class="titles"><i class="fa-solid fa-money-bill-wave fa-fw"></i>&nbsp;Notes:&emsp;</span>' + currNotes);
+                                                                    $('#coins').html('<span class="titles"><i class="fa-solid fa-coins fa-fw"></i>&nbsp;Coins:&emsp;</span>' + currCoins);
+                                                                    $('#phnCd').html('<i class="fa-solid fa-phone fa-fw text-success"></i>&ensp;<span class="titles">Area Code:&emsp;+</span>' + areacd);
+                                                                    $('#flg').html("<span id='flgTxt'>Flag:&ensp;</span><img width=50 height=25 src=" + flagsUrl + " alt=\"flag of \"" + cntrynm + ">");
+                                                                    $('#qbl').html('<span class="titles"><i class="fa-solid fa-kaaba fa-fw"></i>&ensp;Qibla direction:&ensp;&nbsp;</span>' + qbl);
 
                                                                     $.ajax({
                                                                         url: "libs/php/getCities.php",       // access Geonames API - for country cities
