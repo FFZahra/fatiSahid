@@ -66,10 +66,10 @@ html, body {
     font-weight: bold;
 }
 
-
+/* 
 #ctryBody, #wthBody, #wikiBd {
     min-width: 435px;
-}
+} */
 
 #cntry {
     max-width: 250px;
