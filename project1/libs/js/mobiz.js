@@ -44,11 +44,13 @@ var mapBase = L.tileLayer('https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.p
 	maxZoom: 22
 }).addTo(map);
 
+var streetvw = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+});
+
 var flagsUrl = "https://countryflagsapi.com/svg/" + $('#cntry').val();
-$('#flags').html("<img width=100 height=45 src=" + flagsUrl + ">");
 
  // Create markers:
-
  var eqkMarker = L.ExtraMarkers.icon({
     icon: 'fa-explosion',               // for earthquakes    
     iconColor: 'black',
@@ -93,10 +95,28 @@ var wikiBtn = L.easyButton('fa-bullhorn', function(){
 
 wikiBtn.addTo(map);
 
+// Setup event handlers for modal close buttons:
+$('.ctryCls').click(function(){
+    $('#countryModal').modal("hide");
+});
+
+$('.wthCls').click(function(){
+    $('#weatherModal').modal("hide");
+});
+
+$('.wikiCls').click(function(){
+    $('#wikiModal').modal("hide");
+});
+
+
 // Create layer control:
-map.layers = [mapBase];
-var baseMap = {"ThunderForestMap": mapBase};
+map.layers = [mapBase, streetvw];
+var baseMap = {
+    "ThunderForestMap": mapBase
+};
+
 var overMap = {};
+
 var neighbours, earthquakes, nearbyCities;
 
 var ctryOutline = L.geoJSON().addTo(map);
@@ -106,9 +126,22 @@ var ctClusters = L.markerClusterGroup();
 var eqClusters = L.markerClusterGroup();
 var nghbClusters = L.markerClusterGroup();
 
+layCtrl.addBaseLayer(streetvw, "Satellite View");
+
 ctClusters;
 eqClusters;
 nghbClusters;
+
+map.on('baselayerchange', function(){
+    var sLbl = $('#selectLbl');
+
+    if($(sLbl).css('color', 'navy')){
+        $('#selectLbl').css('color', 'ivory');
+    } else{
+        $('#selectLbl').css('color', 'navy');
+    }
+});
+
 
 $('#cntry').change(function(){
     // Clear previous country's controls from map:
@@ -189,7 +222,6 @@ map.locate({setView: true, maxZoom: 16});
 
 function getOtherData(){                    
     var ccode = $('#cntry').val();
-    console.log(ccode);
     
     var flagsUrl = "https://countryflagsapi.com/svg/" + ccode;
         
@@ -223,9 +255,6 @@ function getOtherData(){
                 var clat = Number.parseFloat(((cbn - cbs) / 2) + cbs).toFixed(2);
                 var clng = Number.parseFloat(((cbe - cbw) / 2) + cbw).toFixed(2);
 
-                // set in the flag wtih accessibility note:
-                $('#flags').html("<img width=100 height=45 src=" + flagsUrl + " alt=\"flag of \"" + cntrynm + ">");
-
                 // map out the country bounds:
                 $.ajax({
                     url: 'libs/php/countriesBorder.php',
@@ -237,7 +266,6 @@ function getOtherData(){
                     success: function(response) {
 
                         // set country borders:
-
                         var ctryOutlineStyle = {
                             "color": '#800080',
                             "weight": 3,
@@ -307,13 +335,9 @@ function getOtherData(){
                                                 var quakes = [];
 
                                                 for (let i = 0; i < qkDat.length; i++){
-                                                    var eqDtm = qkDat[i].datetime;
-                                                    var mnth = eqDtm.substring(5,7);
-                                                    var yr = eqDtm.substring(0,4);
-                                                    var day = eqDtm.substring(8,10);
-                                                    var eqm = mnthDik[mnth];
-                                                    var eqDate = day + ' ' + eqm + ' ' + yr;
-
+                                                    var eqDtm = new Date(qkDat[i].datetime);
+                                                    var eqDate = eqDtm.toDateString();
+                                                    
                                                     var eqLat = qkDat[i].lat;
                                                     var eqLng = qkDat[i].lng;
                                                     var eqSize = qkDat[i].magnitude;                               
@@ -332,7 +356,6 @@ function getOtherData(){
 
                                                 // add cluster to map:
                                                 map.addLayer(eqClusters);
-
 
                                                 $.ajax({
                                                     url: "libs/php/getWeather.php",             // access OpenWeather API using clat, clng values
@@ -384,13 +407,15 @@ function getOtherData(){
                                                             $('#dwntm').html(down.getHours() + ':' + downMins);
 
                                                             // For country info:
-                                                            $('#conti').html('<span class="titles">Continent:&emsp;</span>' + cnti);
-                                                            $('#ctrNm').html('<span class="titles">Country:&emsp;</span>' + cntrynm);
-                                                            $('#capCty').html('<span class="titles">Capital City:&emsp;</span>' + cpcity);
+                                                            $('#conti').html(cnti);
+                                                            $('#ctrNm').html(cntrynm);
+                                                            $('#capCty').html(cpcity);
 
                                                             cpop = parseInt(cpop).toLocaleString("en-GB");
-                                                            $('#pop').html('<span class="titles">Estimated Population:&emsp;</span>' + cpop);
-                                                            $('#area').html('<span class="titles">Area(sq/km):&emsp;</span>' + cntryArea);
+                                                            $('#pop').html(cpop);
+
+                                                            cntryArea = parseFloat(cntryArea).toLocaleString("en-GB");
+                                                            $('#area').html(cntryArea);
 
                                                             var wikiCtrnm = cntrynm;
                                                             while (wikiCtrnm.indexOf(' ') !== -1){
@@ -425,14 +450,13 @@ function getOtherData(){
                                                                     }    
                                                                     
                                                                     // More country info:
-                                                                    $('#drvg').html('<span class="titles"><i class="fa-solid fa-car fa-fw"></i>&nbsp;Driving Style:&emsp;</span>' + drv + ' hand drive');
-                                                                    $('#tmzn').html('<span class="titles"><i class="fa-solid fa-globe fa-fw"></i>&nbsp;Time zone:&emsp;</span>' + tmzn + ' GMT/UTC');
-                                                                    $('#currency').html('<span class="titles">Currency</span>');
-                                                                    $('#notes').html('<span class="titles"><i class="fa-solid fa-money-bill-wave fa-fw"></i>&nbsp;Notes:&emsp;</span>' + currNotes);
-                                                                    $('#coins').html('<span class="titles"><i class="fa-solid fa-coins fa-fw"></i>&nbsp;Coins:&emsp;</span>' + currCoins);
-                                                                    $('#phnCd').html('<i class="fa-solid fa-phone fa-fw text-success"></i>&ensp;<span class="titles">Area Code:&emsp;+</span>' + areacd);
-                                                                    $('#flg').html("<span id='flgTxt'>Flag:&ensp;</span><img width=50 height=25 src=" + flagsUrl + " alt=\"flag of \"" + cntrynm + ">");
-                                                                    $('#qbl').html('<span class="titles"><i class="fa-solid fa-kaaba fa-fw"></i>&ensp;Qibla direction:&ensp;&nbsp;</span>' + qbl);
+                                                                    $('#drvg').html(drv + ' hand drive');
+                                                                    $('#tmzn').html(tmzn + ' GMT/UTC');
+                                                                    $('#notes').html(currNotes);
+                                                                    $('#coins').html(currCoins);
+                                                                    $('#phnCd').html('+' + areacd);
+                                                                    $('#flg').html("<img height=25 src=" + flagsUrl + " alt=\"flag of \"" + cntrynm + ">");
+                                                                    $('#qbl').html(qbl);
 
                                                                     $.ajax({
                                                                         url: "libs/php/getCities.php",       // access Geonames API - for country cities

@@ -47,40 +47,31 @@ html, body {
     min-width: 400px;
 }
 
+#header {
+    position: fixed;
+    top: 10;
+    z-index: 99998;
+    margin-left: 50%;
+    justify-content: center;
+}
+
 #map {
     width: 100vw;
-    height: 94.7vh;
-}
-
-#header {
-    width: 100vw;    
-}
-
-#hdrCol {
-    align-items: center;
+    height: 100vh;
 }
 
 #selectLbl {
-    display: inline;
     font-size: 1.2rem;
     font-weight: bold;
+    max-width: 700px;
+    color: navy;
 }
-
-/* 
-#ctryBody, #wthBody, #wikiBd {
-    min-width: 435px;
-} */
 
 #cntry {
     max-width: 250px;
-    display: inline;
 }
 
-#flags {
-   float: right;
-}
-
-#capCd, #tmpImg, #xpct, #wDescrp {
+#capCd, #tmpImg, #wDescrp {
     text-align: center;
     font-weight: bold;
 }
@@ -92,10 +83,6 @@ html, body {
 hr {
     background-color: darkturquoise;
     border-color: darkturquoise;
-}
-
-#xpct {
-    font-style: italic;
 }
 
 #tmpImg {
@@ -115,14 +102,17 @@ hr {
     background-color: skyblue;    
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 
 #sunDwn {
     background-color: navy;
+    text-align: center;
 }
 
 h4 {
     font-style: italic;
+    text-align: center;
 }
 
 #riseImg, #dwnImg {
@@ -175,7 +165,9 @@ h4 {
 #wikiBtn, #ctryBtn, #wthBtn {
     height: 45px;
     width: 45px;
+    border-radius: 25%;
     font-size: 1.5rem;
+    color: purple;
     background-color: lightcyan;
 }
 
@@ -187,40 +179,9 @@ h4 {
     color: blue;
 }
 
-#plains {
-    color: darkcyan;
-    font-weight: bold;
-    text-align: center;
-}
-
-#icns {
-    background-color: darkturquoise;
-    padding: 10px;
-    
-}
-
-.rspTxt {
-    color: navy;
-    font-weight: bold;
-}
-
-.titles {
+.lbls, .icns{
     font-weight: bold;
     color: black;
-}
-
-#currency, #notes, #coins, #drvg, #tmzn, #phnCd, #flg {
-    text-align: center;
-}
-
-#hr2 {
-    background-color: navy;
-    border-color: navy;
-}
-
-#flgTxt {    
-    text-align: right;
-    font-weight: bold;
 }
 
 #flg {
@@ -232,28 +193,6 @@ h4 {
 #flg img {
     border: 1px solid lightgrey;
 }
-
-.fa-globe, .fa-building-flag {
-    color: #800080;
-}
-
-.fa-car {
-    color: blue;
-}
-
-.fa-money-bill-wave {
-    color: green;
-}
-
-.fa-coins {
-    color: goldenrod;
-}
-/* 
-@media (max-width: 768px) {
-    #currency {
-        display: none;
-    }
-} */
 
 .modal-footer {
     background-color: lightcyan;
