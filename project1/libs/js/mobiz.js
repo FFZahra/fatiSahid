@@ -35,7 +35,7 @@ $('document').ready(function(){
 
 var map = L.map('map', {
     minZoom: 0,
-    zoom: 3
+    zoom: 5
 }).fitWorld();  // shows the whole world.
 
 var mapBase = L.tileLayer('https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=d5aae97cbf674c4e89e1d5c82d548dba', {
@@ -74,7 +74,16 @@ var ngbhrMarker = L.ExtraMarkers.icon({
     shape: 'penta',
     markerColor: 'pink',
     prefix: 'fa'
-});                
+}); 
+
+var wikiMarker = L.ExtraMarkers.icon({
+    icon: 'fa-w',               // for country wiki(s)
+    iconColor: '#000080',
+    shape: 'square',
+    markerColor: 'white',
+    prefix: 'fa',
+    svg: true
+}); 
 
 // Create button controls:
 var wBtn = L.easyButton('fa-cloud-sun', function(){
@@ -121,23 +130,28 @@ var neighbours, earthquakes, nearbyCities;
 
 var ctryOutline = L.geoJSON().addTo(map);
 
-var layCtrl = L.control.layers(baseMap, overMap).addTo(map);
+var layCtrl = L.control.layers(baseMap, overMap, {position: 'topleft'}).addTo(map);
 var ctClusters = L.markerClusterGroup();
 var eqClusters = L.markerClusterGroup();
 var nghbClusters = L.markerClusterGroup();
+var wkClusters = L.markerClusterGroup();
 
 layCtrl.addBaseLayer(streetvw, "Satellite View");
 
 ctClusters;
 eqClusters;
 nghbClusters;
+wkClusters;
 
 map.on('baselayerchange', function(){
     var sLbl = $('#selectLbl');
 
-    if($(sLbl).css('color', 'navy')){
+    if(sLbl.css('color') == 'rgb(0, 0, 128)'){
+        // console.log($('#selectLbl').css('color'));
         $('#selectLbl').css('color', 'ivory');
+        // console.log($('#selectLbl').css('color'));
     } else{
+        // console.log($('#selectLbl').css('color'));
         $('#selectLbl').css('color', 'navy');
     }
 });
@@ -152,13 +166,15 @@ $('#cntry').change(function(){
     map.removeLayer(earthquakes);
     map.removeLayer(nearbyCities);
 
-    if (map.hasLayer(ctClusters) || map.hasLayer(eqClusters) || map.hasLayer(nghbClusters)){
+    if (map.hasLayer(ctClusters) || map.hasLayer(eqClusters) || map.hasLayer(nghbClusters) || map.hasLayer(wkClusters)){
         map.removeLayer(ctClusters);
         map.removeLayer(eqClusters);
         map.removeLayer(nghbClusters);
+        map.removeLayer(wkClusters);
         ctClusters = L.markerClusterGroup();
         eqClusters = L.markerClusterGroup();
         nghbClusters = L.markerClusterGroup();
+        wkClusters = L.markerClusterGroup();
     }
     
     ctryOutline.remove(map);      
@@ -329,9 +345,7 @@ function getOtherData(){
                                             if (result.status.name.toUpperCase() == "OK"){
                                                 console.log(result.status.code);
                                                 var qkDat = result.data;
-
-                                                var mnthDik = {'01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr', '05': 'May', '06': 'Jun', '07': 'Jul', '08': 'Aug', '09': 'Sep', '10': 'Oct', '11': 'Nov', '12': 'Dec'}
-                                                
+                                               
                                                 var quakes = [];
 
                                                 for (let i = 0; i < qkDat.length; i++){
@@ -369,19 +383,11 @@ function getOtherData(){
                                                         if (result.status.name.toUpperCase() == "OK"){
                                                             console.log(result.status.code);
                                                             var dat = result.data;
-                                
-                                                            var wDescrp = dat.weather[0].description;
-                                                            var wIcon = dat.weather[0].icon;
-                                                            var wIconUrl = "http://openweathermap.org/img/w/" + wIcon + ".png";
-                                                            var nowTemp = dat.main.temp;
-                                                            var sunrise = dat.sys.sunrise;
-                                                            var sunset = dat.sys.sunset;                           
-                                                            
+                                                                                      
                                                             // For weather info:
-                                                            $('#capCd').html(cpcity + ", " + ctrcd2.toUpperCase());
-                                                            $('#tmpImg').html("<img src=" + wIconUrl + ">&ensp;&nbsp;" + nowTemp.toFixed(0) + "&deg;C");
-                                                            $('#wDescrp').text(wDescrp);
-
+                                                            var sunrise = dat.city.sunrise;
+                                                            var sunset = dat.city.sunset;                                                
+                                                                                                                      
                                                             var rise = new Date(sunrise * 1000);
                                                             var down = new Date(sunset * 1000);
 
@@ -394,17 +400,33 @@ function getOtherData(){
 
                                                             riseMins = setZero(rise.getMinutes());
                                                             downMins = setZero(down.getMinutes());
+                                                            riseHr = setZero(rise.getHours());
+                                                            downHr = setZero(down.getHours());
 
                                                             function getBracket2End(strg){
                                                                 var idx = strg.indexOf('(');
                                                                 return strg.slice(idx);
                                                             }
                                                             
-                                                            $('#riseImg').html('<i class="fa-solid fa-sun fa-fw"></i>');
-                                                            $('#risetm').html(rise.getHours() + ':' + riseMins);
+                                                            $('#capCd').html(cpcity + ", " + ctrcd2.toUpperCase());
+                                                            $('#riseImg').html('<i class="fa-solid fa-arrow-up fa-fw"></i><i class="fa-solid fa-sun fa-fw"></i>');
+                                                            $('#riseTm').html(riseHr + ':' + riseMins);
                                                             $('#stdTmTxt').html(getBracket2End(rise.toTimeString()));
-                                                            $('#dwnImg').html('<i class="fa-solid fa-moon fa-fw"></i><i class="fa-solid fa-star fa-fw"></i>');
-                                                            $('#dwntm').html(down.getHours() + ':' + downMins);
+                                                            $('#downImg').html('<i class="fa-solid fa-arrow-down fa-fw"></i><i class="fa-solid fa-sun fa-fw"></i>');
+                                                            $('#downTm').html(downHr + ':' + downMins);
+
+                                                            //for (i = 0; i < 3; i++){
+                                                                var wDescrp = dat.list[0].weather[0].description;
+                                                                var wDate = dat.list[0].dt;
+                                                                wDate = new Date(wDate * 1000);
+                                                                var wIcon = dat.list[0].weather[0].icon;
+                                                                var wIconUrl = "http://openweathermap.org/img/w/" + wIcon + ".png";
+                                                                var nowTemp = dat.list[0].main.temp;
+
+                                                                $('#wDescrp').html(wDescrp);
+                                                                $('#tmpImg').html("<img id=\"wthImg\" src=" + wIconUrl + ">&ensp;&nbsp;" + nowTemp.toFixed(0) + "&deg;C");
+                                                                $('#tday').html(wDate.toDateString());    
+                                                            //}
 
                                                             // For country info:
                                                             $('#conti').html(cnti);
@@ -416,15 +438,6 @@ function getOtherData(){
 
                                                             cntryArea = parseFloat(cntryArea).toLocaleString("en-GB");
                                                             $('#area').html(cntryArea);
-
-                                                            var wikiCtrnm = cntrynm;
-                                                            while (wikiCtrnm.indexOf(' ') !== -1){
-                                                                wikiCtrnm = wikiCtrnm.replace(' ', '_');
-                                                            }
-                                                            var wikiUrl = "https://en.wikipedia.org/wiki/" + wikiCtrnm;
-
-                                                            // for Wiki modal:
-                                                            $('#wikiBd').html('<iframe src=' + wikiUrl + ' title="Country Wikipedia"></iframe>')
 
                                                             $.ajax({
                                                                 url: "libs/php/getCntryCode.php",       // access OpenCage API - for additional country info
@@ -455,7 +468,6 @@ function getOtherData(){
                                                                     $('#notes').html(currNotes);
                                                                     $('#coins').html(currCoins);
                                                                     $('#phnCd').html('+' + areacd);
-                                                                    $('#flg').html("<img height=25 src=" + flagsUrl + " alt=\"flag of \"" + cntrynm + ">");
                                                                     $('#qbl').html(qbl);
 
                                                                     $.ajax({
@@ -501,13 +513,69 @@ function getOtherData(){
                                                                         error: function(jqXHR){
                                                                             console.log(jqXHR, "Something is wrong");     // error for getCities ajax.
                                                                         }       
-                                                                }); 
+                                                                    }); 
+                                                                    // ********************************************************************************************
+
+                                                                    $.ajax({
+                                                                        url: "libs/php/getWikis.php",       // access Geonames API - for country wikipedia
+                                                                        type: 'POST',
+                                                                        dataType: 'json',
+                                                                        data: {
+                                                                            'north': cbn,
+                                                                            'south': cbs,
+                                                                            'east': cbe,
+                                                                            'west': cbw
+                                                                            },  
+                                                                        success: function(result){ 
+                                                                            console.log(result.status.code);  
                                                             
+                                                                            if ((result.status.name).toUpperCase() == "OK"){
+                                                                                var wikiDat = result.data;
+
+                                                                                var wikis = [];
+                                                                                var wkHtml = '<table id="wkTable"><tbody>';
+
+                                                                                for (let i = 0; i < wikiDat.length; i++){  
+                                                                                    if (wikiDat[i].countryCode == ccode){
+                                                                                        var wikiSummary = wikiDat[i].summary;
+                                                                                        var wikiUrl = wikiDat[i].wikipediaUrl; 
+                                                                                        var wkTitle = wikiDat[i].title;
+                                                                                        var wkLat = wikiDat[i].lat;
+                                                                                        var wkLng = wikiDat[i].lng; 
+                                                                                        
+                                                                                        wkHtml = wkHtml + '<tr><td class="wkTtl"><h5>' + wkTitle + '</h5></td>';
+                                                                                        wkHtml = wkHtml + '<tr><td class="summary">' + wikiSummary + '</td></tr>';
+                                                                                        wikiUrl = "https://" + wikiUrl;
+                                                                                        wkHtml = wkHtml + '<tr><td class="wikiLnk"><a href=' + wikiUrl + '>continue reading ...</a>&emsp;&emsp;</td></tr>';
+                                                        
+                                                                                        var wikiMrk = L.marker([wkLat, wkLng], {icon: wikiMarker}).bindPopup('<table><tr><td class="wkTtl" id="wkPopTtl"><h5>' + wkTitle + '</h5></td><tr><td class="summary">' + wikiSummary + '</td></tr><tr><td class="wikiLnk"><a href=' + wikiUrl + '>continue reading ...</a>&emsp;&emsp;</td></tr></table>');
+                                                                                        wikis.push(wikiMrk);
+
+                                                                                        wkClusters.addLayer(wikiMrk);
+                                                                                    }                                                                                                                  
+                                                                                }
+
+                                                                                wkHtml = wkHtml + '</tbody></table>';
+
+                                                                                // add cluster to map:
+                                                                                map.addLayer(wkClusters);
+
+                                                                                // for Wiki modal:
+                                                                                $('#wikiModalLabel').html(cntrynm + ' Wikipedia&emsp;<span class="px-0 mx-0 w-100 flg"></span>');
+                                                                                $('.flg').html("<img height=25 src=" + flagsUrl + " alt=\"flag of \"" + cntrynm + ">");
+                                                                                $('#wikiBd').html(wkHtml);
+                                                                            }
+                                                                        },
+                                                                        error: function(jqXHR){
+                                                                            console.log(jqXHR, "Something is wrong");     // error for getCities ajax.
+                                                                        }       
+                                                                    });                                                       
+                                                                                                                        
                                                                 },
                                                                 error: function(jqXHR){
                                                                     console.log(jqXHR, "Something is wrong");     // error for 2nd OpenCage ajax.
                                                                 }       
-                                                        }); 
+                                                            }); 
                                                         }                                                       
                                 
                                                     },

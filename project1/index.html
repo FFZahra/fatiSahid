@@ -20,8 +20,8 @@
       <img src="mapLoader.gif" alt="Loading..."/>
     </div>
     <div class="container-fluid mx-0 px-0 w-100" id="plate">
-      <div id="header">             
-          <label class="label" id="selectLbl" for="cntry">&nbsp;&ensp;Select a Country</label><select class="form-control" id="cntry" name="cntry"></select>                             
+      <div id="headr">             
+          <label class="label" id="selectLbl" for="cntry">&nbsp;&ensp;Select a Country&ensp;</label><select class="form-control" id="cntry" name="cntry"></select>                             
       </div>
       <div class="row mx-0 px-0 w-100" id="map-row">
         <div class="col mx-0 px-0 w-100">
@@ -33,45 +33,28 @@
     </div>
 
     <!-- Weather Info Modal -->
-    <div class = "modal fade" id = "weatherModal" tabindex = "-1" role = "dialog" aria-labelledby =" weatherModalLabel" aria-hidden = "true">
+    <div class = "modal fade" id = "weatherModal" data-bs-backdrop="static" keyboard="false" tabindex = "-1" role = "dialog" aria-labelledby =" weatherModalLabel" aria-hidden = "true">
       <div class = "modal-dialog modal-dialog-centered" role = "document">
         <div class = "modal-content">
-          <div class = "modal-header  bg-info text-light">
+          <div class = "modal-header text-light">
             <h5 class = "modal-title" id = "weatherModalLabel">Weather Information</h5>
             <button type="button" class="close wthCls" data-dismiss="modal" aria-label="Close"><span aria-hidden = "true">×</span>
             </button>
           </div>
             
-          <div class = "modal-body" id="wthBody">
-            <p id="capCd"></p>
-            <p id="tmpImg"></p><hr>
-            <p class="text-info" id="wDescrp"></p>
-
-            <div class="row" id="suns">
-              <div class="col" id="sunUp">
-                <div class="row hdg">
-                  <h3 id="hdgUp">Sunrise</h3>
-                </div>
-                <div class="row" id="riseImg">                    
-                </div>
-                <div class="row" id="riseTime">
-                  <p id="risetm"></p>
-                </div>
-              </div>
-              <div class="col" id="sunDwn">
-                <div class="row hdg">
-                  <h3 id="hdgDwn">Sunset</h3>
-                </div>
-                <div class="row" id="dwnImg">                    
-                </div>
-                <div class="row" id="dwnTime">
-                  <p id="dwntm"></p>
-                </div>
-              </div>
-            </div>
-            <div class="row" id="stdTm">
-              <h4 id="stdTmTxt"></h4>                
-            </div>             
+          <div class = "modal-body bg-info" id="wthBody">
+            <table class="table align-middle text-center table-borderless">
+              <tbody>
+                <tr><td colspan="2" id="capCd"></td></tr>
+                <tr><td colspan="2" id="tmpImg"></td></tr>
+                <tr><td colspan="2" id="wDescrp"></td></tr>
+                <tr><td colspan="2"><hr></td></tr>
+                <tr id="suns"><td id="riseImg"></td><td id="downImg"></td></tr>
+                <tr><td id="riseTm"></td><td id="downTm"></td></tr>
+                <tr><td colspan="2"><h5 id="stdTmTxt"></h5></td></tr>
+                <tr><td colspan="2" id="tday"></td></tr>
+              </tbody>      
+            </table>
           </div>
           <div class = "modal-footer">
             <button type = "button" class = "btn btn-info wthCls" data-dismiss = "modal">Close</button>
@@ -80,12 +63,12 @@
       </div>
     </div>
 
-    <!-- Country Info Modal -->
-    <div class = "modal fade" id = "countryModal" tabindex = "-1" data-backdrop="static" role = "dialog" aria-labelledby = "countryModalLabel" aria-hidden = "true">
+    <!-- Country Info Modal -->   
+    <div class = "modal fade" id = "countryModal" data-bs-backdrop="static" keyboard="false" tabindex = "-1" data-backdrop="static" role = "dialog" aria-labelledby = "countryModalLabel" aria-hidden = "true">
        <div class = "modal-dialog modal-dialog-centered" role = "document">
           <div class = "modal-content">
-             <div class = "modal-header  bg-info text-light">
-                <h5 class = "modal-title" id = "countryModalLabel">Country Information&emsp;<span class="px-0 mx-0 w-100" id="flg"></span></h5>
+             <div class = "modal-header text-light">
+                <h5 class = "modal-title" id = "countryModalLabel">Country Information&emsp;<span class="px-0 mx-0 w-100 flg"></span></h5>
                 <button type="button" class="close ctryCls" data-dismiss="modal" aria-label="Close"><span aria-hidden = "true">×</span>
                 </button>
              </div>    
@@ -99,7 +82,7 @@
                       <tr><td class="lbls">Estimated Population</td><td id="pop"></td></tr>
                       <tr><td class="lbls">Area(sq/km)</td><td id="area"></td></tr>
                       <tr><td colspan="2"></td></tr>
-                      <tr class="text-center lbls"><td colspan="2">Currency</td>></tr>
+                      <tr class="lbls text-center"><td colspan="2">Currency</td></tr>
                       <tr><td class="icns"><i class="fa-solid fa-money-bill-wave fa-fw text-info"></i>&emsp;Notes</td><td id="notes"></td></tr>
                       <tr><td class="icns"><i class="fa-solid fa-coins fa-fw text-info"></i>&emsp;Coins</td><td id="coins"></td></tr>
                       <tr><td colspan="2"></td></tr>
@@ -119,12 +102,11 @@
     </div>
 
     <!-- Wiki Modal -->
-    <div class = "modal fade" id = "wikiModal" tabindex = "-1" 
-       role = "dialog" aria-labelledby =" wikiModalLabel" aria-hidden = "true">
+    <div class = "modal fade" id = "wikiModal" data-bs-backdrop="static" keyboard="false" tabindex = "-1" role = "dialog" aria-labelledby =" wikiModalLabel" aria-hidden = "true">
        <div class = "modal-dialog modal-lg modal-dialog-centered" role = "document">
           <div class = "modal-content">
 
-             <div class = "modal-header  bg-info text-light">
+             <div class = "modal-header text-light">
                 <h5 class = "modal-title" id = "wikiModalLabel">Country Wikipedia</h5>
                 <button type = "button" class = "close wikiCls" data-dismiss = "modal" aria-label = "Close"><span aria-hidden = "true">×</span>
                 </button>
@@ -147,11 +129,12 @@
     <script src="libs/css/fontawesome-free-6.1.1-web/js/fontawesome.js"></script>
     <script src="libs/css/fontawesome-free-6.1.1-web/js/fontawesome.min.js"></script>
     <script src="libs/js/leaflet.extra-markers.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.EasyButton/2.4.0/easy-button.js"></script>
+    <script src="libs/js/leaflet-easybutton-2.4.0-src-easy-button.js"></script>
     <script src="https://kit.fontawesome.com/3a47511f55.js" crossorigin="anonymous"></script>
-    <script src="./dist/leaflet.markercluster.js"></script>
+    <script src="dist/leaflet.markercluster.js"></script>
     <script src="libs/js/jquery-3.6.0.min.js" type="application/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <!-- <script src="libs/js/v1.14.3-dist-umd-popper.min.js"></script> -->
+    <script src="libs/js/dist/umd/popper.min.js"></script>
     <script src="bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
     <script src="libs/js/mobiz.js"></script>
   </body>

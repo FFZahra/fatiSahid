@@ -1,12 +1,12 @@
 <?php
-    // Retrieve weather data:
+    // Retrieve Country wikipedia data:
 
     ini_set('display_errors', 'On');
     error_reporting(E_ALL);
 
     $executionStartTime = microtime(true);
 
-    $url = "https://api.openweathermap.org/data/2.5/forecast?lat=".$_REQUEST['lat']."&lon=".$_REQUEST['lon']."&appid=2601917b1aa7d4a9e2ae40d111cde173&units=metric&cnt=3";
+    $url = "http://api.geonames.org/wikipediaBoundingBoxJSON?north=".$_REQUEST['north']."&south=".$_REQUEST['south']."&east=".$_REQUEST['east']."&west=".$_REQUEST['west']."&username=fatimahs";
 
     $ch = curl_init();
     curl_setopt_array($ch, [
@@ -15,32 +15,30 @@
         CURLOPT_URL => $url
     ]);
 
-    $result = curl_exec($ch);
+    $response = curl_exec($ch);
     $err = curl_errno($ch);
     $errmsg = curl_error($ch);
     $errname = curl_strerror($err);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
        
     curl_close($ch);  
     
-    $infoArr = json_decode($result, true);
+    $infoArr = json_decode($response, true);
 
     $output = array();
-
     
     if ($err) {
         echo $err, $errname, $errmsg;
     } else {
-
-        $output['status']['code'] = "200";
+        $output['status']['code'] = $httpCode;
         $output['status']['name'] = "ok";
         $output['status']['description'] = "success";
         $output['status']['returnedIn'] = intval((microtime(true) - $executionStartTime) * 1000)." ms";
-        $output['data'] = $infoArr;
+        $output['data'] = $infoArr['geonames'];
         
         header('Content-Type: application/json; charset=UTF-8');
 
         echo json_encode($output);    
-
-    }
+    };
 
 ?>

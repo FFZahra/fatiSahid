@@ -47,11 +47,11 @@ html, body {
     min-width: 400px;
 }
 
-#header {
+#headr {
     position: fixed;
     top: 10;
-    z-index: 99998;
-    margin-left: 50%;
+    z-index: 1000;
+    margin-left: 50vw;
     justify-content: center;
 }
 
@@ -68,98 +68,66 @@ html, body {
 }
 
 #cntry {
-    max-width: 250px;
+    max-width: 400px;
 }
 
 #capCd, #tmpImg, #wDescrp {
-    text-align: center;
     font-weight: bold;
 }
 
 #capCd {
-    font-size: 2.5rem;
-}
-
-hr {
-    background-color: darkturquoise;
-    border-color: darkturquoise;
+    font-size: 2rem;
 }
 
 #tmpImg {
-    font-size: 2rem;
+    font-size: 3.5rem;
+}
+
+#tmpImg > img {
+    height: 2em;
+    width: 2em;
 }
 
 #wDescrp {
     font-size: 1.5rem;
-}
-
-#suns {
-    border-color: blue;
-    border-width: 10px;;
-}
-
-#sunUp {
-    background-color: skyblue;    
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-#sunDwn {
-    background-color: navy;
-    text-align: center;
-}
-
-h4 {
     font-style: italic;
-    text-align: center;
-}
-
-#riseImg, #dwnImg {
-    height: 100px;
-    justify-content: center;
-    align-items: center;
 }
 
 .fa-sun {
     color: gold;
-    font-size: 2.5rem;
-}
-
-.fa-moon {
-    color: yellow;
-    font-size: 2.5rem;
-    
-}
-
-.fa-star, #hdgDwn, #dwntm {
-    color:ivory;
-}
-
-#riseTime, #dwnTime {
-    height: 70px;
-    padding-left: 15px;
-    padding-right: 15px;    
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     font-weight: bold;
-    justify-content: center;
-    align-items: center;
 }
 
-#hdgUp, #risetm {
-    color: navy;
+.fa-arrow-down, .fa-arrow-up {
+    color: darkorange;
+    font-size: 1.2rem;
 }
 
-.hdg {
-    justify-content: center;
-    align-items: center;
+
+#riseTm, #downTm { 
+    font-size: 1.2rem;
+    font-weight: bold;
 }
 
-#stdTm {
-    color: navy;
-    justify-content: center;
-    align-items: center;
-    padding-top: 5px;
+#stdTmTxt {
+    font-style: italic;
+    text-align: center;
+}
+
+#tday {
+    font-size: 1.8rem;
+}
+
+hr {
+    background-color: black;
+    border-color: black;
+    border-width: 3px;
+}
+ 
+.lbls, .icns{
+    font-weight: bold;
+    color: black;
 }
 
 #wikiBtn, #ctryBtn, #wthBtn {
@@ -179,11 +147,6 @@ h4 {
     color: blue;
 }
 
-.lbls, .icns{
-    font-weight: bold;
-    color: black;
-}
-
 #flg {
     width: 100%;
     padding-left: 0;
@@ -194,15 +157,24 @@ h4 {
     border: 1px solid lightgrey;
 }
 
-.modal-footer {
-    background-color: lightcyan;
+.modal-footer, .modal-header  {
+    background-color: lightskyblue;
 }
 
 #wikiBd {
     text-align: center;
 }
 
-iframe {
-    width: 90%;
-    height: 70vh;
+.wkTtl {
+   text-align: center;
+   background-color: lightblue;
+}
+
+.summary {
+    font-weight: 500;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;    
+}
+
+.wikiLnk {
+    text-align: right;
 }
