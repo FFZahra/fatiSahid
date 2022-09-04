@@ -548,7 +548,7 @@ function getOtherData(){
                                                                                         wikiUrl = "https://" + wikiUrl;
                                                                                         wkHtml = wkHtml + '<tr><td class="wikiLnk"><a href=' + wikiUrl + '>continue reading ...</a>&emsp;&emsp;</td></tr>';
                                                         
-                                                                                        var wikiMrk = L.marker([wkLat, wkLng], {icon: wikiMarker}).bindPopup('<table><tr><td class="wkTtl" id="wkPopTtl"><h5>' + wkTitle + '</h5></td><tr><td class="summary">' + wikiSummary + '</td></tr><tr><td class="wikiLnk"><a href=' + wikiUrl + '>continue reading ...</a>&emsp;&emsp;</td></tr></table>');
+                                                                                        var wikiMrk = L.marker([wkLat, wkLng], {icon: wikiMarker}).bindPopup('<table><tr><td class="wkTtl" id="wkPopTtl">' + wkTitle + '</td><tr><td class="summary">' + wikiSummary + '</td></tr><tr><td class="wikiLnk"><a href=' + wikiUrl + '>continue reading ...</a>&emsp;&emsp;</td></tr></table>');
                                                                                         wikis.push(wikiMrk);
 
                                                                                         wkClusters.addLayer(wikiMrk);
