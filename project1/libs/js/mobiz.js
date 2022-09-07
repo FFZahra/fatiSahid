@@ -86,23 +86,30 @@ var wikiMarker = L.ExtraMarkers.icon({
 }); 
 
 // Create button controls:
+// var weatherModal, countryModal, wikiModal;
+
 var wBtn = L.easyButton('fa-cloud-sun', function(){
-    $("#weatherModal").modal("show");
+    weatherModal = new bootstrap.Modal(document.getElementById('weatherModal'));
+    weatherModal.show();    
 }, 'view weather information', 'wthBtn');
 
 wBtn.addTo(map);
 
-var ctryBtn = L.easyButton('fa-building-flag', function(){
-    $("#countryModal").modal("show");                                                        
+var ctryBtn = L.easyButton('fa-building-flag', function(){                                                         
+    var countryModal = new bootstrap.Modal(document.getElementById('countryModal'));
+    countryModal.show(); 
 }, 'view country information', 'ctryBtn');
 
 ctryBtn.addTo(map);
 
-var wikiBtn = L.easyButton('fa-bullhorn', function(){
-    $("#wikiModal").modal("show");                             
+
+var wikiBtn = L.easyButton('fa-bullhorn', function(){                            
+    var wikiModal = new bootstrap.Modal(document.getElementById('wikiModal'));
+    wikiModal.show();       
 }, 'view country wiki', 'wikiBtn');
 
 wikiBtn.addTo(map);
+
 
 // Setup event handlers for modal close buttons:
 $('.ctryCls').click(function(){
