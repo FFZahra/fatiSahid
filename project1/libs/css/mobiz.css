@@ -61,7 +61,7 @@ html, body {
 }
 
 #selectLbl {
-    font-size: 1.2rem;
+    font-size: 2rem;
     font-weight: bold;
     max-width: 700px;
     color: navy;
@@ -95,7 +95,7 @@ html, body {
 
 .fa-sun {
     color: gold;
-    font-size: 2.2rem;
+    font-size: 2.5rem;
     font-weight: bold;
 }
 
@@ -120,8 +120,8 @@ html, body {
 }
 
 hr {
-    background-color: black;
-    border-color: black;
+    background-color: navy;
+    border-color: navy;
     border-width: 3px;
 }
  
