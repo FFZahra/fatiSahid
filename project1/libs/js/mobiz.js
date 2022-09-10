@@ -10,8 +10,6 @@ $('document').ready(function(){
         type: "GET",
         dataType: 'json',    
         success: function(response){
-            console.log(response.status.name);
-            console.log(response.data);
             var dat = response.data;            
 
             // clear current dropdown contents:
@@ -86,10 +84,8 @@ var wikiMarker = L.ExtraMarkers.icon({
 }); 
 
 // Create button controls:
-// var weatherModal, countryModal, wikiModal;
-
 var wBtn = L.easyButton('fa-cloud-sun', function(){
-    weatherModal = new bootstrap.Modal(document.getElementById('weatherModal'));
+    var weatherModal = new bootstrap.Modal(document.getElementById('weatherModal'));
     weatherModal.show();    
 }, 'view weather information', 'wthBtn');
 
@@ -154,11 +150,8 @@ map.on('baselayerchange', function(){
     var sLbl = $('#selectLbl');
 
     if(sLbl.css('color') == 'rgb(0, 0, 128)'){
-        // console.log($('#selectLbl').css('color'));
         $('#selectLbl').css('color', 'ivory');
-        // console.log($('#selectLbl').css('color'));
     } else{
-        // console.log($('#selectLbl').css('color'));
         $('#selectLbl').css('color', 'navy');
     }
 });
@@ -193,10 +186,9 @@ $('#cntry').change(function(){
 function onLocationFound(e) {
 
     var positn = e.latlng;
-    console.log(positn);  
 
-    plat = positn.lat;
-    plng = positn.lng;  
+    var plat = positn.lat;
+    var plng = positn.lng;  
     
     function getCntryCode(clat, clng){
         $.ajax({
@@ -207,19 +199,17 @@ function onLocationFound(e) {
                   'q': clat + ',' + clng
                   },  
               success: function(result){ 
-                  console.log(result.status.code);  
-    
-                  if ((result.status.name).toUpperCase() == "OK"){
-                      var dat = result.data[0];                        // Extract country code info
-    
-                      var ctrcd = dat.components.country_code;                   
-                  }              
-    
-                  ctrcd = ctrcd.toUpperCase();
-                  
-                  $('#cntry').val(ctrcd);
-                  getOtherData();
-    
+                  if ((result.status.name).toUpperCase() == "OK"){                    
+                    var dat = result.data[0];                        // Extract country code info
+
+                    var ctrcd = dat.components.country_code;                   
+                    //   }              
+
+                    ctrcd = ctrcd.toUpperCase();
+                    
+                    $('#cntry').val(ctrcd);
+                    getOtherData();
+                  }
               },
               error: function(jqXHR){
                   console.log(jqXHR, "Something is wrong");     // error for getCountryCode ajax.
@@ -242,7 +232,6 @@ map.locate({setView: true, maxZoom: 16});
 
 
 
-
 function getOtherData(){                    
     var ccode = $('#cntry').val();
     
@@ -257,9 +246,6 @@ function getOtherData(){
             country: ccode
         },       
         success: function(result){
-            console.log(result.status.code);
-            console.log(result);
-
             if (result.status.name.toUpperCase() == "OK"){
                 var cntrydat = result.data[0]; 
 
@@ -268,7 +254,6 @@ function getOtherData(){
                 var cnti = cntrydat.continentName;
                 var cpop = cntrydat.population;
                 var gnmId = cntrydat.geonameId;
-                var ctrcd2 = ccode;
                 var ctrLang = cntrydat.languages.slice(0,2);
                 var cntryArea = cntrydat.areaInSqKm;
                 var cbn = cntrydat.north;
@@ -284,10 +269,9 @@ function getOtherData(){
                     type: 'POST',
                     dataType: 'json',
                     data: {
-                        country_code: ctrcd2
+                        country_code: ccode
                     },
                     success: function(response) {
-
                         // set country borders:
                         var ctryOutlineStyle = {
                             "color": '#800080',
@@ -311,8 +295,6 @@ function getOtherData(){
                             },
                             success: function(result){
                                 if (result.status.name.toUpperCase() == "OK"){
-                                    console.log(result.status.code);
-                                    
                                     var nghbDat = result.data;
                                     var nghbs = [];
 
@@ -350,9 +332,7 @@ function getOtherData(){
                                         },
                                         success: function(result){
                                             if (result.status.name.toUpperCase() == "OK"){
-                                                console.log(result.status.code);
-                                                var qkDat = result.data;
-                                               
+                                                var qkDat = result.data;                                               
                                                 var quakes = [];
 
                                                 for (let i = 0; i < qkDat.length; i++){
@@ -388,7 +368,6 @@ function getOtherData(){
                                                     },
                                                     success: function(result){
                                                         if (result.status.name.toUpperCase() == "OK"){
-                                                            console.log(result.status.code);
                                                             var dat = result.data;
                                                                                       
                                                             // For weather info:
@@ -415,14 +394,13 @@ function getOtherData(){
                                                                 return strg.slice(idx);
                                                             }
                                                             
-                                                            $('#capCd').html(cpcity + ", " + ctrcd2.toUpperCase());
+                                                            $('#capCd').html(cpcity + ", " + ccode.toUpperCase());
                                                             $('#riseImg').html('<i class="fa-solid fa-arrow-up fa-fw"></i><i class="fa-solid fa-sun fa-fw"></i>');
                                                             $('#riseTm').html(riseHr + ':' + riseMins);
                                                             $('#stdTmTxt').html(getBracket2End(rise.toTimeString()));
                                                             $('#downImg').html('<i class="fa-solid fa-arrow-down fa-fw"></i><i class="fa-solid fa-sun fa-fw"></i>');
                                                             $('#downTm').html(downHr + ':' + downMins);
 
-                                                            //for (i = 0; i < 3; i++){
                                                                 var wDescrp = dat.list[0].weather[0].description;
                                                                 var wDate = dat.list[0].dt;
                                                                 wDate = new Date(wDate * 1000);
@@ -432,8 +410,7 @@ function getOtherData(){
 
                                                                 $('#wDescrp').html(wDescrp);
                                                                 $('#tmpImg').html("<img id=\"wthImg\" src=" + wIconUrl + ">&ensp;&nbsp;" + nowTemp.toFixed(0) + "&deg;C");
-                                                                $('#tday').html(wDate.toDateString());    
-                                                            //}
+                                                                $('#tday').html(wDate.toDateString());   
 
                                                             // For country info:
                                                             $('#conti').html(cnti);
@@ -453,9 +430,7 @@ function getOtherData(){
                                                                 data: {
                                                                     'q': clat + ',' + clng
                                                                     },  
-                                                                success: function(result){ 
-                                                                    console.log(result.status.code);  
-                                                    
+                                                                success: function(result){                                                     
                                                                     if ((result.status.name).toUpperCase() == "OK"){
                                                                         var dat = result.data[0];                        
                                                                         
@@ -489,11 +464,8 @@ function getOtherData(){
                                                                             'lang': ctrLang
                                                                             },  
                                                                         success: function(result){ 
-                                                                            console.log(result.status.code);  
-                                                            
                                                                             if ((result.status.name).toUpperCase() == "OK"){
                                                                                 var cityDat = result.data;
-
                                                                                 var cities = [];
 
                                                                                 for (let i = 0; i < cityDat.length; i++){
@@ -534,11 +506,8 @@ function getOtherData(){
                                                                             'west': cbw
                                                                             },  
                                                                         success: function(result){ 
-                                                                            console.log(result.status.code);  
-                                                            
                                                                             if ((result.status.name).toUpperCase() == "OK"){
                                                                                 var wikiDat = result.data;
-
                                                                                 var wikis = [];
                                                                                 var wkHtml = '<table id="wkTable"><tbody>';
 
@@ -616,6 +585,3 @@ function getOtherData(){
         }
     });
 }
-
-
-
