@@ -1,0 +1,285 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+} 
+
+/* ................................... Preloader ........................ */
+.preloader {    
+    position: fixed;
+    z-index: 99999;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.preloader > img {
+    width: 100px;
+    height: 100px;
+}
+
+.preloader.hidden {
+    animation: fadeOut 1s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeOut {
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+
+/* ................................. end preloader ..............................  */
+
+.homepg {
+    width: 100vw;
+    height: 100vh;
+}
+
+#menuBtn {
+    float: left;
+}
+
+.btn-close {
+    float: right;
+    margin-top: 5px;
+}
+
+.backBtn,.btn-close, .closeBtn, #srchBtn {
+    border-radius: 5px;
+    border-color: green;
+    border-width: 2px;
+}
+
+.homePic {
+    background-image: url('../img/MyPhonePics 094.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 35vh;
+}
+
+.fa-landmark {
+    font-size: 2.5rem;
+}
+
+.compName {
+    font-size: 1.8rem;
+}
+
+.pgTitle {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+#headr {
+    position: fixed;
+    top: 10;
+    z-index: 1000;
+    margin-left: 50vw;
+    justify-content: center;
+}
+
+#menuPgHdrTxt, #menuBarTxt {
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 1vh;
+}
+
+.menuArea {
+    font-size: 1.5rem;
+    margin-top: 10vw;
+}
+
+.mainBtn {
+    font-weight: bold;
+    border-radius: 7px;
+    margin-top: 2vh;
+    margin-bottom: 5vh;
+    width: 25vw;
+}
+
+.portalBody {
+    margin-top: 10vh;
+}
+
+#loginBtn {
+    margin-top: 5vh;
+}
+
+#depDrpDwn {
+    max-width: 400px;
+}
+
+#depStfList {
+    background: scroll;
+}
+
+.pgHdrTxt {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;  
+}
+
+.mainTbl {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;    
+}
+
+.outputTable {
+    padding-left: 3vw;
+    width: 50vw;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3vh;
+    border-width: 3px;
+}
+
+.listHdr {
+    font-size: 1.2rem;
+    font-weight: bold;    
+    background-color: darkseagreen;
+    text-align: left;
+}
+
+.tblTitl {
+    text-align: center;
+    vertical-align: middle;
+}
+
+#theme1 {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    border-width: 5px; 
+    border-color: teal;
+    background-color: darkseagreen;
+    color: black;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+#theme2 {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    border-width: 5px;  
+    border-color: goldenrod;
+    background-color: gold;
+    color: black;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+#theme3 {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    border-width: 5px;  
+    border-color:purple;
+    background-color:plum;
+    color: black;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+#theme4 {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    border-width: 5px;  
+    border-color: cornflowerblue;
+    background-color: lightblue;
+    color: black;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+#theme5 {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    border-width: 5px;  
+    border-color: grey;
+    background-color: lightsteelblue;
+    color: black;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.circleBox {
+    align-items: center;
+    justify-content: center;
+}
+
+#pfnmLst {
+    font-size: 2.5em;      /* chk 2.5rem also  */
+    font-weight: bold;
+    margin-top: 5vh;
+}
+
+#pDsg {
+    font-size: 2.3em;
+    margin-top: 2vh;
+}
+
+#pDep {
+    font-size: 1.8em;
+    margin-top: 2vh;
+}
+
+#pEmail {
+    font-size: 1.2em;
+    margin-top: 5vh;
+}
+
+#pLoc {
+    font-size: 1.5em;
+    margin-top: 2vh;
+}
+
+.welcomeBtns {
+    margin-top: 10vh;
+}
+
+.mngDiv {
+    display: inline-block;
+    margin-top: 5vh;
+}
+
+#srchBx {
+    border-radius: 20px;
+    width: 50vw;
+    margin-top: 1vh;
+}
+/* 
+.updBtns {
+    display:inline-block;
+}
+
+.updBtns button {
+    width: 10vw;
+    /* display: inline-block; */
+/*} */
+
+.formBx {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* to make a result list display in rows instead of on a line:  
+                white-space: pre-wrap; in css for the answer area */
