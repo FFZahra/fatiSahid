@@ -1,9 +1,9 @@
 <?php
 
 	// example use from browser
-	// http://localhost/proj2Bak/libs/php/getLocations.php
+	// http://localhost/companydirectory/libs/php/getPersonnelByLoc.php?locationID=<location id>
 
-	// remove next two lines for production	
+	// remove next two lines for production
 	
 	ini_set('display_errors', 'On');
 	error_reporting(E_ALL);
@@ -32,13 +32,17 @@
 
 	}	
 
-	// SQL does not accept parameters and so is not prepared
+	// SQL accepts parameters and so is prepared
 
-	$query = 'SELECT * FROM location ORDER BY name';
+	// $query = 'SELECT p.id, p.lastName, p.firstName, p.jobTitle, p.email, d.name as department, l.name as location FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) ORDER BY l.name, d.name, p.lastName, p.firstName';
 
-	$result = $conn->query($query);
+	$query = $conn->prepare('SELECT p.id, p.lastName, p.firstName, p.jobTitle, p.email, d.name as department, l.name as location FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) WHERE l.id = ? ORDER BY l.name, d.name, p.lastName, p.firstName');
+
+	$query->bind_param("i", $_REQUEST['locationID']);
+
+	$query->execute();
 	
-	if (!$result) {
+	if (false === $query) {
 
 		$output['status']['code'] = "400";
 		$output['status']['name'] = "executed";
@@ -52,6 +56,8 @@
 		exit;
 
 	}
+    
+	$result = $query->get_result();
    
    	$data = [];
 

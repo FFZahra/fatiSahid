@@ -75,7 +75,7 @@ html, body {
 }
 
 .compName {
-    font-size: 1.8rem;
+    font-size: 2rem;
 }
 
 .pgTitle {
@@ -93,9 +93,8 @@ html, body {
 
 #menuPgHdrTxt, #menuBarTxt {
     font-size: 1.5rem;
-    font-weight: bold;
+    font-weight: 500;
     display: inline-block;
-    margin-top: 1vh;
 }
 
 .menuArea {
@@ -115,8 +114,8 @@ html, body {
     margin-top: 10vh;
 }
 
-#loginBtn {
-    margin-top: 5vh;
+#loginBtn {    
+    width: 10vw;
 }
 
 #depDrpDwn {
@@ -136,7 +135,7 @@ html, body {
 .mainTbl {
     width: 50%;
     margin-left: auto;
-    margin-right: auto;    
+    margin-right: auto; 
 }
 
 .outputTable {
@@ -146,6 +145,8 @@ html, body {
     margin-right: auto;
     margin-top: 3vh;
     border-width: 3px;
+    height: 50vh;
+    overflow-y: auto;
 }
 
 .listHdr {
@@ -153,6 +154,24 @@ html, body {
     font-weight: bold;    
     background-color: darkseagreen;
     text-align: left;
+}
+
+.listHdrDepID {
+    font-size: 1rem;
+    font-weight: 500;
+    float: right;
+}
+
+.hdrLabel {
+    font-weight: bold;
+}
+
+.selectBar {
+   justify-content: center;
+}
+
+select, #srchBx {
+    max-width: 30vw;
 }
 
 .tblTitl {
@@ -260,26 +279,50 @@ html, body {
     margin-top: 5vh;
 }
 
+.mngDLBtns {
+    width: 15vw;
+    margin-left: 2vw;
+    margin-right: 2vw;
+}
+
 #srchBx {
     border-radius: 20px;
     width: 50vw;
     margin-top: 1vh;
 }
-/* 
-.updBtns {
-    display:inline-block;
-}
-
-.updBtns button {
-    width: 10vw;
-    /* display: inline-block; */
-/*} */
 
 .formBx {
     margin-left: auto;
     margin-right: auto;
 }
 
+#details, #help {
+    margin-top: 2.5vh;
+}
+#help {
+    padding-left: 5vh;
+}
+
+#hrTitl {
+    font-size: 1.8rem;
+}
+
+.contactSpan, .helpTxt {
+    font-size: 1.2rem;
+}
+
+#helpQst {
+    font-style: italic;
+    font-weight: 500;
+}
+
+.getId {
+    border: 3px;
+    border-radius: 7px;
+    width: 50vw;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 /* to make a result list display in rows instead of on a line:  
                 white-space: pre-wrap; in css for the answer area */

@@ -320,6 +320,8 @@ $(document).ready(function(){
         $('.delDep').hide();
         $('#depSrch').show();
 
+        var prelist, listContent;
+
         // ---------------------- Fill in dropdown values: ----------------
         $.ajax({
             url: "libs/php/getAllDepartments.php",
@@ -341,6 +343,8 @@ $(document).ready(function(){
                 $('#depSelect').html(choices);
 
                 $('#depBkBtn').click(function(){
+                    prelist = "";
+                    listContent = "";
                     // $('input[type="radio"]:checked').prop("checked", false);
                     goHome();
                 });
@@ -361,7 +365,7 @@ $(document).ready(function(){
                     success: function(response){
                         var preDat = response.data;
 
-                        var prelist = "";
+                        prelist = "";
                         var currDep, currDid;
                         var i = 0;
                         while (i < 20){
@@ -370,7 +374,7 @@ $(document).ready(function(){
                             
                             console.log(currDep, preDat[i].departmentID, depDik[preDat[i].departmentID]);
 
-                            prelist = prelist + "<tr><td class='text-left font-weight-bold'><h5 class='listHdr'>" + currDep + " Department</h5>&emsp;<h6>ID:&nbsp;" + currDid + "</td></tr>";
+                            prelist = prelist + "<tr><td class='text-left font-weight-bold'><h5 class='listHdr'>&emsp;" + currDep + " Department&emsp;&emsp;&emsp;&emsp;<span class='listHdrDepID'>Department ID:&nbsp;" + currDid + "&emsp;</span></h5></td></tr>";
 
                             while (depDik[preDat[i].departmentID] === currDep){
                                 prelist = prelist + "<tr><td class='form-check pl-3'>&emsp;<input class='form-check-input tblRadio' type='radio' name='preDepRadio' id='preDepRadio' value=" + preDat[i].id + "><label class='form-check-label' for='preDepRadio'>" + "&ensp;" + preDat[i].id + "&emsp;" + preDat[i].firstName + "&ensp;" + preDat[i].lastName + "</label></td></tr>";                                                       
@@ -400,7 +404,7 @@ $(document).ready(function(){
                                 success: function(response){
                                     var dat = response.data;                                     
                                     
-                                    var listContent = "<tr><td><h5 class='tblTitl'>Staff Name(s)</h5></td></tr><tr><td><h5 class='listHdr'>" + depTxt + " Department</h5>&emsp;&emsp;<h6>ID:&nbsp;" + depID + "</td></tr>";
+                                    listContent = "<tr><td><h5 class='tblTitl'>Staff Name(s)</h5></td></tr><tr><td><h5 class='listHdr'>&emsp;" + depTxt + " Department&emsp;&emsp;&emsp;&emsp;<span class='listHdrDepID'>Department ID:&nbsp;" + depID + "&emsp;</span></h5></td></tr>";
         
                                     for (let i = 0; i < dat.length; i++){
                                         listContent = listContent + "<tr><td class='form-check pl-3'>&emsp;<input class='form-check-input tblRadio' type='radio' name='byDepRadio' id='byDepRadio' value=" + dat[i].id + "><label class='form-check-label' for='byDepRadio'>" + "&ensp;" + dat[i].id + "&emsp;" + dat[i].firstName + "&ensp;" + dat[i].lastName + "</label></td></tr>";    
@@ -454,6 +458,8 @@ $(document).ready(function(){
         $('.delDep').hide();
         $('#dsgSrch').show();
 
+        var initList, initContent;
+
         // ---------------------- Fill in dropdown values: ---------------
         $.ajax({
             url: "libs/php/getAllTitles.php",
@@ -483,22 +489,24 @@ $(document).ready(function(){
                 $('#dsgSelect').html(choices);
 
                 $('#dsgBkBtn').click(function(){
+                    initList = "";
+                    initContent = "";
                     // $('input[type="radio"]:checked').prop("checked", false);
                     goHome();
                 });
 
                 // add in initial list of staff by designation ***
 
-                var prelist = "";
+                initList = "";
                 var currDsg;
                 var i = 0;
                 while (i < 20){
                     currDsg = dsgDat[i].jobTitle;
 
-                    prelist = prelist + "<tr><td class='text-left font-weight-bold'><h5 class='listHdr'>" + currDsg + " Listing</h5></td></tr>";
+                    initList = initList + "<tr><td class='text-left font-weight-bold'><h5 class='listHdr'>" + currDsg + " Listing</h5></td></tr>";
 
                     while (dsgDat[i].jobTitle === currDsg){
-                        prelist = prelist + "<tr><td class='form-check pl-3'>&emsp;<input class='form-check-input tblRadio' type='radio' name='preDsgRadio' id='preDsgRadio' value=" + dsgDat[i].id + "><label class='form-check-label' for='preDsgpRadio'>" + "&ensp;" + dsgDat[i].id + "&emsp;" + dsgDat[i].firstName + "&ensp;" + dsgDat[i].lastName + "</label></td></tr>";                                                       
+                        initList = initList + "<tr><td class='form-check pl-3'>&emsp;<input class='form-check-input tblRadio' type='radio' name='preDsgRadio' id='preDsgRadio' value=" + dsgDat[i].id + "><label class='form-check-label' for='preDsgpRadio'>" + "&ensp;" + dsgDat[i].id + "&emsp;" + dsgDat[i].firstName + "&ensp;" + dsgDat[i].lastName + "</label></td></tr>";                                                       
                         i++;
                         if (i === dsgDat.length){
                             break;
@@ -507,7 +515,7 @@ $(document).ready(function(){
 
                 };
 
-                $('#dsgStfList').html(prelist);            
+                $('#dsgStfList').html(initList);            
                 clickNshow('preDsgRadio','dsgCookie');   
                 // console.log( $('input[name="preDsgRadio"]').attr('type'), ' jobTitles3');
 
@@ -524,13 +532,13 @@ $(document).ready(function(){
                         success: function(response){
                             var dat = response.data;                                     
                             
-                            var listContent = "<tr><td><h5 class='tblTitl'>Staff Name(s)</h5></td></tr><tr><td><h5 class='listHdr'>" + dsg + " Listing</h5></td></tr>";
+                            initContent = "<tr><td><h5 class='tblTitl'>Staff Name(s)</h5></td></tr><tr><td><h5 class='listHdr'>" + dsg + " Listing</h5></td></tr>";
 
                             for (let i = 0; i < dat.length; i++){
-                                listContent = listContent + "<tr><td class='form-check pl-3'>&emsp;<input class='form-check-input tblRadio' type='radio' name='byDsgRadio' id='byDsgRadio' value=" + dat[i].id + "><label class='form-check-label' for='byDsgRadio'>" + "&ensp;" + dat[i].id + "&emsp;" + dat[i].firstName + "&ensp;" + dat[i].lastName + "</label></td></tr>";    
+                                initContent = initContent + "<tr><td class='form-check pl-3'>&emsp;<input class='form-check-input tblRadio' type='radio' name='byDsgRadio' id='byDsgRadio' value=" + dat[i].id + "><label class='form-check-label' for='byDsgRadio'>" + "&ensp;" + dat[i].id + "&emsp;" + dat[i].firstName + "&ensp;" + dat[i].lastName + "</label></td></tr>";    
                             }   
                             
-                            $('#dsgStfList').html(listContent); 
+                            $('#dsgStfList').html(initContent); 
                             console.log( $('input:radio[name="byDsgRadio"]').attr('type'), ' jobTitles2b');
                             clickNshow('byDsgRadio','dsgCookie');  
                             console.log( $('input:radio[name="byDsgRadio"]').attr('type'), ' jobTitles3b');
@@ -574,8 +582,13 @@ $(document).ready(function(){
         $('.updtDep').hide();
         $('.delDep').hide();
         $('#nmSrch').show();
+
+        var pglist, nmMatches;
         
         $('#snmBkBtn').click(function(){
+            pglist = "";
+            nmMatches = "";
+            $('#srchBx').val('');
             // $('input[type="radio"]:checked').prop("checked", false);
             goHome();
         });
@@ -589,7 +602,7 @@ $(document).ready(function(){
                 
                 // add in initial list of staff alphabetically ***
 
-                var pglist = "";
+                pglist = "";
                 var currLett;
                 var i = 0;
                 while (i < 20){
@@ -614,7 +627,7 @@ $(document).ready(function(){
                 $('#snmStfList').html(pglist);               
                 clickNshow('pglistRadio', 'snmCookie');   
 
-                var nmMatches = "";
+                nmMatches = "";
                 $('#srchBtn').click(function(){
                     var srchTxt = $('#srchBx').val();                    
                     srchTxt = srchTxt.trim().toUpperCase();
@@ -667,9 +680,13 @@ $(document).ready(function(){
         $('.addDep').hide();
         $('.updtDep').hide();
         $('.delDep').hide();
-        $('#locSrch').show();
+        $('#locSrch').show();  
+        
+        var baseList, chosenContent;
 
         $('#locBkBtn').click(function(){
+            baselist = "";
+            chosenContent = "";
             // $('input[type="radio"]:checked').prop("checked", false);
             goHome();
         });
@@ -694,49 +711,38 @@ $(document).ready(function(){
                 
                 $('#locSelect').html(choices);
 
-                $('#locBkBtn').click(function(){
-                    // $('input[type="radio"]:checked').prop("checked", false);
-                    goHome();
-                });
-
                 // add in initial list of staff by locations ***
-                console.log(dat);
-                // const locDik = {};
-                // for (i = 0; i < dat.length; i++){
-                //     locDik[i + 1] = dat[i].name;
-                // }
-
-                // console.log(locDik);
 
                 $.ajax({
                     url:"libs/php/getAllPersonnelByLoc.php",
                     type: "POST",
                     dataType: 'json',
                     success: function(response){
-                        var prevwDat = response.data;
+                        var dat = response.data;
 
-                        var prevwlist = "";
+                        baseList = "";
                         var currLoc;
                         var i = 0;
                         while (i < 20){
-                            currLoc = prevwDat[i].location;
-                            
-                            console.log(currLoc, prevwDat[i].location);
+                            currLoc = dat[i].location;
+                            console.log(currLoc, dat[i].location);
 
-                            prevwlist = prevwlist + "<tr><td class='text-left font-weight-bold'><h5 class='listHdr'>" + currLoc + "</h5></td></tr>";
+                            baseList = baseList + "<tr><td class='text-left font-weight-bold'><h5 class='listHdr'>" + currLoc + "</h5></td></tr>";
 
-                            while (prevwDat[i].location === currLoc){
-                                prevwlist = prevwlist + "<tr><td class='form-check pl-3'>&emsp;<input class='form-check-input tblRadio' type='radio' name='preLocRadio' id='preLocRadio' value=" + prevwDat[i].id + "><label class='form-check-label' for='preLocRadio'>" + "&ensp;" + prevwDat[i].id + "&emsp;" + prevwDat[i].firstName + "&ensp;" + prevwDat[i].lastName + "</label></td></tr>";                                                       
+                            while (dat[i].location === currLoc){
+                                baseList = baseList + "<tr><td class='form-check pl-3'>&emsp;<input class='form-check-input tblRadio' type='radio' name='preLocRadio' id='preLocRadio' value=" + dat[i].id + "><label class='form-check-label' for='preLocRadio'>" + "&ensp;" + dat[i].id + "&emsp;" + dat[i].firstName + "&ensp;" + dat[i].lastName + "</label></td></tr>";                                                       
                                 i++;
-                                if (i === prevwDat.length){
+                                if (i === dat.length){
                                     break;
                                 }                                 
                             };
-
-                            console.log(currLoc, i, prevwDat[i].location);
+                            // if (i === dat.length){
+                            //     break;
+                            // } 
+                            console.log(currLoc, i, dat[i].location);
                         };
 
-                        $('#locStfList').html(prevwlist);
+                        $('#locStfList').html(baseList);
                         clickNshow('preLocRadio', 'locCookie');    
 
                         $('#locSelect').change(function(){
@@ -744,24 +750,31 @@ $(document).ready(function(){
                             var locTxt = $('select option:selected').text();
                                     
                             $.ajax({
-                                url:"libs/php/getAllPersonnelByLoc.php",
+                                url:"libs/php/getPersonnelByLoc.php",
                                 type: "POST",
                                 dataType: 'json',
                                 data: {
-                                    centreNum: locID                
+                                    locationID: locID                
                                 },
                                 success: function(response){
-                                    var dat = response.data;                                     
-                                    
-                                    var listContent = "<tr><td><h5 class='tblTitl'>Staff Name(s)</h5></td></tr><tr><td><h5 class='listHdr'>" + locTxt + "</h5></td></tr>";
-        
-                                    for (let i = 0; i < dat.length; i++){
-                                        listContent = listContent + "<tr><td class='form-check pl-3'>&emsp;<input class='form-check-input tblRadio' type='radio' name='byLocRadio' id='byLocRadio' value=" + dat[i].id + "><label class='form-check-label' for='byLocRadio'>" + "&ensp;" + dat[i].id + "&emsp;" + dat[i].firstName + "&ensp;" + dat[i].lastName + "</label></td></tr>";    
-                                    }
-                                                                                                            
-                                    $('#locStfList').html(listContent); 
-                                    clickNshow('byLocRadio', 'locCookie');     
-                                    
+                                var locDat = response.data;   
+                                console.log(locDat);    
+                                
+                                if (locDat.length === 0){
+                                    $('#locStfList').html('');
+                                    $('#locStfList').html('Sorry, no such record found.');
+                                } else {                                
+                                    chosenContent = "<tr><td><h5 class='tblTitl'>Staff Name(s)</h5></td></tr><tr><td><h5 class='listHdr'>" + locTxt + "</h5></td></tr>";
+                                    for (let i = 0; i < locDat.length; i++){
+                                        chosenContent = chosenContent + "<tr><td class='form-check pl-3'>&emsp;<input class='form-check-input tblRadio' type='radio' name='byLocRadio' id='byLocRadio' value=" + locDat[i].id + "><label class='form-check-label' for='byLocRadio'>" + "&ensp;" + locDat[i].id + "&emsp;" + locDat[i].firstName + "&ensp;" + locDat[i].lastName + "</label></td></tr>";
+                                    }      
+
+                                    $('#locStfList').html('');
+                                    $('#locStfList').html(chosenContent); 
+                                    clickNshow('byLocRadio', 'locCookie');  
+
+                                };                                       
+                                                                   
                                 },
                                 error: function(jqXHR){
                                     console.log(jqXHR, 'Something is wrong');
@@ -785,7 +798,7 @@ $(document).ready(function(){
 
     // ************************************************************
 
-    $('#menuBtn').click(function(){        
+    $('#menuBtn').click(function(){  
         goMenu();
 
         $('#goHome').click(function(){
@@ -815,7 +828,10 @@ $(document).ready(function(){
             $('#home').hide();
             $('.depsNLocs').show();
 
+            var tblList;
+
             $('#depLocBkBtn').click(function(){
+                tblList = "";
                 goMenu();
             });
 
@@ -826,7 +842,7 @@ $(document).ready(function(){
                 success: function(response){
                     var dat = response.data;                                     
                                       
-                    var tblList = "";
+                    tblList = "";
                     var currLoc;
                     var i = 0;
                     while (i < dat.length){
@@ -878,13 +894,20 @@ $(document).ready(function(){
             $('#home').hide();
             $('.depsNLocs').hide();
             $('#adminPort').show();
-
+                        
             $('#portalBkBtn').click(function(){
                 goMenu();
             });
+
+            document.getElementById('loginBtn').disabled = true;
+            $('#unm').on('change', function(){
+                if ($('#unm').val() !== ""){
+                    document.getElementById('loginBtn').disabled = false;
+                } 
+            });
           
             $('#loginBtn').click(function(){      
-                goAdmWelkom();   
+                goAdmWelkom();                  
 
                 var username = $('#unm').val();
                 $('#welcomeHdr').html('Welcome&emsp;' + username);
@@ -935,6 +958,8 @@ $(document).ready(function(){
                     $('.mngStf').show();
 
                     $('#mstfBkBtn').click(function(){
+                        $('#unm').val('');
+                        $('#welcomeHdr').html('');
                         goAdmWelkom();
                     });
 
@@ -961,6 +986,13 @@ $(document).ready(function(){
                         $('.addStf').show();
 
                         $('#addStfBkBtn').click(function(){
+                            // reset form:
+                            $('#fnm').val('');
+                            $('#lnm').val('');
+                            $('#dsgnm').val('');
+                            $('#eml').val('');
+                            $('#dip').val('');
+                            $('#asfeedbk').html('');
                             goMngStff();
                         });
 
@@ -1016,6 +1048,14 @@ $(document).ready(function(){
                         $('.updtStf').show();
 
                         $('#updStfBkBtn').click(function(){
+                            // reset form:
+                            $('#updID').val('');
+                            $('#ufnm').val('');
+                            $('#ulnm').val('');
+                            $('#udsgnm').val('');
+                            $('#ueml').val('');
+                            $('#udip').val('');
+                            $('#usfeedbk').html('');
                             goMngStff();
                         });
 
@@ -1097,6 +1137,9 @@ $(document).ready(function(){
                         $('.delStf').show();
 
                         $('#delStfBkBtn').click(function(){
+                            // reset form:
+                            $('#did').val('');
+                            $('#dsfeedbk').html('');
                             goMngStff();
                         });
 
@@ -1145,6 +1188,8 @@ $(document).ready(function(){
                     $('.mngDepLocs').show();
 
                     $('#mlocBkBtn').click(function(){
+                        $('#unm').val('');
+                        $('#welcomeHdr').html('');
                         goAdmWelkom();
                     });
 
@@ -1171,6 +1216,10 @@ $(document).ready(function(){
                         $('.addDep').show();
     
                         $('#addDepBkBtn').click(function(){
+                            // reset form:
+                            $('#dnm').val('');
+                            $('#lid').val('');
+                            $('#adfeedbk').html('');
                             goMngLoc();
                         });
 
@@ -1221,6 +1270,11 @@ $(document).ready(function(){
                         $('.updtDep').show();
     
                         $('#updtDepBkBtn').click(function(){
+                            // reset form:
+                            $('#uID').val('');
+                            $('#depnm').val('');
+                            $('#locId').val('');
+                            $('#udfeedbk').html('');
                             goMngLoc();
                         });
 
@@ -1293,6 +1347,9 @@ $(document).ready(function(){
                         $('.delDep').show();
     
                         $('#delDepBkBtn').click(function(){
+                            // reset form:
+                            $('#delD').val('');
+                            $('#ddfeedbk').html('');
                             goMngLoc();
                         });
 
@@ -1342,6 +1399,9 @@ $(document).ready(function(){
                         $('.addLoc').show();
     
                         $('#addLocBkBtn').click(function(){
+                            // reset form:
+                            $('#locNm').val('');
+                            $('#alfeedbk').html('');
                             goMngLoc();
                         });
 
@@ -1390,6 +1450,9 @@ $(document).ready(function(){
                         $('.delLoc').show();
     
                         $('#delLocBkBtn').click(function(){
+                            // reset form:
+                            $('#dil').val('');
+                            $('#dlfeedbk').html('');
                             goMngLoc();
                         });
 
