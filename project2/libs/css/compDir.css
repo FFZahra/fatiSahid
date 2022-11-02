@@ -52,15 +52,31 @@ html, body {
     float: left;
 }
 
-.btn-close {
+#logoutBtn {
     float: right;
     margin-top: 5px;
 }
 
-.backBtn,.btn-close, .closeBtn, #srchBtn {
+.backBtn, .closeBtn, #srchBtn,#logoutBtn {
     border-radius: 5px;
     border-color: green;
     border-width: 2px;
+}
+
+.closeBtn {
+    height: 5vh;
+    width: 5vw;
+    margin-top: 1vh;
+    text-align: center;
+}
+
+.clsSpan {
+    font-size: 1rem;
+    font-weight: bold;    
+}
+
+#profileCls {
+    background-color: coral;
 }
 
 .homePic {
@@ -91,10 +107,25 @@ html, body {
     justify-content: center;
 }
 
-#menuPgHdrTxt, #menuBarTxt {
-    font-size: 1.5rem;
+#menuPgHdrTxt, #menuBarTxt, #logoutTxt {
+    font-size: 1rem;
     font-weight: 500;
     display: inline-block;
+}
+
+#logoutTxt {
+    margin-top: 2.5vh;
+}
+
+#menuPgHdrTxt, #menuBarTxt {
+    margin-top: 1.5vh;
+}
+
+.menuLnk {
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 1vh;
+    font-size: 1rem;
 }
 
 .menuArea {
@@ -109,13 +140,17 @@ html, body {
     margin-bottom: 5vh;
     width: 25vw;
 }
+/* 
+button:disabled {
+    background-color: lightgray;
+} */
 
 .portalBody {
     margin-top: 10vh;
 }
 
 #loginBtn {    
-    width: 10vw;
+    width: 20vw;
 }
 
 #depDrpDwn {

@@ -70,8 +70,12 @@ function clickNshow(radionm, cookienm){
                 $('#pDsg').html(dat.designation);
                 $('#pDep').html(dat.department + ' Department');
                 $('#pEmail').html(dat.email);
-                $('#pLoc').html(dat.location);       
+                $('#pLoc').html(dat.location);   
                 
+                $('#profileCls').click(function(){
+                    $('#profile').hide();
+                });
+                                
                 $('#profileBkBtn').click(function(){
                     if (cookie === 'depCookie'){
                         $('#home').hide();
@@ -175,7 +179,15 @@ function clickNshow(radionm, cookienm){
             }                                       
         });
     });
-} // end clickNshow()  
+} // end clickNshow() 
+
+$('#homeCls').click(function(){
+    $('#home').hide();
+});
+
+$('#contactCls').click(function(){
+    $('.contactHR').hide();
+});
 
 function goHome(){
     $('#depSrch').hide();
@@ -933,6 +945,17 @@ $(document).ready(function(){
                     $('.delDep').hide();
                     $('.admWelcome').hide();
                     $('#adminPort').show();
+                    $('#unm').val('');
+                });
+
+                $('#logoutBtn').click(function(){
+                    $('.admWelcome').hide();
+                    $('#adminPort').show();
+                    $('#unm').val('');
+                })
+
+                $('.menuLnk').click(function(){
+                    goMenu();
                 });
 
                 $('#mStf').click(function(){
