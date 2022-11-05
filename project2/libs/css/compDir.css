@@ -52,7 +52,7 @@ html, body {
     float: left;
 }
 
-#logoutBtn {
+#logoutBtn, .closeBtn {
     float: right;
     margin-top: 5px;
 }
@@ -64,8 +64,8 @@ html, body {
 }
 
 .closeBtn {
-    height: 5vh;
-    width: 5vw;
+    height: 3vh;
+    width: 2vw;
     margin-top: 1vh;
     text-align: center;
 }
@@ -107,14 +107,20 @@ html, body {
     justify-content: center;
 }
 
-#menuPgHdrTxt, #menuBarTxt, #logoutTxt {
+#menuPgHdrTxt {
+    font-size: 1.7rem;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: 500;
+}
+
+#menuBarTxt, #logoutTxt {
     font-size: 1rem;
     font-weight: 500;
     display: inline-block;
 }
 
 #logoutTxt {
-    margin-top: 2.5vh;
+    margin-top: 1.5vh;
 }
 
 #menuPgHdrTxt, #menuBarTxt {
@@ -125,7 +131,6 @@ html, body {
     text-decoration: none;
     display: inline-block;
     margin-top: 1vh;
-    font-size: 1rem;
 }
 
 .menuArea {
@@ -140,17 +145,17 @@ html, body {
     margin-bottom: 5vh;
     width: 25vw;
 }
-/* 
+
 button:disabled {
     background-color: lightgray;
-} */
+}
 
 .portalBody {
     margin-top: 10vh;
 }
 
 #loginBtn {    
-    width: 20vw;
+    width: 15vw;
 }
 
 #depDrpDwn {
@@ -354,9 +359,15 @@ select, #srchBx {
 .getId {
     border: 3px;
     border-radius: 7px;
-    width: 50vw;
+    width: 30vw;
     margin-left: auto;
     margin-right: auto;
+}
+
+#welkomLn2 {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 1.2rem;
+    font-weight: 500;
 }
 
 /* to make a result list display in rows instead of on a line:  

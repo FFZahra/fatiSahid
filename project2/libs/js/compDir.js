@@ -36,6 +36,7 @@ function clickNshow(radionm, cookienm){
                 $('.delLoc').hide();
                 $('.addDep').hide();
                 $('.updtDep').hide();
+                $('.updtLoc').hide();
                 $('.delDep').hide();
                 $('#profile').show();
                 var cookie = cookienm;
@@ -97,6 +98,7 @@ function clickNshow(radionm, cookienm){
                         $('.delLoc').hide();
                         $('.addDep').hide();
                         $('.updtDep').hide();
+                        $('.updtLoc').hide();
                         $('.delDep').hide();
                         $('#depSrch').show();
                     }
@@ -121,6 +123,7 @@ function clickNshow(radionm, cookienm){
                         $('.delLoc').hide();
                         $('.addDep').hide();
                         $('.updtDep').hide();
+                        $('.updtLoc').hide();
                         $('.delDep').hide();
                         $('#dsgSrch').show();
                     }
@@ -145,6 +148,7 @@ function clickNshow(radionm, cookienm){
                         $('.delLoc').hide();
                         $('.addDep').hide();
                         $('.updtDep').hide();
+                        $('.updtLoc').hide();
                         $('.delDep').hide();
                         $('#nmSrch').show();
                     };
@@ -169,6 +173,7 @@ function clickNshow(radionm, cookienm){
                         $('.delLoc').hide();
                         $('.addDep').hide();
                         $('.updtDep').hide();
+                        $('.updtLoc').hide();
                         $('.delDep').hide();
                         $('#locSrch').show();
                     };
@@ -209,6 +214,7 @@ function goHome(){
     $('.delLoc').hide();
     $('.addDep').hide();
     $('.updtDep').hide();
+    $('.updtLoc').hide();
     $('.delDep').hide();
     $('#home').show();
 } // end goHome()
@@ -232,6 +238,7 @@ function goMenu(){
     $('.delLoc').hide();
     $('.addDep').hide();
     $('.updtDep').hide();
+    $('.updtLoc').hide();
     $('.delDep').hide();
     $('#home').hide();                
     $('#menu').show();
@@ -256,6 +263,7 @@ function goAdmWelkom(){
     $('.delLoc').hide();
     $('.addDep').hide();
     $('.updtDep').hide();
+    $('.updtLoc').hide();
     $('.delDep').hide();
     $('.admWelcome').show();
 }   // end goAdmWelkom()
@@ -277,6 +285,7 @@ function goMngStff(){
     $('.delLoc').hide();
     $('.addDep').hide();
     $('.updtDep').hide();
+    $('.updtLoc').hide();
     $('.delDep').hide();
     $('.admWelcome').hide();
     $('#adminPort').hide();
@@ -299,6 +308,7 @@ function goMngLoc(){
     $('.delLoc').hide();
     $('.addDep').hide();
     $('.updtDep').hide();
+    $('.updtLoc').hide();
     $('.delDep').hide();
     $('.admWelcome').hide();
     $('#adminPort').hide();
@@ -329,6 +339,7 @@ $(document).ready(function(){
         $('.delLoc').hide();
         $('.addDep').hide();
         $('.updtDep').hide();
+        $('.updtLoc').hide();
         $('.delDep').hide();
         $('#depSrch').show();
 
@@ -467,6 +478,7 @@ $(document).ready(function(){
         $('.delLoc').hide();
         $('.addDep').hide();
         $('.updtDep').hide();
+        $('.updtLoc').hide();
         $('.delDep').hide();
         $('#dsgSrch').show();
 
@@ -592,6 +604,7 @@ $(document).ready(function(){
         $('.delLoc').hide();
         $('.addDep').hide();
         $('.updtDep').hide();
+        $('.updtLoc').hide();
         $('.delDep').hide();
         $('#nmSrch').show();
 
@@ -691,6 +704,7 @@ $(document).ready(function(){
         $('.delLoc').hide();
         $('.addDep').hide();
         $('.updtDep').hide();
+        $('.updtLoc').hide();
         $('.delDep').hide();
         $('#locSrch').show();  
         
@@ -836,6 +850,7 @@ $(document).ready(function(){
             $('.delLoc').hide();
             $('.addDep').hide();
             $('.updtDep').hide();
+            $('.updtLoc').hide();
             $('.delDep').hide();
             $('#home').hide();
             $('.depsNLocs').show();
@@ -902,12 +917,16 @@ $(document).ready(function(){
             $('.delLoc').hide();
             $('.addDep').hide();
             $('.updtDep').hide();
+            $('.updtLoc').hide();
             $('.delDep').hide();
             $('#home').hide();
             $('.depsNLocs').hide();
             $('#adminPort').show();
+            $('#unm').val('');
+
                         
             $('#portalBkBtn').click(function(){
+                $('#unm').val('');
                 goMenu();
             });
 
@@ -923,6 +942,7 @@ $(document).ready(function(){
 
                 var username = $('#unm').val();
                 $('#welcomeHdr').html('Welcome&emsp;' + username);
+                $('#welkomLn2').html('Fresh Flowers Admin');
 
                 $('#welcomeBkBtn').click(function(){
                     $('#home').hide();
@@ -942,6 +962,7 @@ $(document).ready(function(){
                     $('.delLoc').hide();
                     $('.addDep').hide();
                     $('.updtDep').hide();
+                    $('.updtLoc').hide();
                     $('.delDep').hide();
                     $('.admWelcome').hide();
                     $('#adminPort').show();
@@ -975,6 +996,7 @@ $(document).ready(function(){
                     $('.delLoc').hide();
                     $('.addDep').hide();
                     $('.updtDep').hide();
+                    $('.updtLoc').hide();
                     $('.delDep').hide();
                     $('.admWelcome').hide();
                     $('#adminPort').hide();
@@ -982,7 +1004,8 @@ $(document).ready(function(){
 
                     $('#mstfBkBtn').click(function(){
                         $('#unm').val('');
-                        $('#welcomeHdr').html('');
+                        $('#welcomeHdr').html('Fresh Flowers Admin');
+                        $('#welkomLn2').html('');
                         goAdmWelkom();
                     });
 
@@ -1002,6 +1025,7 @@ $(document).ready(function(){
                         $('.delLoc').hide();
                         $('.addDep').hide();
                         $('.updtDep').hide();
+                        $('.updtLoc').hide();
                         $('.delDep').hide();
                         $('.admWelcome').hide();
                         $('#adminPort').hide();
@@ -1064,6 +1088,7 @@ $(document).ready(function(){
                         $('.delLoc').hide();
                         $('.addDep').hide();
                         $('.updtDep').hide();
+                        $('.updtLoc').hide();
                         $('.delDep').hide();
                         $('.admWelcome').hide();
                         $('#adminPort').hide();
@@ -1153,6 +1178,7 @@ $(document).ready(function(){
                         $('.delLoc').hide();
                         $('.addDep').hide();
                         $('.updtDep').hide();
+                        $('.updtLoc').hide();
                         $('.delDep').hide();
                         $('.admWelcome').hide();
                         $('#adminPort').hide();
@@ -1205,6 +1231,7 @@ $(document).ready(function(){
                     $('.delLoc').hide();
                     $('.addDep').hide();
                     $('.updtDep').hide();
+                    $('.updtLoc').hide();
                     $('.delDep').hide();
                     $('.admWelcome').hide();
                     $('#adminPort').hide();
@@ -1212,7 +1239,8 @@ $(document).ready(function(){
 
                     $('#mlocBkBtn').click(function(){
                         $('#unm').val('');
-                        $('#welcomeHdr').html('');
+                        $('#welcomeHdr').html('Fresh Flowers Admin');
+                        $('#welkomLn2').html('');
                         goAdmWelkom();
                     });
 
@@ -1232,6 +1260,7 @@ $(document).ready(function(){
                         $('.addLoc').hide();
                         $('.delLoc').hide();
                         $('.updtDep').hide();
+                        $('.updtLoc').hide();
                         $('.delDep').hide();
                         $('.admWelcome').hide();
                         $('#adminPort').hide();
@@ -1363,6 +1392,7 @@ $(document).ready(function(){
                         $('.addLoc').hide();
                         $('.delLoc').hide();
                         $('.updtDep').hide();
+                        $('.updtLoc').hide();
                         $('.admWelcome').hide();
                         $('#adminPort').hide();
                         $('.mngDepLocs').hide();
@@ -1414,6 +1444,7 @@ $(document).ready(function(){
                         $('.delStf').hide();
                         $('.delLoc').hide();
                         $('.updtDep').hide();
+                        $('.updtLoc').hide();
                         $('.delDep').hide();
                         $('.admWelcome').hide();
                         $('#adminPort').hide();
@@ -1465,6 +1496,7 @@ $(document).ready(function(){
                         $('.delStf').hide();
                         $('.addLoc').hide();
                         $('.updtDep').hide();
+                        $('.updtLoc').hide();
                         $('.delDep').hide();
                         $('.admWelcome').hide();
                         $('#adminPort').hide();
@@ -1499,6 +1531,79 @@ $(document).ready(function(){
 
                         });
                     });
+
+                    $('#mLocUpd').click(function(){
+                        $('#home').hide();
+                        $('#depSrch').hide();
+                        $('#dsgSrch').hide();
+                        $('#nmSrch').hide();
+                        $('#locSrch').hide();
+                        $('#menu').hide();        
+                        $('.depsNLocs').hide();
+                        $('.contactHR').hide();
+                        $('.mngStf').hide();
+                        $('.addStf').hide();
+                        $('.delStf').hide();
+                        $('.addLoc').hide();
+                        $('.delLoc').hide();
+                        $('.delDep').hide();
+                        $('.admWelcome').hide();
+                        $('#adminPort').hide();
+                        $('.mngDepLocs').hide();
+                        $('.addDep').hide();
+                        $('.updtStf').hide();
+                        $('.updtDep').hide();
+                        $('.updtLoc').show();
+    
+                        $('#updtLocBkBtn').click(function(){
+                            // reset form:
+                            $('#ulcID').val('');
+                            $('#ulfeedbk').html('');
+                            goMngLoc();
+                        });
+
+                        $('#ulcIDBtn').click(function(){
+                            var idee = $('#ulcID').val();
+
+                            $.ajax({
+                                url:"libs/php/getLocationByID.php",
+                                type: "POST",
+                                dataType: 'json',
+                                data: {
+                                    id: idee
+                                },
+                                success: function(response){         
+                                    var dat = response.data[0];
+                                    $('#locnm').val(dat.name);
+
+                                    $('#upLoc').click(function(){
+                                        var locval = $('#locnm').val();
+
+                                        $.ajax({
+                                            url:"libs/php/updateLocation.php",
+                                            type: "POST",
+                                            dataType: 'json',
+                                            data: {
+                                                name: locval,
+                                                id: idee
+                                            },
+                                            success: function(response){
+
+                                                $('#ulfeedbk').html('Location successfully updated.');
+
+                                            },
+                                            error: function(jqXHR){
+                                                console.log(jqXHR, 'Something is wrong');
+                                            }
+                                        });
+                                    });                                                                                        
+                                },
+                                error: function(jqXHR){
+                                    console.log(jqXHR, 'Something is wrong');
+                                }
+                            });
+                        });
+                    });
                 });
             });
         });
@@ -1520,6 +1625,7 @@ $(document).ready(function(){
             $('.delLoc').hide();
             $('.addDep').hide();
             $('.updtDep').hide();
+            $('.updtLoc').hide();
             $('.delDep').hide();
             $('#home').hide();
             $('.depsNLocs').hide();
