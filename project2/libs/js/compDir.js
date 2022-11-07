@@ -194,6 +194,10 @@ $('#contactCls').click(function(){
     $('.contactHR').hide();
 });
 
+$('.menuLnk').click(function(){
+    goMenu();
+});
+
 function goHome(){
     $('#depSrch').hide();
     $('#dsgSrch').hide();
@@ -358,7 +362,7 @@ $(document).ready(function(){
                     $('#depSelect').html('');                
                 }
 
-                var choices = "";
+                var choices = "<option selected> Choose a department . . . </option>";
                 for (var i = 0; i < dat.length; i++){
                     choices = choices + '<option value = "' + dat[i].id + '">' + dat[i].name + '</option>';
                 }
@@ -373,13 +377,11 @@ $(document).ready(function(){
                 });
 
                 // add in initial list of staff by dept ***
-                console.log(dat);
+               
                 const depDik = {};
                 for (i = 0; i < dat.length; i++){
                     depDik[i + 1] = dat[i].name;
                 }
-
-                console.log(depDik);
 
                 $.ajax({
                     url:"libs/php/getAllPersonnelByDep.php",
@@ -394,8 +396,6 @@ $(document).ready(function(){
                         while (i < 20){
                             currDep = depDik[preDat[i].departmentID];
                             currDid = preDat[i].departmentID;
-                            
-                            console.log(currDep, preDat[i].departmentID, depDik[preDat[i].departmentID]);
 
                             prelist = prelist + "<tr><td class='text-left font-weight-bold'><h5 class='listHdr'>&emsp;" + currDep + " Department&emsp;&emsp;&emsp;&emsp;<span class='listHdrDepID'>Department ID:&nbsp;" + currDid + "&emsp;</span></h5></td></tr>";
 
@@ -407,7 +407,7 @@ $(document).ready(function(){
                                 }                                 
                             };
 
-                            console.log(currDep, i, preDat[i].departmentID, depDik[preDat[i].departmentID]);
+                            console.log(currDep, 'listHdr');
                         };
 
                         $('#depStfList').html(prelist);
@@ -415,7 +415,7 @@ $(document).ready(function(){
 
                         $('#depSelect').change(function(){
                             var depID = $('#depSelect').val();
-                            var depTxt = $('select option:selected').text();
+                            var depTxt = $('#depSelect option:selected').text();
                                     
                             $.ajax({
                                 url:"libs/php/getPersonnelByDep.php",
@@ -432,7 +432,9 @@ $(document).ready(function(){
                                     for (let i = 0; i < dat.length; i++){
                                         listContent = listContent + "<tr><td class='form-check pl-3'>&emsp;<input class='form-check-input tblRadio' type='radio' name='byDepRadio' id='byDepRadio' value=" + dat[i].id + "><label class='form-check-label' for='byDepRadio'>" + "&ensp;" + dat[i].id + "&emsp;" + dat[i].firstName + "&ensp;" + dat[i].lastName + "</label></td></tr>";    
                                     }
-                                                                                                            
+                                      
+                                    console.log(depTxt);
+
                                     $('#depStfList').html(listContent); 
                                     clickNshow('byDepRadio', 'depCookie');     
                                     
@@ -505,7 +507,7 @@ $(document).ready(function(){
                     $('#dsgSelect').html('');             
                 }
                 
-                var choices = "";
+                var choices = "<option selected> Choose a designation . . . </option>";
                 for (var i = 0; i < designations.length; i++){
                     choices = choices + '<option value = "' + designations[i] + '">' + designations[i] + '</option>';
                 }
@@ -539,9 +541,11 @@ $(document).ready(function(){
 
                 };
 
+                
+                console.log( currDsg, ' last currDsg');
+
                 $('#dsgStfList').html(initList);            
                 clickNshow('preDsgRadio','dsgCookie');   
-                // console.log( $('input[name="preDsgRadio"]').attr('type'), ' jobTitles3');
 
                 $('#dsgSelect').change(function(){
                     var dsg = $('#dsgSelect').val();
@@ -562,10 +566,11 @@ $(document).ready(function(){
                                 initContent = initContent + "<tr><td class='form-check pl-3'>&emsp;<input class='form-check-input tblRadio' type='radio' name='byDsgRadio' id='byDsgRadio' value=" + dat[i].id + "><label class='form-check-label' for='byDsgRadio'>" + "&ensp;" + dat[i].id + "&emsp;" + dat[i].firstName + "&ensp;" + dat[i].lastName + "</label></td></tr>";    
                             }   
                             
+
+                            console.log(dsg, ' selected dsg');
+
                             $('#dsgStfList').html(initContent); 
-                            console.log( $('input:radio[name="byDsgRadio"]').attr('type'), ' jobTitles2b');
                             clickNshow('byDsgRadio','dsgCookie');  
-                            console.log( $('input:radio[name="byDsgRadio"]').attr('type'), ' jobTitles3b');
                         },
                         error: function(jqXHR){
                             console.log(jqXHR, 'Something is wrong');
@@ -730,7 +735,7 @@ $(document).ready(function(){
                     $('#locSelect').html('');                
                 }
 
-                var choices = "";
+                var choices = "<option selected> Choose a location . . . </option>";
                 for (var i = 0; i < dat.length; i++){
                     choices = choices + '<option value = "' + dat[i].id + '">' + dat[i].name + '</option>';
                 }
@@ -762,9 +767,7 @@ $(document).ready(function(){
                                     break;
                                 }                                 
                             };
-                            // if (i === dat.length){
-                            //     break;
-                            // } 
+
                             console.log(currLoc, i, dat[i].location);
                         };
 
@@ -773,7 +776,7 @@ $(document).ready(function(){
 
                         $('#locSelect').change(function(){
                             var locID = $('#locSelect').val();
-                            var locTxt = $('select option:selected').text();
+                            var locTxt = $('#locSelect option:selected').text();
                                     
                             $.ajax({
                                 url:"libs/php/getPersonnelByLoc.php",
@@ -799,7 +802,9 @@ $(document).ready(function(){
                                     $('#locStfList').html(chosenContent); 
                                     clickNshow('byLocRadio', 'locCookie');  
 
-                                };                                       
+                                };     
+                                
+                                console.log(locTxt, 'location text')
                                                                    
                                 },
                                 error: function(jqXHR){
@@ -974,10 +979,6 @@ $(document).ready(function(){
                     $('#adminPort').show();
                     $('#unm').val('');
                 })
-
-                $('.menuLnk').click(function(){
-                    goMenu();
-                });
 
                 $('#mStf').click(function(){
                     $('#home').hide();

@@ -20,7 +20,7 @@
                 <div class="col-1 py-1"><button type="menu" class="btn btn-outline-success" id="menuBtn" aria-label="Menu button"><i class="fa-solid fa-bars fa-fw"></i></button><label id="menuBarTxt" for="menuBtn">&ensp;Menu</label></div>                
                 <!-- <div class="col-1"><p id="menuBarTxt">Menu</p></div> -->
                 <div class="col-10"></div> 
-                <div class="col-1 py-1"><button type="button" class="closeBtn" id="homeCls" aria-label="Close"><span class="clsSpan">X</span></button></div>                               
+                <div class="col-1 py-1"><button type="button" class="closeBtn" id="homeCls" aria-label="Close"><div class="tooltip"><span class="tooltiptext">Close</span></div></button></div>                               
             </div>
             <div class="row">
                 <div class="col-12 pt-5 homePic">
@@ -62,7 +62,7 @@
             </div>
             <div class="row"> 
                 <div class="col-12 selectBar">
-                    <label class="hdrLabel" for="dsgSelect">Choose a designation:&nbsp;</label><select class="form-select" aria-label="Designation list dropdown" id="dsgSelect" name="dsgSelect"></select>
+                    <select class="form-select" aria-label="Designation list dropdown" id="dsgSelect" name="dsgSelect"></select>
                 </div>
             </div>
             <div class="outputTable border border-success">
@@ -78,7 +78,7 @@
             </div>
             <div class="row"> 
                 <div class="col-12 selectBar">
-                    <label class="hdrLabel" for="locSelect">Choose a location:&nbsp;</label><select class="form-select" aria-label="Location list dropdown" id="locSelect" name="locSelect"></select>
+                    <select class="form-select" aria-label="Location list dropdown" id="locSelect" name="locSelect"></select>
                 </div>
             </div>
             <div class="outputTable border border-success">
@@ -94,7 +94,7 @@
             </div>
             <div class="row"> 
                 <div class="col-12 selectBar">
-                    <label class="hdrLabel" for="depSelect">Choose a department:&nbsp;</label><select class="form-select" aria-label="Department list dropdown" id="depSelect" name="depSelect"></select>
+                    <select class="form-select" aria-label="Department list dropdown" id="depSelect" name="depSelect"></select>
                 </div>
             </div>
             <div class="outputTable border border-success">
@@ -104,22 +104,24 @@
             </div>            
         </div>
         <!-- ********************************************************************************************************************************************************** -->
-        <div class="stfProfile container-fluid justify-content-center text-center" id="profile">
-            <div class="row homePic">
-                <div class="row headr"> 
-                    <div class="col-1 py-1"><button type="button" class="btn backBtn" id="profileBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>               
-                    <div class="col-7"></div>
-                    <div class="col-1"><a href="#" type=button class="menuLnk"><h5>Menu</h5></a></div>
-                    <div class="col-1"></div>
-                    <div class="col-1 py-1"><button type="button" class="closeBtn" id="profileCls" aria-label="Close"><span class="clsSpan">X</span></button></div>
-                </div>                 
+        <div class="stfProfile container-fluid" id="profile">
+            <div class="row headr"> 
+                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="profileBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>               
+                <div class="col-8"></div>
+                <div class="col-1"><a href="#" type=button class="menuLnk"><h5>Menu</h5></a></div>
+                <div class="col-1"></div>
+                <div class="col-1 py-1"><button type="button" class="closeBtn" id="profileCls" aria-label="Close"><span class="clsSpan"></span></button></div>
+            </div>
+            <div class="row homePic justify-content-center text-center pt-5">                                 
                 <div class="circleBox"></div>
             </div>
-            <p id="pfnmLst">First name & Last name</p>
-            <p id="pDsg">Designation</p>
-            <p id="pDep">Department</p>
-            <p id="pEmail">Email</p>
-            <p id="pLoc">Location</p>
+            <div class="profileBdy justify-content-center text-center"> 
+                <p id="pfnmLst">First name & Last name</p>
+                <p id="pDsg">Designation</p>
+                <p id="pDep">Department</p>
+                <p id="pEmail">Email</p>
+                <p id="pLoc">Location</p>
+            </div>
         </div>
         <!-- ********************************************************************************************************************************************************** -->
         <div class="menuPg container-fluid w-70" id="menu">
@@ -137,11 +139,11 @@
             </div>
         </div>
         <!-- ********************************************************************************************************************************************************** -->
-        <div class="adminPortalPg container-fluid justify-content-center text-center" id="adminPort">
-            <div class="row border border-success headr"> 
+        <div class="adminPortalPg container-fluid" id="adminPort">
+            <div class="row headr"> 
                 <div class="col-1 py-1"><button type="button" class="btn backBtn" id="portalBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
             </div>
-            <div class="row picCase">
+            <div class="row picCase justify-content-center text-center">
                 <div class="col-12 pt-5 homePic">
                     <div class="row justify-content-center pb-1 portalRow"><i class="fa-solid fa-landmark fa-fw"></i></div>
                     <div class="row justify-content-center pt-1 mb-3 portalRow compName">Fresh Flowers</div>
@@ -173,7 +175,7 @@
             <div class="row headr"> 
                 <div class="col-1 py-1"><button type="button" class="btn backBtn" id="contactBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
                 <div class="col-10"></div>
-                <div class="col-1 py-1"><button type="button" class="closeBtn" id="contactCls" aria-label="Close"><span class="clsSpan">X</span></button></div>
+                <div class="col-1 py-1"><button type="button" class="closeBtn" id="contactCls" aria-label="Close"><span class="clsSpan"></span></button></div>
             </div>            
             <div class="col-12 pt-5 homePic">
                 <div class="row justify-content-center pb-1 portalRow"><i class="fa-solid fa-landmark fa-fw"></i></div>
