@@ -349,6 +349,12 @@ $(document).ready(function(){
 
         var prelist, listContent;
 
+        $('#depBkBtn').click(function(){
+            prelist = "";
+            listContent = "";
+            goHome();
+        });
+
         // ---------------------- Fill in dropdown values: ----------------
         $.ajax({
             url: "libs/php/getAllDepartments.php",
@@ -368,13 +374,6 @@ $(document).ready(function(){
                 }
                 
                 $('#depSelect').html(choices);
-
-                $('#depBkBtn').click(function(){
-                    prelist = "";
-                    listContent = "";
-                    // $('input[type="radio"]:checked').prop("checked", false);
-                    goHome();
-                });
 
                 // add in initial list of staff by dept ***
                
@@ -486,6 +485,12 @@ $(document).ready(function(){
 
         var initList, initContent;
 
+        $('#dsgBkBtn').click(function(){
+            initList = "";
+            initContent = "";
+            goHome();
+        });
+
         // ---------------------- Fill in dropdown values: ---------------
         $.ajax({
             url: "libs/php/getAllTitles.php",
@@ -513,13 +518,6 @@ $(document).ready(function(){
                 }
                 
                 $('#dsgSelect').html(choices);
-
-                $('#dsgBkBtn').click(function(){
-                    initList = "";
-                    initContent = "";
-                    // $('input[type="radio"]:checked').prop("checked", false);
-                    goHome();
-                });
 
                 // add in initial list of staff by designation ***
 
