@@ -8,14 +8,302 @@
         <link rel="stylesheet" href="libs/bootstrap-5.0.2-dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="libs/fontawesome-free-6.1.1-web/css/fontawesome.min.css">
         <link rel="stylesheet" href="libs/fontawesome-free-6.1.1-web/css/fontawesome.css">
-        <link rel="stylesheet" href="libs/css/compDir.css">
+        <link rel="stylesheet" href="libs/css/newCompDir.css">
 	    <title>Company Directory</title>
     </head>
     <body>  <!--  mx-0 px-0 w-100 -->
         <div class="preloader">
             <img src="libs/img/dirLoader.gif" alt="Loading..."/>
         </div>
-        <div class="homepg container-fluid" id="home">
+        <!-- ********************************************************************************************************************************************************** -->
+        <div class="resultsPg container-fluid" id="mainPg">
+            <div class="row headr mainPgHdr">
+                <div class="col-2 text-center"><p class="hdrTxt">&#127804;&ensp;Fresh Flowers&ensp;&#127804;</p></div>  
+                <!-- <div class="col-1"><button type="button" class="btn btn-outline-success mngBtns" id="resetList" data-bs-toggle="tooltip" title="Reset List" aria-label="List reset button"><i class="fa-solid fa-rotate-left fa-fw"></i></button></div>
+                <div class="col-1"><button type="button" class="btn btn-outline-success mngBtns" id="addStaff" data-bs-toggle="tooltip" title="Add Employee" aria-label="Add employee button"><i class="fa-solid fa-user-plus fa-fw"></i></button></div>           -->
+                <!-- <div class="col-1"></div> -->
+                <div class="col-sm-5 col-md-7"></div>
+                <div class="col-sm-4 col-md-2 py-1">
+                    <button type="button" class="btn btn-outline-success mngBtns" id="resetList" data-bs-toggle="tooltip" title="Reset List" aria-label="List reset button"><i class="fa-solid fa-rotate-left fa-fw"></i></button>
+                    <button type="button" class="btn btn-outline-success mngBtns" id="addStaff" data-bs-toggle="tooltip" title="Add Employee" aria-label="Add employee button"><i class="fa-solid fa-user-plus fa-fw"></i></button>
+                    <button type="button" class="btn btn-outline-success mngBtns" id="mngDepBtn" data-bs-toggle="tooltip" title="Manage departments" aria-label="Manage departments button"><i class="fa-regular fa-building fa-fw"></i></button>              
+                    <button type="button" class="btn btn-outline-success mngBtns" id="mngLocBtn" data-bs-toggle="tooltip" title="Manage locations" aria-label="Manage locations button"><i class="fa-solid fa-location-dot fa-fw"></i></button>
+                </div>                
+                <div class="col-1"></div>
+            </div>
+            <div class="searchRow">
+                <div class="col justify-content-center text-center srchCtrls">                
+                    <input class="border border-success px-5" type="text" id="srchBx" name="srchBx">&nbsp;<button class="btn searchBtn" id="srchBtn" type="button" data-bs-toggle="tooltip" title="Click to search" aria-label="srchBtn button"><i class="fa-solid fa-magnifying-glass fa-fw"></i></button>
+                </div>
+            </div>
+            <div class="outputTable border border-success">
+                <table class="table table-outline" id="mainTbl">      
+                    <tbody id="mainList"></tbody>      
+                </table>
+            </div>
+        </div>
+        <!-- ********************************************************************************************************************************************************** -->
+        <div class="stfProfile container-fluid" id="profile">
+            <div class="row headr"> 
+                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="profileBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>               
+                <div class="col-9"></div>
+                <div class="col-1"></div>
+                <div class="col-1"></div>
+            </div>
+            <div class="row homePic justify-content-center text-center pt-5">                                 
+                <div class="circleBox"></div>
+            </div>
+            <div class="profileBdy justify-content-center text-center"> 
+                <table class="table text-center">
+                    <tr><p id="pfnmLst">First name & Last name</p></tr>
+                    <tr><p id="pDsg">Designation</p></tr>
+                    <tr><p id="pDep">Department</p></tr>
+                    <tr><p id="pEmail">Email</p></tr>
+                    <tr><p id="pLoc">Location</p></tr>
+                </table>
+            </div>
+            <div class="mngDiv justify-content-center text-center mb-3">
+                <button type="button" class="btn editBtn mngBtns pt-0" id="editStfBtn" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square fa-fw"></i></button>&emsp;<button class="button delBtn mngBtns" id="delStfBtn"><i class="fa-regular fa-trash-can fa-fw"></i></button>                  
+            </div>
+        </div>
+        <!-- ********************************************************************************************************************************************************** -->
+        <!-- Edit Modal -->
+        <div class ="modal fade" id ="editModal" data-bs-backdrop="static" keyboard="false" tabindex ="-1" role ="dialog" aria-labelledby =" editModalLabel" aria-hidden ="true">
+            <div class = "modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class = "modal-content">        
+                    <div class = "modal-header">
+                        <h5 class = "modal-title" id = "editModalLabel">Update Employee Details</h5>
+                        <button type = "button" class ="btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+                    </div>
+                    
+                    <div class = "modal-body" id="editMdl">
+                        <div class="table-responsive">
+                            <table class=" table table-success editFm" id="editTbl">
+                                <tbody class="editTblBd">
+                                    <tr><td><label for="ufnm">First Name:&emsp;</label><input class="border border-success" type="text" id="ufnm" name="ufnm"></td></tr>
+                                    <tr><td><label for="ulnm">Last Name:&emsp;</label><input class="border border-success" type="text" id="ulnm" name="ulnm"></td></tr>
+                                    <tr><td><label for="udsgnm">Designation:&emsp;</label><input class="border border-success w-50" type="text" id="udsgnm" name="udsgnm"></td></tr>
+                                    <tr><td><label for="ueml">Email:&emsp;</label><input class="border border-success w-50" type="text" id="ueml" name="ueml"></td></tr>
+                                    <tr><td><label for="udip">Department ID:&emsp;</label><input class="border border-success" type="text" aria-label="Department id" id="udip" name="udip"></td></tr>
+                                    <tr><td><label for="dipnm">Department Name:&emsp;</label><input class="border border-secondary bg-transparent text-dark w-50" type="text" aria-label="Department name read-only" id="dipnm" name="dipnm" readonly></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>                    
+                    <div class = "modal-footer">
+                        <button class="btn btn-outline-success saveBtn text-center py-2 px-2" type="button" id="updstf">Save</button>
+                        <p id="usfeedbk"></p>
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <!-- ********************************************************************************************************************************************************** -->
+         <!-- Delete Modal -->
+         <div class ="modal fade" id ="deleteModal" data-bs-backdrop="static" keyboard="false" tabindex ="-1" role ="dialog" aria-labelledby =" deleteModalLabel" aria-hidden ="true">
+            <div class = "modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class = "modal-content">        
+                    <div class = "modal-header">
+                        <h5 class = "modal-title" id = "deleteModalLabel">Delete Employee</h5>
+                        <button type = "button" class ="btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+                    </div>
+                    
+                    <div class = "modal-body" id="deleteMdl">
+                        <div class="table-responsive">
+                            <table class=" table table-success" id="deleteTbl">
+                                <tbody class="deleteTblBd">
+                                    <tr><td><h5 class="text-center text-italic"><i class="fa-solid fa-triangle-exclamation fa-fw bg-warning"></i>&emsp;<span id="delSpan"></span></h5></td></tr>
+                                    <tr><td class="ansBtns"><button class="btn btn-outline-success ansBtn text-center py-2" type="button" id="delStfYes">Yes</button>&emsp;<button class="btn btn-outline-success ansBtn text-center py-2 px-1" type="button" id="delStfNo" data-bs-dismiss = "modal" aria-label = "Close Modal">No</button></td></tr>                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>                    
+                    <div class = "modal-footer">                        
+                        <p id="dsfeedbk"></p>
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <!-- ********************************************************************************************************************************************************** -->
+        <!-- Add Modal -->
+        <div class ="modal fade" id ="addModal" data-bs-backdrop="static" keyboard="false" tabindex ="-1" role ="dialog" aria-labelledby =" addModalLabel" aria-hidden ="true">
+            <div class = "modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class = "modal-content">        
+                    <div class = "modal-header">
+                        <h5 class = "modal-title" id = "addModalLabel">New Employee Details</h5>
+                        <button type = "button" class ="btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+                    </div>
+                    
+                    <div class = "modal-body" id="editMdl">
+                        <div class="table-responsive">
+                            <table class=" table table-success addFm">
+                                <tbody class="addTblBd">
+                                    <tr><td><label for="afnm">First Name:&emsp;</label><input class="border border-success" type="text" id="afnm" name="afnm"></td></tr>
+                                    <tr><td><label for="alnm">Last Name:&emsp;</label><input class="border border-success" type="text" id="alnm" name="alnm"></td></tr>
+                                    <tr><td><label for="adsgnm">Designation:&emsp;</label><input class="border border-success w-50" type="text" id="adsgnm" name="udsgnm"></td></tr>
+                                    <tr><td><label for="aeml">Email:&emsp;</label><input class="border border-success w-50" type="text" id="aeml" name="aeml"></td></tr>                                    
+                                    <tr><td><label for="depts">Department Name:&emsp;</label><select class="form-select" aria-label="Department list dropdown" id="depts" name="depts"></select>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>                    
+                    <div class = "modal-footer">
+                        <button class="btn btn-outline-success saveBtn text-center py-2 px-2" type="button" id="aStf">Save</button>
+                        <p id="asfeedbk"></p>
+                    </div> 
+                </div>
+            </div>
+        </div>
+         <!-- ********************************************************************************************************************************************************** -->
+         <div class="mngPg container-fluid" id="deptPg">
+            <div class="row headr">
+                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="depBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>
+                <div class="col-3 text-left"><p class="hdrTxt">&#127804;&ensp;Fresh Flowers&ensp;&#127804;</p></div>          
+                <div class="col-sm-6 col-md-7"></div>       
+                <div class="col-1">
+                    <button type="button" class="btn btn-outline-success mngBtns" id="addDept" data-bs-toggle="tooltip" title="Add Department" aria-label="Add department button"><i class="fa-regular fa-building fa-fw"></i><sup><i class="fa-solid fa-plus fa-fw"></i></sup></button>
+                </div>  
+                <div class="col-sm-1"></div> 
+            </div>           
+            <div class="outputTable border border-success pl-0">
+                <p class="tblCaption">Departments</p>
+                <table class="table table-outline table-striped table-responsive" id="deptTbl">      
+                    <tbody id="deptList"></tbody>      
+                </table>
+            </div>
+        </div>
+        <!-- ********************************************************************************************************************************************************** -->
+        <div class="mngPg container-fluid" id="locPg">
+            <div class="row headr">
+                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="locBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>
+                <div class="col-3 text-left"><p class="hdrTxt">&#127804;&ensp;Fresh Flowers&ensp;&#127804;</p></div>  
+                <div class="col-sm-6 col-md-7"></div> 
+                <div class="col-1">               
+                    <button type="button" class="btn btn-outline-success mngBtns" id="addLoc" data-bs-toggle="tooltip" title="Add Location" aria-label="Add location button"><i class="fa-solid fa-location-dot fa-fw"></i><sup><i class="fa-solid fa-plus fa-fw"></i></sup></button>
+                </div>                          
+                <div class="col-sm-1"></div>
+            </div>           
+            <div class="outputTable border border-success">
+                <p class="tblCaption">Locations</p>
+                <table class="table table-outline table-striped table-responsive" id="locTbl">      
+                    <tbody id="locList"></tbody>      
+                </table>
+            </div>
+        </div>
+        <!-- ********************************************************************************************************************************************************** -->
+        <!-- Edit Dept Modal -->
+        <div class ="modal fade" id ="eDepModal" data-bs-backdrop="static" keyboard="false" tabindex ="-1" role ="dialog" aria-labelledby =" eDepModalLabel" aria-hidden ="true">
+            <div class = "modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class = "modal-content">        
+                    <div class = "modal-header">
+                        <h5 class = "modal-title" id = "eDepModalLabel">Update Department Details</h5>
+                        <button type = "button" class ="btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+                    </div>
+                    
+                    <div class = "modal-body" id="eDepMdl">
+                        <div class="table-responsive">
+                            <table class=" table table-success editFm" id="eDepTbl">
+                                <tbody class="eDepTblBd">
+                                    <tr><td><label for="depnm">Department:&emsp;</label><input class="border border-success" type="text" id="depnm" name="depnm"></td></tr>                                   
+                                    <tr><td><label for="locId">Location ID:&emsp;</label><input class="border border-secondary bg-transparent text-dark w-50" type="text" aria-label="Department id read-only" id="locId" name="locId" readonly></td></tr>
+                                    <tr><td><label for="places">Location:&emsp;</label><select class="form-select" aria-label="Location list dropdown" id="places" name="places"></select>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>                    
+                    <div class = "modal-footer">
+                        <button class="btn btn-outline-success saveBtn text-center py-2 px-2" type="button" id="updept">Save</button>
+                        <p id="udfeedbk"></p>
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <!-- ********************************************************************************************************************************************************** -->
+        <!-- Add Dept Modal -->
+        <div class ="modal fade" id ="aDepModal" data-bs-backdrop="static" keyboard="false" tabindex ="-1" role ="dialog" aria-labelledby =" aDepModalLabel" aria-hidden ="true">
+            <div class = "modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class = "modal-content">        
+                    <div class = "modal-header">
+                        <h5 class = "modal-title" id = "aDepModalLabel">New Department Details</h5>
+                        <button type = "button" class ="btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+                    </div>
+                    
+                    <div class = "modal-body">
+                        <div class="table-responsive">
+                            <table class=" table table-success addFm">
+                                <tbody class="addDepTblBd">
+                                    <tr><td><label for="aDep">Department:&emsp;</label><input class="border border-success" type="text" id="aDep" name="aDep" autofocus></td></tr>                                   
+                                    <tr><td><label for="aLocID">Location ID:&emsp;</label><input class="border border-secondary bg-transparent text-dark w-50" type="text" aria-label="Department id read-only" id="aLocID" name="aLocID" readonly></td></tr>
+                                    <tr><td><label for="addLocSelect">Location:&emsp;</label><select class="form-select" aria-label="Location list dropdown" id="addLocSelect" name="addLocSelect"></select>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>                    
+                    <div class = "modal-footer">
+                        <button class="btn btn-outline-success saveBtn text-center py-2 px-2" type="button" id="newDep">Save</button>
+                        <p id="adfeedbk"></p>
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <!-- ********************************************************************************************************************************************************** -->
+        <!-- Edit Location Modal -->
+        <div class ="modal fade" id ="eLocModal" data-bs-backdrop="static" keyboard="false" tabindex ="-1" role ="dialog" aria-labelledby =" eLocModalLabel" aria-hidden ="true">
+            <div class = "modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class = "modal-content">        
+                    <div class = "modal-header">
+                        <h5 class = "modal-title" id = "eLocModalLabel">Update Location Details</h5>
+                        <button type = "button" class ="btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+                    </div>
+                    
+                    <div class = "modal-body" id="eLocMdl">
+                        <div class="table-responsive">
+                            <table class=" table table-success editFm" id="eLocTbl">
+                                <tbody class="eLocTblBd">
+                                    <tr><td><label for="locnm">Location:&emsp;</label><input class="border border-success" type="text" id="locnm" name="locnm" focusable="true" autofocus></td></tr>   
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>                    
+                    <div class = "modal-footer">
+                        <button class="btn btn-outline-success saveBtn text-center py-2 px-2" type="button" id="upLoc">Save</button>
+                        <p id="ulfeedbk"></p>
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <!-- ********************************************************************************************************************************************************** -->
+        <!-- Add Location Modal -->
+        <div class ="modal fade" id ="aLocModal" data-bs-backdrop="static" keyboard="false" tabindex ="-1" role ="dialog" aria-labelledby =" aLocModalLabel" aria-hidden ="true">
+            <div class = "modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class = "modal-content">        
+                    <div class = "modal-header">
+                        <h5 class = "modal-title" id = "aLocModalLabel">New Location Details</h5>
+                        <button type = "button" class ="btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+                    </div>
+                    
+                    <div class = "modal-body">
+                        <div class="table-responsive">
+                            <table class=" table table-success">
+                                <tbody class="addLocTblBd">
+                                    <tr><td><label for="aLoc">Location:&emsp;</label><input class="border border-success" type="text" id="aLoc" name="aLoc" focusable="true" autofocus="true"></td></tr> 
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>                    
+                    <div class = "modal-footer">
+                        <button class="btn btn-outline-success saveBtn text-center py-2 px-2" type="button" id="saveLoc">Save</button>
+                        <p id="alfeedbk"></p>
+                    </div> 
+                </div>
+            </div>
+        </div>
+         <!-- ********************************************************************************************************************************************************** -->
+         
+
+
+
+        <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+        <!-- <div class="homepg container-fluid" id="home">
             <div class="row headr"> 
                 <div class="col-1 py-1"><button type="menu" class="btn btn-outline-success" id="menuBtn" aria-label="Menu button"><i class="fa-solid fa-bars fa-fw"></i></button><label id="menuBarTxt" for="menuBtn">&ensp;Menu</label></div>                
                 <div class="col-11"></div> 
@@ -40,7 +328,7 @@
             </div>            
         </div>
         <!-- ********************************************************************************************************************************************************** -->
-        <div class="stfNmSrch container-fluid" id="nmSrch">
+        <!-- <div class="stfNmSrch container-fluid" id="nmSrch">
             <div class="row headr"> 
                 <div class="col-1 py-1"><button type="button" class="btn backBtn" id="snmBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
             </div>
@@ -52,9 +340,9 @@
                     <tbody id="snmStfList"></tbody>      
                 </table>
             </div>
-        </div>
+        </div> -->
         <!-- ********************************************************************************************************************************************************** -->
-        <div class="stfDsgSrch container-fluid" id="dsgSrch">
+        <!-- <div class="stfDsgSrch container-fluid" id="dsgSrch">
             <div class="row headr"> 
                 <div class="col-1 py-1"><button type="button" class="btn backBtn" id="dsgBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
             </div>
@@ -68,9 +356,9 @@
                     <tbody id="dsgStfList"></tbody>      
                 </table>
             </div>        
-        </div>
+        </div> -->
         <!-- ********************************************************************************************************************************************************** -->
-        <div class="stfLocSrch container-fluid" id="locSrch">
+        <!-- <div class="stfLocSrch container-fluid" id="locSrch">
             <div class="row headr"> 
                 <div class="col-1 py-1"><button type="button" class="btn backBtn" id="locBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
             </div>
@@ -84,9 +372,9 @@
                     <tbody id="locStfList"></tbody>      
                 </table>
             </div>    
-        </div>
+        </div> -->
         <!-- ********************************************************************************************************************************************************** -->
-        <div class="stfDepSrch container-fluid" id="depSrch">
+        <!-- <div class="stfDepSrch container-fluid" id="depSrch">
             <div class="row headr"> 
                 <div class="col-1 py-1"><button type="button" class="btn backBtn" id="depBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
             </div>
@@ -100,9 +388,9 @@
                     <tbody id="depStfList"></tbody>      
                 </table>
             </div>            
-        </div>
+        </div> -->
         <!-- ********************************************************************************************************************************************************** -->
-        <div class="stfProfile container-fluid" id="profile">
+        <!-- <div class="stfProfile container-fluid" id="profile">
             <div class="row headr"> 
                 <div class="col-1 py-1"><button type="button" class="btn backBtn" id="profileBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>               
                 <div class="col-9"></div>
@@ -119,8 +407,8 @@
                 <p id="pEmail">Email</p>
                 <p id="pLoc">Location</p>
             </div>
-        </div>
-        <!-- ********************************************************************************************************************************************************** -->
+        </div> -->
+        <!-- ********************************************************************************************************************************************************** 
         <div class="menuPg container-fluid" id="menu">
             <div class="row menuPgHdr"> 
                 <div class="col-1 py-1"><button type="button" class="btn btn-outline-success mb-5 goHomeBtn" aria-label="Menu page home button"><i class="fa-solid fa-landmark fa-fw" id="pgBtn"></i></button></div>               
@@ -135,7 +423,7 @@
                 <p><button class="btn btn-outline-success mainBtn menupg-btns text-center py-3" type="button" id="goContact">Contact HR</button></p>
             </div>
         </div>
-        <!-- ********************************************************************************************************************************************************** -->
+        <!-- ********************************************************************************************************************************************************** 
         <div class="adminPortalPg container-fluid" id="adminPort">
             <div class="row headr"> 
                 <div class="col-1 py-1"><button type="button" class="btn backBtn" id="portalBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
@@ -157,7 +445,7 @@
                 </form> 
             </div> 
         </div>
-        <!-- ********************************************************************************************************************************************************** -->
+        <!-- ********************************************************************************************************************************************************** 
         <div class="depsNLocs container-fluid">
             <div class="row headr"> 
                 <div class="col-1 py-1"><button type="button" class="btn backBtn" id="depLocBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
@@ -167,7 +455,7 @@
                 <tbody id="depLocList"></tbody>      
             </table>            
         </div>
-        <!-- ********************************************************************************************************************************************************** -->
+        <!-- ********************************************************************************************************************************************************** 
         <div class="contactHR container-fluid justify-content-center">
             <div class="row headr"> 
                 <div class="col-1 py-1"><button type="button" class="btn backBtn" id="contactBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
@@ -192,7 +480,7 @@
                 <p>&emsp;<i class="fa-solid fa-at fa-fw"></i>&emsp;support@freshflowers.com&ensp;&#127804;</p>
             </div>           
         </div>
-        <!-- ********************************************************************************************************************************************************** -->
+        <!-- ********************************************************************************************************************************************************** 
         <div class="admWelcome container-fluid text-center">
             <div class="row headr"> 
                 <div class="col-1 py-1"><button type="button" class="btn backBtn" id="welcomeBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>               
@@ -206,7 +494,7 @@
                 <p><button class="btn btn-outline-success mainBtn text-center py-3" id="mLoc" type="button">Manage Locations</button></p>
             </div>
         </div>
-        <!-- ********************************************************************************************************************************************************** -->
+        <!-- ********************************************************************************************************************************************************** 
         <div class="mngStf container-fluid justify-content-center text-center">
             <div class="row headr"> 
                 <div class="col-1 py-1"><button type="button" class="btn backBtn" id="mstfBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>
@@ -221,7 +509,7 @@
                 <p><button class="btn btn-outline-success mainBtn text-center py-3" id="mstfDel" type="button">Delete Existing Staff</button></p>
             </div> 
         </div>
-        <!-- ********************************************************************************************************************************************************** -->
+        <!-- ********************************************************************************************************************************************************** 
         <div class="mngDepLocs container-fluid justify-content-center text-center">
             <div class="row headr"> 
                 <div class="col-1 py-1"><button type="button" class="btn backBtn" id="mlocBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>
@@ -243,7 +531,7 @@
                 <button class="btn btn-outline-success mainBtn mngDLBtns text-center py-3" id="mLocUpd" type="button">Update</button>
             </div> 
         </div>
-        <!-- ********************************************************************************************************************************************************** -->
+        <!-- ********************************************************************************************************************************************************** 
         <div class="addStf container-fluid">
             <div class="row headr"> 
                 <div class="col-1 py-1"><button type="button" class="btn backBtn" id="addStfBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
@@ -264,7 +552,7 @@
                 <p id="asfeedbk"></p>
             </div>
         </div>
-        <!-- ********************************************************************************************************************************************************** -->
+        <!-- ********************************************************************************************************************************************************** 
         <div class="updtStf container-fluid">
             <div class="row headr"> 
                 <div class="col-1 py-1"><button type="button" class="btn backBtn" id="updStfBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
@@ -291,7 +579,7 @@
             </div>
         </div>
 
-        <!-- ********************************************************************************************************************************************************** -->
+        <!-- ********************************************************************************************************************************************************** 
         <div class="delStf container-fluid">
             <div class="row headr"> 
                 <div class="col-1 py-1"><button type="button" class="btn backBtn" id="delStfBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
@@ -308,7 +596,7 @@
                 <p id="dsfeedbk"></p>
             </div>
         </div>
-        <!-- ********************************************************************************************************************************************************** -->
+        <!-- ********************************************************************************************************************************************************** 
         <div class="addLoc container-fluid">
             <div class="row headr"> 
                 <div class="col-1 py-1"><button type="button" class="btn backBtn" id="addLocBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
@@ -325,7 +613,7 @@
                 <p id="alfeedbk"></p>
             </div>
         </div>
-        <!-- ********************************************************************************************************************************************************** -->
+        <!-- ********************************************************************************************************************************************************** 
         <div class="updtLoc container-fluid">
             <div class="row headr"> 
                 <div class="col-1 py-1"><button type="button" class="btn backBtn" id="updtLocBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
@@ -347,7 +635,7 @@
                 <p id="ulfeedbk"></p>
             </div>
         </div>
-        <!-- ********************************************************************************************************************************************************** -->
+        <!-- ********************************************************************************************************************************************************** 
         <div class="delLoc container-fluid">
             <div class="row headr"> 
                 <div class="col-1 py-1"><button type="button" class="btn backBtn" id="delLocBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
@@ -364,7 +652,7 @@
                 <p id="dlfeedbk"></p>
             </div>
         </div>
-        <!-- ********************************************************************************************************************************************************** -->
+        <!-- ********************************************************************************************************************************************************** 
         <div class="addDep container-fluid">
             <div class="row headr"> 
                 <div class="col-1 py-1"><button type="button" class="btn backBtn" id="addDepBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
@@ -382,7 +670,7 @@
                 <p id="adfeedbk"></p>
             </div>
         </div>
-        <!-- ********************************************************************************************************************************************************** -->
+        <!-- **********************************************************************************************************************************************************
         <div class="updtDep container-fluid">
             <div class="row headr"> 
                 <div class="col-1 py-1"><button type="button" class="btn backBtn" id="updtDepBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
@@ -405,7 +693,7 @@
                 <p id="udfeedbk"></p>
             </div>
         </div>
-        <!-- ********************************************************************************************************************************************************** -->
+        <!-- ********************************************************************************************************************************************************** 
         <div class="delDep container-fluid">
             <div class="row headr"> 
                 <div class="col-1 py-1"><button type="button" class="btn backBtn" id="delDepBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
@@ -422,7 +710,7 @@
                 <p id="ddfeedbk"></p>
             </div>
         </div>
-
+ -->
 
         <script src="libs/fontawesome-free-6.1.1-web/js/fontawesome.js"></script>
         <script src="libs/fontawesome-free-6.1.1-web/js/fontawesome.min.js"></script>        
@@ -430,7 +718,7 @@
         <script src="libs/js/jquery-3.6.0.min.js" type="application/javascript"></script>
         <script src="libs/js/popper-1.14.3-dist/umd/popper.min.js"></script>
         <script src="libs/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
-        <script src="libs/js/compDir.js"></script>
+        <script src="libs/js/newCompDir.js"></script>
         <!-- <script src="libs/js/setTitles.js"></script> -->
     </body>
 </html>

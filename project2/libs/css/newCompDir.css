@@ -1,0 +1,554 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+} 
+
+/* ................................... Preloader ........................ */
+.preloader {    
+    position: fixed;
+    z-index: 99999;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.preloader > img {
+    width: 100px;
+    height: 100px;
+}
+
+.preloader.hidden {
+    animation: fadeOut 1s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeOut {
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+
+/* ................................. end preloader ..............................  */
+
+#mainPg {
+    width: 100vw;
+    height: 100vh;
+}
+
+.mngBtns {
+    font-size: 1.7rem;
+    border: 0px;
+}
+
+#srchBtn {
+    font-size: 1.7rem;
+}
+
+#srchBx {
+    border-radius: 20px;
+    max-width: 30vw;
+    margin-top: 2vh;
+}
+
+.outputTable {
+    padding-left: 3vw;
+    width: 50vw;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3vh;
+    border-width: 3px;
+    height: 70vh;
+    overflow-y: auto;
+}
+
+.listHdr {
+    font-size: 1.2rem;
+    font-weight: bold;    
+    background-color: darkseagreen;
+    text-align: left;
+    padding-left: 1vw;
+}
+
+.editBtn, .delBtn {
+    border: 0px;
+    background-color: #fff;
+}
+
+.editBtn {
+    color: green;    
+}
+
+.delBtn {
+    color: orange;
+}
+
+.mngBtns::before {
+    content:attr(data-bs-toggle="tooltip");
+    border-radius: 5px;
+    border-color: green;
+    border-width: 5px;
+}
+
+.fa-triangle-exclamation {
+    /* display: inline-block; */
+    font-size: 1.5rem;
+}
+
+.ansBtns {
+   text-align: center;
+}
+
+.ansBtns {
+    width: 15vw;
+}
+    
+#theme1 {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    border-width: 5px; 
+    border-color: teal;
+    background-color: darkseagreen;
+    color: black;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+#theme2 {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    border-width: 5px;  
+    border-color: goldenrod;
+    background-color: gold;
+    color: black;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+#theme3 {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    border-width: 5px;  
+    border-color:purple;
+    background-color:plum;
+    color: black;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+#theme4 {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    border-width: 5px;  
+    border-color: cornflowerblue;
+    background-color: lightblue;
+    color: black;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+#theme5 {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    border-width: 5px;  
+    border-color: grey;
+    background-color: lightsteelblue;
+    color: black;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.circleBox {
+    align-items: center;
+    justify-content: center;
+}
+
+#pfnmLst {
+    font-size: 2.5em;     
+    font-weight: bold;
+    margin-top: 3vh;
+}
+
+#pDsg {
+    font-size: 2.3em;
+    margin-top: 2vh;
+}
+
+#pDep {
+    font-size: 1.8em;
+    margin-top: 2vh;
+}
+
+#pEmail {
+    font-size: 1.2em;
+    margin-top: 5vh;
+}
+
+#pLoc {
+    font-size: 1.5em;
+    margin-top: 2vh;
+}
+
+
+.homePic {
+    background-image: url('../img/MyPhonePics 094.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 35vh;
+}
+
+.modal-header {
+    background-color: peachpuff;
+}
+
+select {
+    max-width: 400px;
+}
+
+td {
+    font-size: 1.2rem;
+}
+
+.hdrTxt {
+    font-size: 1.7rem;
+    /* margin-top: 1.5vh; */
+    font-weight: 500;
+}
+
+.tblCaption {
+    font-size: 1.5rem;
+    font-weight: bold;    
+    background-color: darkseagreen;
+    padding-left: 1vw;
+}
+
+
+
+
+/* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#menuBtn {
+    float: left;
+}
+
+#logoutBtn {
+    float: right;
+    margin-top: 5px;
+}
+
+.backBtn, #srchBtn,#logoutBtn {
+    border-radius: 5px;
+    border-color: green;
+    border-width: 2px;
+}
+
+.homePic {
+    background-image: url('../img/MyPhonePics 094.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 35vh;
+}
+
+.fa-landmark {
+    font-size: 2.5rem;
+}
+
+.compName {
+    font-size: 2rem;
+}
+
+.pgTitle {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+#headr {
+    position: fixed;
+    top: 10;
+    z-index: 1000;
+    margin-left: 50vw;
+    justify-content: center;
+}
+
+#menuPgHdrTxt {
+    font-size: 1.7rem;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: 500;
+}
+
+#menuBarTxt, #logoutTxt {
+    font-size: 1rem;
+    font-weight: 500;
+    display: inline-block;
+}
+
+#logoutTxt {
+    margin-top: 1.5vh;
+}
+
+#menuPgHdrTxt, #menuBarTxt {
+    margin-top: 1.5vh;
+}
+
+.menuLnk {
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 1vh;
+}
+
+.menuArea {
+    font-size: 1.5rem;
+    margin-top: 10vw;
+}
+
+.mainBtn {
+    font-weight: bold;
+    border-radius: 7px;
+    margin-top: 2vh;
+    margin-bottom: 5vh;
+    width: 25vw;
+}
+
+button:disabled {
+    background-color: lightgray;
+}
+
+.portalBody {
+    margin-top: 10vh;
+}
+
+#loginBtn {    
+    width: 15vw;
+}
+
+#depDrpDwn {
+    max-width: 400px;
+}
+
+#depStfList {
+    background: scroll;
+}
+
+.pgHdrTxt {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;  
+}
+
+.mainTbl {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto; 
+}
+
+.outputTable {
+    padding-left: 3vw;
+    width: 50vw;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3vh;
+    border-width: 3px;
+    height: 50vh;
+    overflow-y: auto;
+}
+
+.listHdr {
+    font-size: 1.2rem;
+    font-weight: bold;    
+    background-color: darkseagreen;
+    text-align: left;
+}
+
+.listHdrDepID {
+    font-size: 1rem;
+    font-weight: 500;
+    float: right;
+}
+
+.hdrLabel {
+    font-weight: bold;
+}
+
+.selectBar {
+   justify-content: center;
+}
+
+select, #srchBx {
+    max-width: 30vw;
+}
+
+.tblTitl {
+    text-align: center;
+    vertical-align: middle;
+}
+
+#theme1 {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    border-width: 5px; 
+    border-color: teal;
+    background-color: darkseagreen;
+    color: black;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+#theme2 {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    border-width: 5px;  
+    border-color: goldenrod;
+    background-color: gold;
+    color: black;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+#theme3 {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    border-width: 5px;  
+    border-color:purple;
+    background-color:plum;
+    color: black;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+#theme4 {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    border-width: 5px;  
+    border-color: cornflowerblue;
+    background-color: lightblue;
+    color: black;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+#theme5 {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    border-width: 5px;  
+    border-color: grey;
+    background-color: lightsteelblue;
+    color: black;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.circleBox {
+    align-items: center;
+    justify-content: center;
+}
+
+#pfnmLst {
+    font-size: 2.5em;     
+    font-weight: bold;
+    margin-top: 5vh;
+}
+
+#pDsg {
+    font-size: 2.3em;
+    margin-top: 2vh;
+}
+
+#pDep {
+    font-size: 1.8em;
+    margin-top: 2vh;
+}
+
+#pEmail {
+    font-size: 1.2em;
+    margin-top: 5vh;
+}
+
+#pLoc {
+    font-size: 1.5em;
+    margin-top: 2vh;
+}
+
+.welcomeBtns {
+    margin-top: 10vh;
+}
+
+.mngDiv {
+    display: inline-block;
+    margin-top: 5vh;
+}
+
+.mngDLBtns {
+    width: 15vw;
+    margin-left: 2vw;
+    margin-right: 2vw;
+}
+
+#srchBx {
+    border-radius: 20px;
+    width: 50vw;
+    margin-top: 1vh;
+}
+
+.formBx {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#details, #help {
+    margin-top: 2.5vh;
+}
+#help {
+    padding-left: 5vh;
+}
+
+#hrTitl {
+    font-size: 1.8rem;
+}
+
+.contactSpan, .helpTxt {
+    font-size: 1.2rem;
+}
+
+#helpQst {
+    font-style: italic;
+    font-weight: 500;
+}
+
+.getId {
+    border: 3px;
+    border-radius: 7px;
+    width: 30vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#welkomLn2 {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+}  */
+
+/* to make a result list display in rows instead of on a line:  
+                white-space: pre-wrap; in css for the answer area */
