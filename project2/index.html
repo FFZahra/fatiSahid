@@ -18,20 +18,38 @@
         <!-- ********************************************************************************************************************************************************** -->
         <div class="resultsPg container-fluid" id="mainPg">
             <div class="row headr mainPgHdr">
-                <div class="col-2 text-center"><p class="hdrTxt">&#127804;&ensp;Fresh Flowers&ensp;&#127804;</p></div>  
-                <!-- <div class="col-1"><button type="button" class="btn btn-outline-success mngBtns" id="resetList" data-bs-toggle="tooltip" title="Reset List" aria-label="List reset button"><i class="fa-solid fa-rotate-left fa-fw"></i></button></div>
-                <div class="col-1"><button type="button" class="btn btn-outline-success mngBtns" id="addStaff" data-bs-toggle="tooltip" title="Add Employee" aria-label="Add employee button"><i class="fa-solid fa-user-plus fa-fw"></i></button></div>           -->
-                <!-- <div class="col-1"></div> -->
-                <div class="col-sm-5 col-md-7"></div>
-                <div class="col-sm-4 col-md-2 py-1">
+                <div class="col-sm-4 col-md-3 col-2 text-center"><p class="hdrTxt">&#127804;&ensp;Fresh Flowers&ensp;&#127804;</p></div>  
+                <div class="col-sm-4 col-md-5"></div>
+                <div class="col-sm-4 col-md-4">
                     <button type="button" class="btn btn-outline-success mngBtns" id="resetList" data-bs-toggle="tooltip" title="Reset List" aria-label="List reset button"><i class="fa-solid fa-rotate-left fa-fw"></i></button>
                     <button type="button" class="btn btn-outline-success mngBtns" id="addStaff" data-bs-toggle="tooltip" title="Add Employee" aria-label="Add employee button"><i class="fa-solid fa-user-plus fa-fw"></i></button>
                     <button type="button" class="btn btn-outline-success mngBtns" id="mngDepBtn" data-bs-toggle="tooltip" title="Manage departments" aria-label="Manage departments button"><i class="fa-regular fa-building fa-fw"></i></button>              
                     <button type="button" class="btn btn-outline-success mngBtns" id="mngLocBtn" data-bs-toggle="tooltip" title="Manage locations" aria-label="Manage locations button"><i class="fa-solid fa-location-dot fa-fw"></i></button>
-                </div>                
-                <div class="col-1"></div>
+                </div> 
             </div>
-            <div class="searchRow">
+            <div class="row searchRow">
+                <div class="col filterDiv">
+                    <p>
+                        <button class="btn btn-outline-success" type="button" data-bs-toggle="collapse tooltip" title="Filters" data-bs-target=".trio-collapse" aria-expanded="false" aria-controls="depFilter locFilter2 doMainPgFilter" id="filterBtn2"><i class="fa-solid fa-filter fa-fw"></i></button>
+                    </p>
+                    <div class="row">
+                        <div class="col">
+                            <div class="collapse trio-collapse" id="locFilter2">
+                                <select class="form-select" aria-label="Location list dropdown" id="locFilter2Select" name="locFilter2Select"></select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="collapse trio-collapse" id="depFilter">
+                                <select class="form-select" aria-label="Department list dropdown" id="depFilterSelect" name="depFilterSelect"></select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="collapse trio-collapse" id="doMainPgFilter">
+                                <button class="btn applyFilterBtn" type="button" id="applyFilterBtn2" aria-label="apply filter button">Apply filter</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>   
                 <div class="col justify-content-center text-center srchCtrls">                
                     <input class="border border-success px-5" type="text" id="srchBx" name="srchBx">&nbsp;<button class="btn searchBtn" id="srchBtn" type="button" data-bs-toggle="tooltip" title="Click to search" aria-label="srchBtn button"><i class="fa-solid fa-magnifying-glass fa-fw"></i></button>
                 </div>
@@ -153,8 +171,8 @@
                 </div>
             </div>
         </div>
-         <!-- ********************************************************************************************************************************************************** -->
-         <div class="mngPg container-fluid" id="deptPg">
+        <!-- ********************************************************************************************************************************************************** -->       
+        <div class="mngPg container-fluid" id="deptPg">
             <div class="row headr">
                 <div class="col-1 py-1"><button type="button" class="btn backBtn" id="depBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>
                 <div class="col-3 text-left"><p class="hdrTxt">&#127804;&ensp;Fresh Flowers&ensp;&#127804;</p></div>          
@@ -163,7 +181,24 @@
                     <button type="button" class="btn btn-outline-success mngBtns" id="addDept" data-bs-toggle="tooltip" title="Add Department" aria-label="Add department button"><i class="fa-regular fa-building fa-fw"></i><sup><i class="fa-solid fa-plus fa-fw"></i></sup></button>
                 </div>  
                 <div class="col-sm-1"></div> 
-            </div>           
+            </div> 
+            <div class="container filterDiv">
+                <p>
+                    <button class="btn btn-outline-success" type="button" data-bs-toggle="collapse tooltip" title="Filters" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="locFilter1 doDepPgFilter" id="filterBtn"><i class="fa-solid fa-filter fa-fw"></i></button>
+                </p>
+                <div class="row">
+                    <div class="col">
+                        <div class="collapse multi-collapse" id="locFilter1">
+                            <select class="form-select" aria-label="Location list dropdown" id="locFilter1Select" name="locFilter1Select"></select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="collapse multi-collapse" id="doDepPgFilter">
+                            <button class="btn applyFilterBtn" type="button" id="applyFilterBtn1" aria-label="apply filter button">Apply filter</button>
+                        </div>
+                    </div>
+                </div>
+            </div>                   
             <div class="outputTable border border-success pl-0">
                 <p class="tblCaption">Departments</p>
                 <table class="table table-outline table-striped table-responsive" id="deptTbl">      
@@ -297,421 +332,8 @@
                 </div>
             </div>
         </div>
-         <!-- ********************************************************************************************************************************************************** -->
-         
-
-
-
-        <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
-        <!-- <div class="homepg container-fluid" id="home">
-            <div class="row headr"> 
-                <div class="col-1 py-1"><button type="menu" class="btn btn-outline-success" id="menuBtn" aria-label="Menu button"><i class="fa-solid fa-bars fa-fw"></i></button><label id="menuBarTxt" for="menuBtn">&ensp;Menu</label></div>                
-                <div class="col-11"></div> 
-            </div>
-            <div class="row">
-                <div class="col-12 pt-5 homePic">
-                    <div class="row justify-content-center pb-1"><i class="fa-solid fa-landmark fa-fw"></i></div>
-                    <div class="row justify-content-center pt-1 mb-3 compName">Fresh Flowers</div>
-                    <div class="row font-weight-bold justify-content-center pgTitle">Staff Directory</div>
-                </div>
-            </div>
-            <div class="homeBody justify-content-center text-center">
-                <table class="table mainTbl table-borderless">
-                    <tbody>
-                        <tr><td class="text-center"><h5>Search By</h5></td></tr>
-                        <tr><td class="tdHome"><button class="btn btn-outline-success mainBtn text-center my-2 py-3" type="button" id="byDep">Department</button></td></tr>
-                        <tr><td class="tdHome"><button class="btn btn-outline-success mainBtn text-center my-2 py-3" type="button" id="bySnm">Staff&ensp;Name</button></td></tr>
-                        <tr><td class="tdHome"><button class="btn btn-outline-success mainBtn text-center my-2 py-3" type="button" id="byLoc">Location</button></td></tr>
-                        <tr><td class="tdHome"><button class="btn btn-outline-success mainBtn text-center my-2 py-3" type="button" id="byDsg">Designation</button></td></tr>
-                    </tbody>
-                </table>
-            </div>            
-        </div>
         <!-- ********************************************************************************************************************************************************** -->
-        <!-- <div class="stfNmSrch container-fluid" id="nmSrch">
-            <div class="row headr"> 
-                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="snmBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
-            </div>
-            <div class="container-fluid justify-content-center text-center">                
-                <input class="border border-success px-5" type="text" id="srchBx" name="srchBx">&nbsp;<button class="btn searchBtn" id="srchBtn" type="button" aria-label="srchBtn button"><i class="fa-solid fa-magnifying-glass fa-fw"></i></button>
-            </div>
-            <div class="outputTable border border-success">
-                <table class="table table-outline">      
-                    <tbody id="snmStfList"></tbody>      
-                </table>
-            </div>
-        </div> -->
-        <!-- ********************************************************************************************************************************************************** -->
-        <!-- <div class="stfDsgSrch container-fluid" id="dsgSrch">
-            <div class="row headr"> 
-                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="dsgBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
-            </div>
-            <div class="row"> 
-                <div class="col-12 selectBar">
-                    <select class="form-select" aria-label="Designation list dropdown" id="dsgSelect" name="dsgSelect"></select>
-                </div>
-            </div>
-            <div class="outputTable border border-success">
-                <table class="table table-outline">       
-                    <tbody id="dsgStfList"></tbody>      
-                </table>
-            </div>        
-        </div> -->
-        <!-- ********************************************************************************************************************************************************** -->
-        <!-- <div class="stfLocSrch container-fluid" id="locSrch">
-            <div class="row headr"> 
-                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="locBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
-            </div>
-            <div class="row"> 
-                <div class="col-12 selectBar">
-                    <select class="form-select" aria-label="Location list dropdown" id="locSelect" name="locSelect"></select>
-                </div>
-            </div>
-            <div class="outputTable border border-success">
-                <table class="table table-outline">
-                    <tbody id="locStfList"></tbody>      
-                </table>
-            </div>    
-        </div> -->
-        <!-- ********************************************************************************************************************************************************** -->
-        <!-- <div class="stfDepSrch container-fluid" id="depSrch">
-            <div class="row headr"> 
-                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="depBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
-            </div>
-            <div class="row"> 
-                <div class="col-12 selectBar">
-                    <select class="form-select" aria-label="Department list dropdown" id="depSelect" name="depSelect"></select>
-                </div>
-            </div>
-            <div class="outputTable border border-success">
-                <table class="table table-outline">
-                    <tbody id="depStfList"></tbody>      
-                </table>
-            </div>            
-        </div> -->
-        <!-- ********************************************************************************************************************************************************** -->
-        <!-- <div class="stfProfile container-fluid" id="profile">
-            <div class="row headr"> 
-                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="profileBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>               
-                <div class="col-9"></div>
-                <div class="col-1"><a href="#" type=button class="menuLnk"><h5>Menu</h5></a></div>
-                <div class="col-1"></div>
-            </div>
-            <div class="row homePic justify-content-center text-center pt-5">                                 
-                <div class="circleBox"></div>
-            </div>
-            <div class="profileBdy justify-content-center text-center"> 
-                <p id="pfnmLst">First name & Last name</p>
-                <p id="pDsg">Designation</p>
-                <p id="pDep">Department</p>
-                <p id="pEmail">Email</p>
-                <p id="pLoc">Location</p>
-            </div>
-        </div> -->
-        <!-- ********************************************************************************************************************************************************** 
-        <div class="menuPg container-fluid" id="menu">
-            <div class="row menuPgHdr"> 
-                <div class="col-1 py-1"><button type="button" class="btn btn-outline-success mb-5 goHomeBtn" aria-label="Menu page home button"><i class="fa-solid fa-landmark fa-fw" id="pgBtn"></i></button></div>               
-                <div class="col-3"></div> 
-                <div class="col-4 text-center"><p id="menuPgHdrTxt">&#127804;&ensp;Fresh Flowers&ensp;&#127804;</p></div>
-                <div class="col-4"></div>                                
-            </div>
-            <div class="menuArea container-fluid justify-content-center text-center">
-                <p><button class="btn btn-outline-success mainBtn menupg-btns text-center py-3" type="button" id="goHome">Home</button></p>
-                <p><button class="btn btn-outline-success mainBtn menupg-btns text-center py-3" type="button" id="goDepLoc">Departments & Locations</button></p>
-                <p><button class="btn btn-outline-success mainBtn menupg-btns text-center py-3" type="button" id="goAdminP">Admin</button></p>
-                <p><button class="btn btn-outline-success mainBtn menupg-btns text-center py-3" type="button" id="goContact">Contact HR</button></p>
-            </div>
-        </div>
-        <!-- ********************************************************************************************************************************************************** 
-        <div class="adminPortalPg container-fluid" id="adminPort">
-            <div class="row headr"> 
-                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="portalBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
-            </div>
-            <div class="row picCase justify-content-center text-center">
-                <div class="col-12 pt-5 homePic">
-                    <div class="row justify-content-center pb-1 portalRow"><i class="fa-solid fa-landmark fa-fw"></i></div>
-                    <div class="row justify-content-center pt-1 mb-3 portalRow compName">Fresh Flowers</div>
-                    <div class="row font-weight-bold justify-content-center portaRow pgTitle">Admin Portal</div>
-                </div>
-            </div>
-            <div class="portalBody justify-content-center text-center">
-                <form>
-                    <fieldset>
-                        <legend> Enter a username </legend><br><br>
-                        <label for="unm">User Name:&emsp;</label><input class="border border-success" type="text" id="unm" name="unm" required autofocus><br><p id="hideTxt"></p><br>
-                        <button class="btn btn-outline-success mainBtn text-center py-2" type="button" id="loginBtn" disabled>Log in</button><br>
-                    </fieldset>
-                </form> 
-            </div> 
-        </div>
-        <!-- ********************************************************************************************************************************************************** 
-        <div class="depsNLocs container-fluid">
-            <div class="row headr"> 
-                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="depLocBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
-            </div>
-            <p class="pgHdrTxt" id="depLocHdr">Departments & Locations</p>
-            <table class="table mainTbl border border-success table-outline">     
-                <tbody id="depLocList"></tbody>      
-            </table>            
-        </div>
-        <!-- ********************************************************************************************************************************************************** 
-        <div class="contactHR container-fluid justify-content-center">
-            <div class="row headr"> 
-                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="contactBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
-                <div class="col-11"></div>
-            </div>            
-            <div class="col-12 pt-5 homePic">
-                <div class="row justify-content-center pb-1 portalRow"><i class="fa-solid fa-landmark fa-fw"></i></div>
-                <div class="row justify-content-center pt-1 mb-3 portalRow compName">Fresh Flowers</div>
-                <div class="row font-weight-bold justify-content-center portaRow pgTitle">Contact</div>
-            </div>
-            <div class="justify-content-center text-center" id="details">
-                <p id="hrTitl">Human Resources Department</p>
-                <p><i class="fa-solid fa-phone fa-fw"></i>&emsp;<span class="contactSpan">(+44) 0207 325 8187</span></p>
-                <p><i class="fa-solid fa-at fa-fw"></i>&emsp;<span class="contactSpan">enquirieshr@freshflowers.com</span></p>
-                <p><i class="fa-solid fa-paper-plane fa-fw"></i>&emsp;<span class="contactSpan">233 Balsett Moore Way<br>London<br>WC5N 2LT<br></span></p>
-            </div>
-            <div class="text-left" id="help">
-                <p class="helpTxt" id="helpQst">Need help using the application?</p>
-                <p class="helpTxt">Call support on:</p>
-                <p>&emsp;<i class="fa-solid fa-phone fa-fw"></i>&emsp;+49 701 6825176</p>
-                <p class="helpTxt">or send them an email at:</p>
-                <p>&emsp;<i class="fa-solid fa-at fa-fw"></i>&emsp;support@freshflowers.com&ensp;&#127804;</p>
-            </div>           
-        </div>
-        <!-- ********************************************************************************************************************************************************** 
-        <div class="admWelcome container-fluid text-center">
-            <div class="row headr"> 
-                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="welcomeBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>               
-                <div class="col-10"></div>
-                <div class="col-1 py-1"><label id="logoutTxt" for="logoutBtn">Logout</label><button type="button" class="btn mr-2" id="logoutBtn" aria-label="Logout button"><i class="fa-solid fa-right-from-bracket fa-fw"></i></button></div>                               
-            </div>
-            <p class="pgHdrTxt" id="welcomeHdr">Welcome</p>
-            <p class="mt-1" id="welkomLn2">Fresh Flowers Admin</p>   
-            <div class="welcomeBtns container-fluid justify-content-center text-center">
-                <p><button class="btn btn-outline-success mainBtn text-center py-3" id="mStf" type="button">Manage Staff</button></p>
-                <p><button class="btn btn-outline-success mainBtn text-center py-3" id="mLoc" type="button">Manage Locations</button></p>
-            </div>
-        </div>
-        <!-- ********************************************************************************************************************************************************** 
-        <div class="mngStf container-fluid justify-content-center text-center">
-            <div class="row headr"> 
-                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="mstfBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>
-                <div class="col-9"></div>
-                <div class="col-1"><a href="#" type=button class="menuLnk"><h5>Menu</h5></a></div>
-                <div class="col-1"></div>
-            </div>
-            <p class="pgHdrTxt mt-3 mb-3" id="mstfHdr">Manage Staff</p>
-            <div class="menuArea justify-content-center text-center">
-                <p><button class="btn btn-outline-success mainBtn text-center py-3" id="mstfAdd" type="button">Add New Staff</button></p>
-                <p><button class="btn btn-outline-success mainBtn text-center py-3" id="mstfUpd" type="button">Update Existing Staff</button></p>
-                <p><button class="btn btn-outline-success mainBtn text-center py-3" id="mstfDel" type="button">Delete Existing Staff</button></p>
-            </div> 
-        </div>
-        <!-- ********************************************************************************************************************************************************** 
-        <div class="mngDepLocs container-fluid justify-content-center text-center">
-            <div class="row headr"> 
-                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="mlocBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>
-                <div class="col-9"></div>
-                <div class="col-1"><a href="#" type=button class="menuLnk"><h5>Menu</h5></a></div>
-                <div class="col-1"></div>  
-            </div>
-            <p class="pgHdrTxt" id="mlocHdr">Manage Departments & Locations</p><br>
-            <p class="text-left"><h4>Departments</h4></p>
-            <div class="mngDiv justify-content-center text-center" id="mgDeps">
-                <button class="btn btn-outline-success mainBtn mngDLBtns text-center py-3" id="mDepAdd" type="button">Add</button>
-                <button class="btn btn-outline-success mainBtn mngDLBtns text-center py-3" id="mDepDel" type="button">Delete</button>
-                <button class="btn btn-outline-success mainBtn mngDLBtns text-center py-3" id="mDepUpd" type="button">Update</button>
-            </div>
-            <p class="text-left"><h4>Locations</h4></p>
-            <div class="mngDiv justify-content-center text-center" id="mgLocs">
-                <button class="btn btn-outline-success mainBtn mngDLBtns text-center py-3" id="mLocAdd" type="button">Add</button>
-                <button class="btn btn-outline-success mainBtn mngDLBtns text-center py-3" id="mLocDel" type="button">Delete</button>
-                <button class="btn btn-outline-success mainBtn mngDLBtns text-center py-3" id="mLocUpd" type="button">Update</button>
-            </div> 
-        </div>
-        <!-- ********************************************************************************************************************************************************** 
-        <div class="addStf container-fluid">
-            <div class="row headr"> 
-                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="addStfBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
-            </div>
-            <p class="pgHdrTxt mt-5 mb-5" id="mstfHdr">Add New Staff</p>
-            <div class="container-fluid justify-content-center text-center mt-5">
-                <form>
-                    <fieldset>
-                        <legend> Enter new staff details </legend><br><br>
-                        <label for="fnm">First Name:&emsp;</label><input class="border border-success" type="text" id="fnm" name="fnm" required autofocus><br><br>
-                        <label for="lnm">Last Name:&emsp;</label><input class="border border-success" type="text" id="lnm" name="lnm" required><br><br>
-                        <label for="dsgnm">Designation:&emsp;</label><input class="border border-success" type="text" id="dsgnm" name="dsgnm" required><br><br>
-                        <label for="eml">Email:&emsp;</label><input class="border border-success" type="text" id="eml" name="eml" required><br><br>
-                        <label for="dip">Department ID:&emsp;</label><input class="border border-success" type="text" id="dip" name="dip" required><br><br>
-                        <button class="btn btn-outline-success mainBtn text-center py-3" type="button" id="adstf">Add Staff</button><br>
-                    </fieldset>
-                </form>
-                <p id="asfeedbk"></p>
-            </div>
-        </div>
-        <!-- ********************************************************************************************************************************************************** 
-        <div class="updtStf container-fluid">
-            <div class="row headr"> 
-                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="updStfBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
-            </div>
-            <p class="pgHdrTxt mt-5 mb-5">Update Staff Details</p>
-            <div class="container-fluid justify-content-center text-center mt-5">
-                <div class="getId border border-success mb-5 py-2">
-                    <h6>Enter ID of record to be updated: </h6><br>
-                    <label for="updID">Staff ID:&emsp;</label><input class="border border-success" type="text" id="updID" name="updID"><br><br>
-                    <button class="btn btn-outline-success text-center py-1" type="button" id="updIDBtn">Submit ID</button>
-                </div>
-                <form>
-                    <fieldset>
-                        <legend> Update record details </legend><br><br>                        
-                        <label for="ufnm">First Name:&emsp;</label><input class="border border-success" type="text" id="ufnm" name="ufnm"><br><br>
-                        <label for="ulnm">Last Name:&emsp;</label><input class="border border-success" type="text" id="ulnm" name="ulnm"><br><br>
-                        <label for="udsgnm">Designation:&emsp;</label><input class="border border-success" type="text" id="udsgnm" name="udsgnm"><br><br>
-                        <label for="ueml">Email:&emsp;</label><input class="border border-success" type="text" id="ueml" name="ueml"><br><br>
-                        <label for="udip">Department ID:&emsp;</label><input class="border border-success" type="text" id="udip" name="udip"><br><br>
-                        <button class="btn btn-outline-success mainBtn text-center py-3" type="button" id="updstf">Save</button><br>
-                    </fieldset>
-                </form><br>
-                <p id="usfeedbk"></p>
-            </div>
-        </div>
-
-        <!-- ********************************************************************************************************************************************************** 
-        <div class="delStf container-fluid">
-            <div class="row headr"> 
-                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="delStfBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
-            </div>
-            <p class="pgHdrTxt mt-5 mb-5" id="mstfHdr">Delete Staff Record</p>
-            <div class="justify-content-center text-center mt-5">
-                <form>
-                    <fieldset>
-                        <legend> Enter ID of record to be deleted </legend><br><br>
-                        <label for="did">Staff ID:&emsp;</label><input class="border border-success" type="text" id="did" name="did" required><br><br>
-                        <button class="btn btn-outline-success mainBtn text-center py-3" type="button" id="delstf">Delete Staff</button><br>
-                    </fieldset>
-                </form><br>
-                <p id="dsfeedbk"></p>
-            </div>
-        </div>
-        <!-- ********************************************************************************************************************************************************** 
-        <div class="addLoc container-fluid">
-            <div class="row headr"> 
-                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="addLocBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
-            </div>
-            <p class="pgHdrTxt mt-5 mb-5" id="mstfHdr">Add New Location</p>
-            <div class="justify-content-center text-center mt-5">
-                <form>
-                    <fieldset>
-                        <legend> Enter new location name </legend><br><br>
-                        <label for="locNm">Location Name:&emsp;</label><input class="border border-success" type="text" id="locNm" name="locNm" required><br><br>
-                        <button class="btn btn-outline-success mainBtn text-center py-3" type="button" id="adLoc">Add Location</button><br>
-                    </fieldset>
-                </form><br>
-                <p id="alfeedbk"></p>
-            </div>
-        </div>
-        <!-- ********************************************************************************************************************************************************** 
-        <div class="updtLoc container-fluid">
-            <div class="row headr"> 
-                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="updtLocBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
-            </div>
-            <p class="pgHdrTxt mt-5 mb-5">Update Location</p>
-            <div class="container-fluid justify-content-center text-center mt-5">
-                <div class="getId border border-success mb-5 py-2">
-                    <h6>Enter ID of location to be updated: </h6><br>
-                    <label for="ulcID">Department ID:&emsp;</label><input class="border border-success" type="text" id="ulcID" name="ulcID"><br><br>
-                    <button class="btn btn-outline-success text-center py-1" type="button" id="ulcIDBtn">Submit ID</button>
-                </div>
-                <form>
-                    <fieldset>
-                        <legend> Update location details </legend><br><br>                        
-                        <label for="locnm">Location Name:&emsp;</label><input class="border border-success" type="text" id="locnm" name="locnm"><br><br>
-                        <button class="btn btn-outline-success mainBtn text-center py-3" type="button" id="upLoc">Save</button><br>
-                    </fieldset>
-                </form><br>
-                <p id="ulfeedbk"></p>
-            </div>
-        </div>
-        <!-- ********************************************************************************************************************************************************** 
-        <div class="delLoc container-fluid">
-            <div class="row headr"> 
-                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="delLocBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
-            </div>
-            <p class="pgHdrTxt mt-5 mb-5" id="mstfHdr">Delete Location</p>
-            <div class="justify-content-center text-center mt-5">
-                <form>
-                    <fieldset>
-                        <legend> Enter ID of location to be deleted </legend><br><br>
-                        <label for="dil">Location ID:&emsp;</label><input class="border border-success" type="text" id="dil" name="dil" required><br><br>
-                        <button class="btn btn-outline-success mainBtn text-center py-3" type="button" id="dLoc">Delete Location</button><br>
-                    </fieldset>
-                </form><br>
-                <p id="dlfeedbk"></p>
-            </div>
-        </div>
-        <!-- ********************************************************************************************************************************************************** 
-        <div class="addDep container-fluid">
-            <div class="row headr"> 
-                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="addDepBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
-            </div>
-            <p class="pgHdrTxt mt-5 mb-5" id="mstfHdr">Add New Department</p>
-            <div class="justify-content-center text-center mt-5">
-                <form>
-                    <fieldset>
-                        <legend> Enter new department details </legend><br><br>
-                        <label for="dnm">Department Name:&emsp;</label><input class="border border-success" type="text" id="dnm" name="dnm" required><br><br>
-                        <label for="lid">Location ID:&emsp;</label><input class="border border-success" type="text" id="lid" name="lid" required><br><br>
-                        <button class="btn btn-outline-success mainBtn text-center py-3" type="button" id="aDep">Add Department</button><br>
-                    </fieldset>
-                </form><br>
-                <p id="adfeedbk"></p>
-            </div>
-        </div>
-        <!-- **********************************************************************************************************************************************************
-        <div class="updtDep container-fluid">
-            <div class="row headr"> 
-                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="updtDepBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
-            </div>
-            <p class="pgHdrTxt mt-5 mb-5">Update Department</p>
-            <div class="container-fluid justify-content-center text-center mt-5">
-                <div class="getId border border-success mb-5 py-2">
-                    <h6>Enter ID of department to be updated: </h6><br>
-                    <label for="uID">Department ID:&emsp;</label><input class="border border-success" type="text" id="uID" name="uID"><br><br>
-                    <button class="btn btn-outline-success text-center py-1" type="button" id="uIDBtn">Submit ID</button>
-                </div>
-                <form>
-                    <fieldset>
-                        <legend> Update department details </legend><br><br>                        
-                        <label for="depnm">Department Name:&emsp;</label><input class="border border-success" type="text" id="depnm" name="depnm"><br><br>
-                        <label for="locId">Location ID:&emsp;</label><input class="border border-success" type="text" id="locId" name="locId"><br><br>
-                        <button class="btn btn-outline-success mainBtn text-center py-3" type="button" id="upDep">Save</button><br>
-                    </fieldset>
-                </form><br>
-                <p id="udfeedbk"></p>
-            </div>
-        </div>
-        <!-- ********************************************************************************************************************************************************** 
-        <div class="delDep container-fluid">
-            <div class="row headr"> 
-                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="delDepBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  
-            </div>
-            <p class="pgHdrTxt mt-5 mb-5" id="mstfHdr">Delete Staff Record</p>
-            <div class="justify-content-center text-center mt-5">
-                <form>
-                    <fieldset>
-                        <legend> Enter ID of department to be deleted </legend><br><br>
-                        <label for="delD">Department ID:&emsp;</label><input class="border border-success" type="text" id="delD" name="delD" required><br><br>
-                        <button class="btn btn-outline-success mainBtn text-center py-3" type="button" id="dDep">Delete Department</button><br>
-                    </fieldset>
-                </form><br>
-                <p id="ddfeedbk"></p>
-            </div>
-        </div>
- -->
-
+        
         <script src="libs/fontawesome-free-6.1.1-web/js/fontawesome.js"></script>
         <script src="libs/fontawesome-free-6.1.1-web/js/fontawesome.min.js"></script>        
         <script src="libs/fontawesome-free-6.1.1-web/js/all.min.js"></script>

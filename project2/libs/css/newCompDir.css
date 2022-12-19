@@ -66,7 +66,7 @@ html, body {
 
 .outputTable {
     padding-left: 3vw;
-    width: 50vw;
+    width: 75vw;
     margin-left: auto;
     margin-right: auto;
     margin-top: 3vh;
@@ -238,6 +238,46 @@ td {
     font-weight: bold;    
     background-color: darkseagreen;
     padding-left: 1vw;
+}
+
+
+.trio-collapse {
+    display: inline-block;
+}
+
+select:disabled {
+    background-color: lightgrey;
+}
+
+.applyFilterBtn {
+    background-color: peachpuff;
+    border-color: darkseagreen;
+    border-width: 2px;
+    font-weight: 500;
+}
+
+@media only screen and (max-width: 760px) {
+    /* For mobile phones: */
+   .headr, tbody {
+      font-size: 90%;
+    }
+   
+}
+
+@media only screen and (max-width: 620px) {
+    /* For mobile phones: */
+   .headr, tbody {
+      font-size: 80%;
+    }
+   
+  }
+
+@media only screen and (max-width: 480px) {
+    /* For mobile phones: */
+    .headr, tbody {
+        font-size: 70%;
+    }
+
 }
 
 
