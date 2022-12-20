@@ -337,6 +337,32 @@ function updateStaff(idnum, hint){
     });
 }
 
+function resetLocs(){
+    $.ajax({
+        url: "libs/php/getLocations.php",
+        type: "GET",
+        dataType: 'json',    
+        success: function(response){
+            var dat = response.data;  
+
+            // clear current table contents:
+            if (dat.length > 0) {
+                $('#locList').html('');                
+            }
+
+            var sites = "";
+            for (var i = 0; i < dat.length; i++){
+                sites = sites + '<tr><td><p id="' + dat[i].id + '">' + dat[i].name + '&emsp;<button class="button editBtn"><i class="fa-solid fa-pen-to-square fa-fw"></i></button>&emsp;<button class="button delBtn"><i class="fa-regular fa-trash-can"></i></button></p></td></tr>';
+            }
+            
+            $('#locList').html(sites);
+        },
+        error: function(jqXHR){
+            console.log(jqXHR, 'Something is wrong');
+        }
+    });
+} // end resetLocs
+
 $(document).ready(function(){
     $('#profile').hide();
     $('#deptPg').hide();
@@ -608,35 +634,39 @@ $(document).ready(function(){
 });
 
 // ******************** Manage departments ***************************************
-$('#mngDepBtn').click(function(){
+$('.vwDep').click(function(){
     $('#profile').hide();
     $('#locPg').hide();
     $('#mainPg').hide();
     $('#deptPg').show();
 
-    $.ajax({
-        url: "libs/php/getAllDepartments.php",
-        type: "GET",
-        dataType: 'json',    
-        success: function(response){
-            var dat = response.data;            
-
-            // clear current table contents:
-            if (dat.length > 0) {
-                $('#deptList').html('');                
+    function resetDepts(){
+        $.ajax({
+            url: "libs/php/getAllDepartments.php",
+            type: "GET",
+            dataType: 'json',    
+            success: function(response){
+                var dat = response.data;            
+    
+                // clear current table contents:
+                if (dat.length > 0) {
+                    $('#deptList').html('');                
+                }
+    
+                var depts = "";
+                for (var i = 0; i < dat.length; i++){
+                    depts = depts + '<tr><td><p id="' + dat[i].id + '">' + dat[i].name + '&emsp;<button class="button editBtn"><i class="fa-solid fa-pen-to-square fa-fw"></i></button>&emsp;<button class="button delBtn"><i class="fa-regular fa-trash-can"></i></button></p></td></tr>';                
+                }
+                
+                $('#deptList').html(depts);            
+            },
+            error: function(jqXHR){
+                console.log(jqXHR, 'Something is wrong'); 
             }
-
-            var depts = "";
-            for (var i = 0; i < dat.length; i++){
-                depts = depts + '<tr><td><p id="' + dat[i].id + '">' + dat[i].name + '&emsp;<button class="button editBtn"><i class="fa-solid fa-pen-to-square fa-fw"></i></button>&emsp;<button class="button delBtn"><i class="fa-regular fa-trash-can"></i></button></p></td></tr>';                
-            }
-            
-            $('#deptList').html(depts);            
-        },
-        error: function(jqXHR){
-            console.log(jqXHR, 'Something is wrong'); 
-        }
-    });        
+        });        
+    }
+    
+    resetDepts();
 
     $('#filterBtn').click(function(){
         $('.multi-collapse').collapse('show');   // $('.multi-collapse').on("show.bs.collapse", function(){
@@ -827,6 +857,24 @@ $('#mngDepBtn').click(function(){
         }); 
 
     });
+
+    $('#resetDeptList').click(function(){
+        resetDepts();
+    });
+
+    $('#viewStfBtn').click(function(){
+        $('#profile').hide();
+        $('#deptPg').hide();
+        $('#locPg').hide();
+        $('#mainPg').show();
+    });
+
+    // $('#viewLocsBtn').click(function(){
+    //     $('#profile').hide();
+    //     $('#deptPg').hide();
+    //     $('#mainPg').hide();
+    //     $('#locPg').show();
+    // });
     
     $('#depBkBtn').click(function(){
         $('#profile').hide();
@@ -903,35 +951,13 @@ $('#mngDepBtn').click(function(){
 });
 
 // ******************* Mange locations ****************************************
-$('#mngLocBtn').click(function(){
+$('.vwLoc').click(function(){
     $('#profile').hide();
     $('#deptPg').hide();
     $('#mainPg').hide();
     $('#locPg').show();
 
-    $.ajax({
-        url: "libs/php/getLocations.php",
-        type: "GET",
-        dataType: 'json',    
-        success: function(response){
-            var dat = response.data;  
-
-            // clear current table contents:
-            if (dat.length > 0) {
-                $('#locList').html('');                
-            }
-
-            var sites = "";
-            for (var i = 0; i < dat.length; i++){
-                sites = sites + '<tr><td><p id="' + dat[i].id + '">' + dat[i].name + '&emsp;<button class="button editBtn"><i class="fa-solid fa-pen-to-square fa-fw"></i></button>&emsp;<button class="button delBtn"><i class="fa-regular fa-trash-can"></i></button></p></td></tr>';
-            }
-            
-            $('#locList').html(sites);
-        },
-        error: function(jqXHR){
-            console.log(jqXHR, 'Something is wrong');
-        }
-    });
+    resetLocs();
 
     // to edit a record from the location list table, on edit button click:
     $("#locTbl").on('click', '.editBtn', function() {
@@ -1056,6 +1082,24 @@ $('#mngLocBtn').click(function(){
             });
         });
     });
+
+    $('#resetLocList').click(function(){
+        resetLocs();
+    });
+
+    $('#viewStfBtn2').click(function(){
+        $('#profile').hide();
+        $('#deptPg').hide();
+        $('#locPg').hide();
+        $('#mainPg').show();
+    });
+
+    // $('#viewDeptsBtn').click(function(){
+    //     $('#locPg').hide();
+    //     $('#mainPg').hide();
+    //     $('#profile').hide();
+    //     $('#deptPg').show();
+    // });
 
     $('#locBkBtn').click(function(){
         $('#profile').hide();

@@ -23,8 +23,8 @@
                 <div class="col-sm-4 col-md-4">
                     <button type="button" class="btn btn-outline-success mngBtns" id="resetList" data-bs-toggle="tooltip" title="Reset List" aria-label="List reset button"><i class="fa-solid fa-rotate-left fa-fw"></i></button>
                     <button type="button" class="btn btn-outline-success mngBtns" id="addStaff" data-bs-toggle="tooltip" title="Add Employee" aria-label="Add employee button"><i class="fa-solid fa-user-plus fa-fw"></i></button>
-                    <button type="button" class="btn btn-outline-success mngBtns" id="mngDepBtn" data-bs-toggle="tooltip" title="Manage departments" aria-label="Manage departments button"><i class="fa-regular fa-building fa-fw"></i></button>              
-                    <button type="button" class="btn btn-outline-success mngBtns" id="mngLocBtn" data-bs-toggle="tooltip" title="Manage locations" aria-label="Manage locations button"><i class="fa-solid fa-location-dot fa-fw"></i></button>
+                    <button type="button" class="btn btn-outline-success vwDep mngBtns" id="mngDepBtn" data-bs-toggle="tooltip" title="Manage departments" aria-label="Manage departments button"><i class="fa-solid fa-building fa-fw"></i></button>              
+                    <button type="button" class="btn btn-outline-success vwLoc mngBtns" id="mngLocBtn" data-bs-toggle="tooltip" title="Manage locations" aria-label="Manage locations button"><i class="fa-solid fa-location-dot fa-fw"></i></button>
                 </div> 
             </div>
             <div class="row searchRow">
@@ -173,14 +173,19 @@
         </div>
         <!-- ********************************************************************************************************************************************************** -->       
         <div class="mngPg container-fluid" id="deptPg">
-            <div class="row headr">
+            <div class="row headr1">
                 <div class="col-1 py-1"><button type="button" class="btn backBtn" id="depBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>
                 <div class="col-3 text-left"><p class="hdrTxt">&#127804;&ensp;Fresh Flowers&ensp;&#127804;</p></div>          
-                <div class="col-sm-6 col-md-7"></div>       
-                <div class="col-1">
-                    <button type="button" class="btn btn-outline-success mngBtns" id="addDept" data-bs-toggle="tooltip" title="Add Department" aria-label="Add department button"><i class="fa-regular fa-building fa-fw"></i><sup><i class="fa-solid fa-plus fa-fw"></i></sup></button>
-                </div>  
-                <div class="col-sm-1"></div> 
+                <div class="col-sm-6 col-md-7"></div>
+            </div>
+            <div class="row headr2">                
+                <div class="col-sm-7 col-md-9 col-lg-10"></div>      
+                <div class="col">
+                    <button type="button" class="btn btn-outline-success mngBtns" id="resetDeptList" data-bs-toggle="tooltip" title="Reset List" aria-label="List reset button"><i class="fa-solid fa-rotate-left fa-fw"></i></button>
+                    <button type="button" class="btn btn-outline-success mngBtns" id="addDept" data-bs-toggle="tooltip" title="Add Department" aria-label="Add department button"><i class="fa-solid fa-building fa-fw"></i><sup><i class="fa-solid fa-plus fa-fw"></i></sup></button>
+                    <button type="button" class="btn btn-outline-success mngBtns" id="viewStfBtn" data-bs-toggle="tooltip" title="View Employees" aria-label="view employees button"><i class="fa-solid fa-user fa-fw"></i></button>              
+                    <button type="button" class="btn btn-outline-success vwLoc mngBtns" id="viewLocsBtn" data-bs-toggle="tooltip" title="View Locations" aria-label="view locations button"><i class="fa-solid fa-location-dot fa-fw"></i></button>
+                </div>   
             </div> 
             <div class="container filterDiv">
                 <p>
@@ -208,15 +213,20 @@
         </div>
         <!-- ********************************************************************************************************************************************************** -->
         <div class="mngPg container-fluid" id="locPg">
-            <div class="row headr">
+            <div class="row headr1">
                 <div class="col-1 py-1"><button type="button" class="btn backBtn" id="locBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>
                 <div class="col-3 text-left"><p class="hdrTxt">&#127804;&ensp;Fresh Flowers&ensp;&#127804;</p></div>  
-                <div class="col-sm-6 col-md-7"></div> 
-                <div class="col-1">               
+                <div class="col-sm-6 col-md-7"></div>
+            </div>
+            <div class="row headr2">                
+                <div class="col-sm-7 col-md-9 col-lg-10"></div>       
+                <div class="col">                    
+                    <button type="button" class="btn btn-outline-success mngBtns" id="resetLocList" data-bs-toggle="tooltip" title="Reset Location List" aria-label="List reset button"><i class="fa-solid fa-rotate-left fa-fw"></i></button>
                     <button type="button" class="btn btn-outline-success mngBtns" id="addLoc" data-bs-toggle="tooltip" title="Add Location" aria-label="Add location button"><i class="fa-solid fa-location-dot fa-fw"></i><sup><i class="fa-solid fa-plus fa-fw"></i></sup></button>
-                </div>                          
-                <div class="col-sm-1"></div>
-            </div>           
+                    <button type="button" class="btn btn-outline-success mngBtns" id="viewStfBtn2" data-bs-toggle="tooltip" title="View Employees" aria-label="view employees button"><i class="fa-solid fa-user fa-fw"></i></button>              
+                    <button type="button" class="btn btn-outline-success vwDep mngBtns" id="viewDeptsBtn" data-bs-toggle="tooltip" title="View Departments" aria-label="view departments button"><i class="fa-regular fa-building fa-fw"></i></button>
+                </div>   
+            </div>        
             <div class="outputTable border border-success">
                 <p class="tblCaption">Locations</p>
                 <table class="table table-outline table-striped table-responsive" id="locTbl">      

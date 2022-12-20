@@ -52,6 +52,17 @@ html, body {
 .mngBtns {
     font-size: 1.7rem;
     border: 0px;
+    /* display: inline-block; */
+}
+
+
+.mngBtns::before {
+    content:attr(data-bs-toggle="tooltip");
+    border-radius: 5px;
+    border-color: green;
+    border-width: 5px;
+    font-weight: 500;
+    font-size: larger;
 }
 
 #srchBtn {
@@ -94,13 +105,6 @@ html, body {
 
 .delBtn {
     color: orange;
-}
-
-.mngBtns::before {
-    content:attr(data-bs-toggle="tooltip");
-    border-radius: 5px;
-    border-color: green;
-    border-width: 5px;
 }
 
 .fa-triangle-exclamation {
@@ -240,7 +244,6 @@ td {
     padding-left: 1vw;
 }
 
-
 .trio-collapse {
     display: inline-block;
 }
@@ -259,7 +262,7 @@ select:disabled {
 @media only screen and (max-width: 760px) {
     /* For mobile phones: */
    .headr, tbody {
-      font-size: 90%;
+      font-size: .9rem;
     }
    
 }
@@ -267,7 +270,7 @@ select:disabled {
 @media only screen and (max-width: 620px) {
     /* For mobile phones: */
    .headr, tbody {
-      font-size: 80%;
+      font-size: .8rem;
     }
    
   }
@@ -275,7 +278,7 @@ select:disabled {
 @media only screen and (max-width: 480px) {
     /* For mobile phones: */
     .headr, tbody {
-        font-size: 70%;
+        font-size: .7rem;
     }
 
 }
