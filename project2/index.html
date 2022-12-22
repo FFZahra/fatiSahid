@@ -18,13 +18,13 @@
         <!-- ********************************************************************************************************************************************************** -->
         <div class="resultsPg container-fluid" id="mainPg">
             <div class="row headr mainPgHdr">
-                <div class="col-sm-4 col-md-3 col-2 text-center"><p class="hdrTxt">&#127804;&ensp;Fresh Flowers&ensp;&#127804;</p></div>  
-                <div class="col-sm-4 col-md-5"></div>
-                <div class="col-sm-4 col-md-4">
-                    <button type="button" class="btn btn-outline-success mngBtns" id="resetList" data-bs-toggle="tooltip" title="Reset List" aria-label="List reset button"><i class="fa-solid fa-rotate-left fa-fw"></i></button>
-                    <button type="button" class="btn btn-outline-success mngBtns" id="addStaff" data-bs-toggle="tooltip" title="Add Employee" aria-label="Add employee button"><i class="fa-solid fa-user-plus fa-fw"></i></button>
-                    <button type="button" class="btn btn-outline-success vwDep mngBtns" id="mngDepBtn" data-bs-toggle="tooltip" title="Manage departments" aria-label="Manage departments button"><i class="fa-solid fa-building fa-fw"></i></button>              
-                    <button type="button" class="btn btn-outline-success vwLoc mngBtns" id="mngLocBtn" data-bs-toggle="tooltip" title="Manage locations" aria-label="Manage locations button"><i class="fa-solid fa-location-dot fa-fw"></i></button>
+                <div class="col"><span class="hdrTxt">&#127804;&ensp;Fresh Flowers</span> 
+                    <!-- <div class="col-sm-4 col-md-5"></div> ,  &ensp;&#127804; -->
+                    <!-- <div class="col"> -->
+                    <button type="button" class="btn btn-outline-success hdright mngBtns" id="resetList" data-bs-toggle="tooltip" title="Reset List" aria-label="List reset button"><i class="fa-solid fa-rotate-left fa-fw"></i></button>
+                    <button type="button" class="btn btn-outline-success hdright mngBtns" id="addStaff" data-bs-toggle="tooltip" title="Add Employee" aria-label="Add employee button"><i class="fa-solid fa-user-plus fa-fw"></i></button>
+                    <button type="button" class="btn btn-outline-success hdright mngBtns" id="mngDepBtn" data-bs-toggle="tooltip" title="Manage departments" aria-label="Manage departments button"><i class="fa-solid fa-building fa-fw"></i></button>              
+                    <button type="button" class="btn btn-outline-success hdright mngBtns" id="mngLocBtn" data-bs-toggle="tooltip" title="Manage locations" aria-label="Manage locations button"><i class="fa-solid fa-location-dot fa-fw"></i></button>
                 </div> 
             </div>
             <div class="row searchRow">
@@ -63,10 +63,11 @@
         <!-- ********************************************************************************************************************************************************** -->
         <div class="stfProfile container-fluid" id="profile">
             <div class="row headr"> 
-                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="profileBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>               
-                <div class="col-9"></div>
-                <div class="col-1"></div>
-                <div class="col-1"></div>
+                <!-- <div class="col-1 py-1"><button type="button" class="btn backBtn" id="profileBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  -->                            
+                <div class="col-12"><button type="button" class="btn btn-outline-success mngBtns" id="prof2mainBtn" data-bs-toggle="tooltip" title="View Employees" aria-label="view employees button"><i class="fa-solid fa-user fa-fw"></i></button>
+                <!-- <button type="button" class="btn btn-outline-success hdright mngBtns" id="toDepBtn" data-bs-toggle="tooltip" title="View Departments" aria-label="view departments button"><i class="fa-regular fa-building fa-fw"></i></button>
+                <button type="button" class="btn btn-outline-success hdright mngBtns" id="toLocBtn" data-bs-toggle="tooltip" title="View Locations" aria-label="view locations button"><i class="fa-solid fa-location-dot fa-fw"></i></button> -->                
+            </div>
             </div>
             <div class="row homePic justify-content-center text-center pt-5">                                 
                 <div class="circleBox"></div>
@@ -102,8 +103,9 @@
                                     <tr><td><label for="ulnm">Last Name:&emsp;</label><input class="border border-success" type="text" id="ulnm" name="ulnm"></td></tr>
                                     <tr><td><label for="udsgnm">Designation:&emsp;</label><input class="border border-success w-50" type="text" id="udsgnm" name="udsgnm"></td></tr>
                                     <tr><td><label for="ueml">Email:&emsp;</label><input class="border border-success w-50" type="text" id="ueml" name="ueml"></td></tr>
-                                    <tr><td><label for="udip">Department ID:&emsp;</label><input class="border border-success" type="text" aria-label="Department id" id="udip" name="udip"></td></tr>
-                                    <tr><td><label for="dipnm">Department Name:&emsp;</label><input class="border border-secondary bg-transparent text-dark w-50" type="text" aria-label="Department name read-only" id="dipnm" name="dipnm" readonly></td></tr>
+                                    <!-- <tr><td><label for="udip">Department ID:&emsp;</label><input class="border border-success" type="text" aria-label="Department id" id="udip" name="udip"></td></tr> -->
+                                    <tr><td><label for="udip">Department ID:&emsp;</label><input class="border border-secondary bg-transparent text-dark w-50" type="text" aria-label="Department name read-only" id="udip" name="udip" readonly></td></tr>
+                                    <tr><td><label for="dipnm">Department Name:&emsp;</label><select class="form-select" aria-label="Department list dropdown" id="dipnm" name="dipnm"></select>
                                 </tbody>
                             </table>
                         </div>
@@ -174,17 +176,12 @@
         <!-- ********************************************************************************************************************************************************** -->       
         <div class="mngPg container-fluid" id="deptPg">
             <div class="row headr1">
-                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="depBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>
-                <div class="col-3 text-left"><p class="hdrTxt">&#127804;&ensp;Fresh Flowers&ensp;&#127804;</p></div>          
-                <div class="col-sm-6 col-md-7"></div>
-            </div>
-            <div class="row headr2">                
-                <div class="col-sm-7 col-md-9 col-lg-10"></div>      
-                <div class="col">
-                    <button type="button" class="btn btn-outline-success mngBtns" id="resetDeptList" data-bs-toggle="tooltip" title="Reset List" aria-label="List reset button"><i class="fa-solid fa-rotate-left fa-fw"></i></button>
-                    <button type="button" class="btn btn-outline-success mngBtns" id="addDept" data-bs-toggle="tooltip" title="Add Department" aria-label="Add department button"><i class="fa-solid fa-building fa-fw"></i><sup><i class="fa-solid fa-plus fa-fw"></i></sup></button>
-                    <button type="button" class="btn btn-outline-success mngBtns" id="viewStfBtn" data-bs-toggle="tooltip" title="View Employees" aria-label="view employees button"><i class="fa-solid fa-user fa-fw"></i></button>              
-                    <button type="button" class="btn btn-outline-success vwLoc mngBtns" id="viewLocsBtn" data-bs-toggle="tooltip" title="View Locations" aria-label="view locations button"><i class="fa-solid fa-location-dot fa-fw"></i></button>
+                <!-- <div class="col-1 py-1"><button type="button" class="btn backBtn" id="depBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div> -->
+                <div class="col"><h3 class="hdrTxt">&#127804;&ensp;Fresh Flowers</h3>
+                    <button type="button" class="btn btn-outline-success hdright mngBtns" id="resetDeptList" data-bs-toggle="tooltip" title="Reset List" aria-label="List reset button"><i class="fa-solid fa-rotate-left fa-fw"></i></button>
+                    <button type="button" class="btn btn-outline-success hdright mngBtns" id="addDept" data-bs-toggle="tooltip" title="Add Department" aria-label="Add department button"><i class="fa-solid fa-building fa-fw"></i><sup><i class="fa-solid fa-plus fa-fw"></i></sup></button>
+                    <button type="button" class="btn btn-outline-success hdright mngBtns" id="depBkBtn" data-bs-toggle="tooltip" title="View Employees" aria-label="view employees button"><i class="fa-solid fa-user fa-fw"></i></button>              
+                    <button type="button" class="btn btn-outline-success hdright mngBtns" id="locBtn" data-bs-toggle="tooltip" title="View Locations" aria-label="view locations button"><i class="fa-solid fa-location-dot fa-fw"></i></button>
                 </div>   
             </div> 
             <div class="container filterDiv">
@@ -214,17 +211,13 @@
         <!-- ********************************************************************************************************************************************************** -->
         <div class="mngPg container-fluid" id="locPg">
             <div class="row headr1">
-                <div class="col-1 py-1"><button type="button" class="btn backBtn" id="locBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>
-                <div class="col-3 text-left"><p class="hdrTxt">&#127804;&ensp;Fresh Flowers&ensp;&#127804;</p></div>  
-                <div class="col-sm-6 col-md-7"></div>
-            </div>
-            <div class="row headr2">                
-                <div class="col-sm-7 col-md-9 col-lg-10"></div>       
-                <div class="col">                    
-                    <button type="button" class="btn btn-outline-success mngBtns" id="resetLocList" data-bs-toggle="tooltip" title="Reset Location List" aria-label="List reset button"><i class="fa-solid fa-rotate-left fa-fw"></i></button>
-                    <button type="button" class="btn btn-outline-success mngBtns" id="addLoc" data-bs-toggle="tooltip" title="Add Location" aria-label="Add location button"><i class="fa-solid fa-location-dot fa-fw"></i><sup><i class="fa-solid fa-plus fa-fw"></i></sup></button>
-                    <button type="button" class="btn btn-outline-success mngBtns" id="viewStfBtn2" data-bs-toggle="tooltip" title="View Employees" aria-label="view employees button"><i class="fa-solid fa-user fa-fw"></i></button>              
-                    <button type="button" class="btn btn-outline-success vwDep mngBtns" id="viewDeptsBtn" data-bs-toggle="tooltip" title="View Departments" aria-label="view departments button"><i class="fa-regular fa-building fa-fw"></i></button>
+                <!-- <div class="col-1 py-1"><button type="button" class="btn backBtn" id="locBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div> -->
+                <div class="col">
+                    <h3 class="hdrTxt">&#127804;&ensp;Fresh Flowers</h3>
+                    <button type="button" class="btn btn-outline-success hdright mngBtns" id="resetLocList" data-bs-toggle="tooltip" title="Reset Location List" aria-label="List reset button"><i class="fa-solid fa-rotate-left fa-fw"></i></button>
+                    <button type="button" class="btn btn-outline-success hdright mngBtns" id="addLoc" data-bs-toggle="tooltip" title="Add Location" aria-label="Add location button"><i class="fa-solid fa-location-dot fa-fw"></i><sup><i class="fa-solid fa-plus fa-fw"></i></sup></button>
+                    <button type="button" class="btn btn-outline-success hdright mngBtns" id="viewStfBtn2" data-bs-toggle="tooltip" title="View Employees" aria-label="view employees button"><i class="fa-solid fa-user fa-fw"></i></button>              
+                    <button type="button" class="btn btn-outline-success hdright mngBtns" id="deptBtn" data-bs-toggle="tooltip" title="View Departments" aria-label="view departments button"><i class="fa-regular fa-building fa-fw"></i></button>
                 </div>   
             </div>        
             <div class="outputTable border border-success">
@@ -343,6 +336,35 @@
             </div>
         </div>
         <!-- ********************************************************************************************************************************************************** -->
+        <!-- hasDepend Modal -->
+        <div class ="modal fade" id ="hasDependModal" data-bs-backdrop="static" keyboard="false" tabindex ="-1" role ="dialog" aria-labelledby =" hasDependModalLabel" aria-hidden ="true">
+            <div class = "modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class = "modal-content">        
+                    <div class = "modal-header">
+                        <h5 class = "modal-title" id = "hasDependModalLabel">Dependency Warning&ensp;<i class="fa-solid fa-triangle-exclamation fa-fw bg-warning"></i></h5>
+                        <button type = "button" class ="btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+                    </div>
+                    
+                    <div class = "modal-body">
+                        <div class="table-responsive">
+                            <table class=" table table-success">
+                                <tbody class="mngDepend text-center">
+                                    <tr><td><p id="line1">Departments exist under this location</p></td></tr>
+                                    <tr><td><p id="line2"><strong>Move</strong> to new location &ensp;OR&ensp; <strong>Go Back</strong> to edit new locations separately</p></td></tr>                                   
+                                    <tr><td><button class="btn btn-outline-success ansBtn text-center py-2" type="button" id="moveBtn">Move</button>&emsp;<button class="btn btn-outline-success ansBtn text-center py-2" type="button" id="goBkBtn">Go Back</button>
+                                    <tr><td><select class="form-select" aria-label="Location list dropdown" id="newOtherSelect" name="newOtherSelect"></select></td></tr>
+                                    <tr><td><button class="btn btn-outline-success ansBtn text-center py-2" type="button" id="setNew">Set new location</button></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>                    
+                    <div class = "modal-footer">
+                        <p id="newOtherFeedbk"></p>
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <!-- ********************************************************************************************************************************************************** -->
         
         <script src="libs/fontawesome-free-6.1.1-web/js/fontawesome.js"></script>
         <script src="libs/fontawesome-free-6.1.1-web/js/fontawesome.min.js"></script>        
@@ -353,4 +375,4 @@
         <script src="libs/js/newCompDir.js"></script>
         <!-- <script src="libs/js/setTitles.js"></script> -->
     </body>
-</html>
+</html> 

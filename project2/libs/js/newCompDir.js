@@ -26,6 +26,9 @@ var eLocModal = new bootstrap.Modal(document.getElementById('eLocModal'));
 // **** Add Location modal  **********
 var aLocModal = new bootstrap.Modal(document.getElementById('aLocModal'));
 
+// **** hasDepend modal  **********
+var hasDepend = new bootstrap.Modal(document.getElementById('hasDependModal'));
+
 // ******************************
 
 $('#resetList').click(function(){
@@ -111,6 +114,27 @@ function stfReset(){
         }
     });
 } // end stfReset()
+
+$('#prof2mainBtn').click(function(){
+    $('#profile').hide();
+    $('#deptPg').hide();
+    $('#locPg').hide();
+    $('#mainPg').show();
+});   
+
+$('#toDepBtn').click(function(){
+    $('#profile').hide();
+    $('#mainPg').hide();
+    $('#locPg').hide();
+    $('#deptPg').show();
+});
+
+$('#toLocBtn').click(function(){
+    $('#profile').hide();
+    $('#mainPg').hide();
+    $('#deptPg').hide();
+    $('#locPg').show();
+});
 
 function clickNshow(radionm){
     var stfId = $('input[name=' + radionm + ']:checked').val();
@@ -226,18 +250,34 @@ function redoProfile(idnum){
             
             $('#profile').show();
             
-            $('#profileBkBtn').click(function(){
-                $('#profile').hide();
-                $('#deptPg').hide();
-                $('#locPg').hide();
-                $('#mainPg').show();
-            });                                        
+            // $('#prof2mainBtn').click(function(){
+            //     $('#profile').hide();
+            //     $('#deptPg').hide();
+            //     $('#locPg').hide();
+            //     $('#mainPg').show();
+            // });   
+            
+            // $('#toDepBtn').click(function(){
+            //     $('#profile').hide();
+            //     $('#mainPg').hide();
+            //     $('#locPg').hide();
+            //     $('#deptPg').show();
+            // });
+
+            // $('#toLocBtn').click(function(){
+            //     $('#profile').hide();
+            //     $('#mainPg').hide();
+            //     $('#deptPg').hide();
+            //     $('#locPg').show();
+            // });
         },
         error: function(jqXHR){
             console.log('Sorry, something is wrong.')
         }                                       
     });
 } // end redoProfile()
+
+
 
 function deleteStaff(idnum, delTrack){
     var delType = delTrack;
@@ -280,18 +320,28 @@ function updateStaff(idnum, hint){
             $('#udsgnm').val(dat.jobTitle);
             $('#ueml').val(dat.email);
             $('#udip').val(dat.departmentID);
-            
-            var dpnam;
-            for (i = 0; i < dpdat.length; i++){
-                if (dpdat[i].id === $('#udip').val()){
-                    dpnam = dpdat[i].name;
-                    break;
-                }                    
-            }  
 
-            $('#dipnm').val(dpnam); // change this to a dropdown box: 
+            // ---------------------- Fill in dropdown values: ----------------
+            // clear current dropdown contents:
+            if (dpdat.length > 0) {
+                $('#dipnm').html('');                
+            }
+
+            var choices = "<option>&emsp;</option>";
+            for (var i = 0; i < dpdat.length; i++){
+                choices = choices + '<option value = "' + dpdat[i].id + '">' + dpdat[i].name + '</option>';
+            }
+            
+            $('#dipnm').html(choices);
+            var dpnam = $('#udip').val(); 
+            $('#dipnm').val(dpnam); 
 
             $('#editModal').modal("show"); 
+
+            $('#dipnm').change(function(){
+                var newID = $('#dipnm').val();
+                $('#udip').val(newID);
+            });
 
             $('#updstf').click(function(){
                 var fval = $('#ufnm').val();
@@ -335,7 +385,7 @@ function updateStaff(idnum, hint){
             console.log(jqXHR, 'Something is wrong');
         }
     });
-}
+}  // end updateStaff()
 
 function resetLocs(){
     $.ajax({
@@ -489,7 +539,6 @@ $(document).ready(function(){
         srchTxt = srchTxt.trim().toUpperCase();
         var srchLen = srchTxt.length;
 
-        // bring ajax in here:
         $.ajax({
             url: "libs/php/getPersonnelAlphabetic.php",
             type: "GET",
@@ -631,15 +680,8 @@ $(document).ready(function(){
         });   
     });
     
-});
 
-// ******************** Manage departments ***************************************
-$('.vwDep').click(function(){
-    $('#profile').hide();
-    $('#locPg').hide();
-    $('#mainPg').hide();
-    $('#deptPg').show();
-
+    // ******************** Manage departments ***************************************
     function resetDepts(){
         $.ajax({
             url: "libs/php/getAllDepartments.php",
@@ -647,12 +689,12 @@ $('.vwDep').click(function(){
             dataType: 'json',    
             success: function(response){
                 var dat = response.data;            
-    
+
                 // clear current table contents:
                 if (dat.length > 0) {
                     $('#deptList').html('');                
                 }
-    
+
                 var depts = "";
                 for (var i = 0; i < dat.length; i++){
                     depts = depts + '<tr><td><p id="' + dat[i].id + '">' + dat[i].name + '&emsp;<button class="button editBtn"><i class="fa-solid fa-pen-to-square fa-fw"></i></button>&emsp;<button class="button delBtn"><i class="fa-regular fa-trash-can"></i></button></p></td></tr>';                
@@ -664,9 +706,16 @@ $('.vwDep').click(function(){
                 console.log(jqXHR, 'Something is wrong'); 
             }
         });        
-    }
-    
-    resetDepts();
+    } // end resetDepts()
+
+    $('#mngDepBtn').click(function(){
+        $('#profile').hide();
+        $('#locPg').hide();
+        $('#mainPg').hide();
+        $('#deptPg').show();
+        
+        resetDepts();
+    });
 
     $('#filterBtn').click(function(){
         $('.multi-collapse').collapse('show');   // $('.multi-collapse').on("show.bs.collapse", function(){
@@ -677,12 +726,12 @@ $('.vwDep').click(function(){
             dataType: 'json',    
             success: function(response){
                 var dat = response.data;            
-    
+
                 // clear current dropdown contents:
                 if (dat.length > 0) {
                     $('#locFilter1Select').html('');                
                 }
-    
+
                 var choices = "<option>&emsp;</option>";
                 for (var i = 0; i < dat.length; i++){
                     choices = choices + '<option value = "' + dat[i].id + '">' + dat[i].name + '</option>';
@@ -698,7 +747,7 @@ $('.vwDep').click(function(){
 
         $('#applyFilterBtn1').click(function(){
             var getLocID = $('#locFilter1Select').val();
-    
+
             $.ajax({
                 url: "libs/php/getDepartmentsByLoc.php",
                 type: "POST",
@@ -708,23 +757,23 @@ $('.vwDep').click(function(){
                 }, 
                 success: function(response){
                     var dat = response.data;            
-    
+
                     var depsByLoc = '';
                     for (var i = 0; i < dat.length; i++){
                         depsByLoc = depsByLoc + '<tr><td><p id="' + dat[i].id + '">' + dat[i].name + '&emsp;<button class="button editBtn"><i class="fa-solid fa-pen-to-square fa-fw"></i></button>&emsp;<button class="button delBtn"><i class="fa-regular fa-trash-can"></i></button></p></td></tr>';
                     }
-    
+
                     $('#deptList').html('');
                     $('#deptList').html(depsByLoc);
 
                     $('.multi-collapse').collapse('hide');
-    
+
                 },
                 error: function(jqXHR){
                     console.log(jqXHR, 'Something is wrong');
                 }
             });
-    
+
         });
     });
 
@@ -811,71 +860,200 @@ $('.vwDep').click(function(){
     });
 
     // to remove a row from dept list table on trash-can button click:
-    $("#deptTbl").on('click', '.delBtn', function() {
-        // var eydee = $(this).parents('td').children('input[type="radio"]').val();  
+    $("#deptTbl").on('click', '.delBtn', function() {  
         var eydee = $(this).parents('p').attr('id');
         console.log('id', eydee);
 
         var depNm = $(this).parents('p').text();
-        console.log('modified dept1: ', depNm);
+        // console.log('modified dept1: ', depNm);
         depNm = depNm.trim();    
-        console.log('modified dept2: ', depNm);
+        // console.log('modified dept2: ', depNm);
 
-        var delRow = $(this).closest('tr');     // or, $(this).parents('tr').remove();   
-        $(delRow).hide();
-        
-        $('#delSpan').html('Delete ' + depNm + ' ?');
-        $('#deleteModalLabel').html('Delete Department');
+        var delRow = $(this).closest('tr'); 
+        // find out if the record has any employee dependencies first:   
 
-        $('#deleteModal').modal("show");
+        var delChk;
+        $.ajax({
+            url:"libs/php/getPersonnelByDep.php",
+            type: "POST",
+            dataType: 'json',
+            data: {
+                departmentID: eydee
+            },
+            success: function(response){                                    
+                var dat = response.data;
 
-        $('#delStfNo').click(function(){
-            $(delRow).show();
-        });
+                if (dat.length > 0){
+                    delChk = 'ties';  // department not cleared, has dependencies
 
-        $('#delStfYes').click(function(){
-            $(delRow).remove();
-            $.ajax({
-                url:"libs/php/deleteDepartmentByID.php",
-                type: "POST",
-                dataType: 'json',
-                data: {
-                    id: eydee
-                },
-                success: function(response){  
+                    $.ajax({
+                        url:"libs/php/getDepartmentsExcept.php", // brings up list of all departments except the one to be deleted
+                        type: "POST",
+                        dataType: 'json',
+                        data: {
+                            id: eydee
+                        },
+                        success: function(response){
+                            var dat = response.data;            
 
-                    $('#dsfeedbk').html('Department successfully deleted.');    
-                    
-                    $('#deleteModal').on('hidden.bs.modal', function(){
-                        $('#dsfeedbk').html('');
+                            // clear current dropdown contents:
+                            if (dat.length > 0) {
+                                $('#newOtherSelect').html('');                
+                            }
+            
+                            var choices = "<option>Select new department ...</option>";
+                            for (var i = 0; i < dat.length; i++){
+                                choices = choices + '<option value = "' + dat[i].id + '">' + dat[i].name + '</option>';
+                            }
+                            
+                            $('#newOtherSelect').html(choices);
+                        },
+                        error: function(jqXHR){
+                            console.log(jqXHR, 'Something is wrong');
+                        }
                     });
-                },
-                error: function(jqXHR){
-                    console.log(jqXHR, 'Something is wrong');
-                }
-            });                    
-        }); 
 
+                    $('#newOtherSelect').hide();
+                    $('#setNew').text('Set new department');
+                    $('#setNew').hide();
+                    $('#line1').html('Employees exist under this location');
+                    $('#line2').html('<strong>Move</strong> to new department &ensp;<b>OR</b>&ensp; <strong>Go Back</strong> to edit new departments separately');
+                    $('#hasDependModal').modal('show');
+
+                    $('#moveBtn').click(function(){
+                        $('#newOtherSelect').show();
+                        $('#setNew').show();
+
+                        $('#setNew').click(function(){
+                            var newDepID = $('#newOtherSelect').val();
+                            // update the affected department ids with the new one:
+                            $.ajax({
+                                url:"libs/php/updateBatchStf.php",
+                                type: "POST",
+                                dataType: 'json',
+                                data: {
+                                    newID: newDepID,
+                                    oldID: eydee
+                                },
+                                success: function(response){
+                                                                    
+                                    $('#newOtherFeedbk').html(' New department set successfully.');
+
+                                    $('#hasDependModal').on('hidden.bs.modal', function(){
+                                        $('#newOtherFeedbk').html('');
+
+                                        $(delRow).hide();
+            
+                                        $('#delSpan').html('Delete ' + depNm + ' ?');
+                                        $('#deleteModalLabel').html('Delete Department');
+                                
+                                        $('#deleteModal').modal("show");
+                                
+                                        $('#delStfNo').click(function(){
+                                            $(delRow).show();
+                                        });
+                                
+                                        $('#delStfYes').click(function(){
+                                            $(delRow).remove();
+                                            $.ajax({
+                                                url:"libs/php/deleteDepartmentByID.php",
+                                                type: "POST",
+                                                dataType: 'json',
+                                                data: {
+                                                    id: eydee
+                                                },
+                                                success: function(response){  
+                                
+                                                    $('#dsfeedbk').html('Department successfully deleted.');    
+                                                    
+                                                    $('#deleteModal').on('hidden.bs.modal', function(){
+                                                        $('#dsfeedbk').html('');
+                                                    });
+                                                },
+                                                error: function(jqXHR){
+                                                    console.log(jqXHR, 'Something is wrong');
+                                                }
+                                            });                    
+                                        }); 
+
+                                    });
+                                },
+                                error: function(jqXHR){
+                                    console.log(jqXHR, 'Something is wrong');
+                                }
+                            });
+                        });
+
+                    });
+
+                    $('#goBkBtn').click(function(){
+                        $('#hasDependModal').modal('hide');
+                        $('#deptPg').hide();
+                        $('#mainPg').show();
+                    }); 
+
+                } else {
+                    delChk = 'okay'; // department cleared for deletion
+
+                    $(delRow).hide();
+        
+                    $('#delSpan').html('Delete ' + depNm + ' ?');
+                    $('#deleteModalLabel').html('Delete Department');
+
+                    $('#deleteModal').modal("show");
+
+                    $('#delStfNo').click(function(){
+                        $(delRow).show();
+                    });
+
+                    $('#delStfYes').click(function(){
+                        $(delRow).remove();
+                        $.ajax({
+                            url:"libs/php/deleteDepartmentByID.php",
+                            type: "POST",
+                            dataType: 'json',
+                            data: {
+                                id: eydee
+                            },
+                            success: function(response){  
+
+                                $('#dsfeedbk').html('Department successfully deleted.');    
+                                
+                                $('#deleteModal').on('hidden.bs.modal', function(){
+                                    $('#dsfeedbk').html('');
+                                });
+                            },
+                            error: function(jqXHR){
+                                console.log(jqXHR, 'Something is wrong');
+                            }
+                        });                    
+                    }); 
+                };
+            },
+            error: function(jqXHR){
+                console.log(jqXHR, 'Something is wrong');
+            }
+        });
     });
 
     $('#resetDeptList').click(function(){
         resetDepts();
     });
 
-    $('#viewStfBtn').click(function(){
-        $('#profile').hide();
-        $('#deptPg').hide();
-        $('#locPg').hide();
-        $('#mainPg').show();
-    });
-
-    // $('#viewLocsBtn').click(function(){
+    // $('#viewStfBtn').click(function(){
     //     $('#profile').hide();
     //     $('#deptPg').hide();
-    //     $('#mainPg').hide();
-    //     $('#locPg').show();
+    //     $('#locPg').hide();
+    //     $('#mainPg').show();
     // });
-    
+
+    $('#locBtn').click(function(){
+        $('#profile').hide();
+        $('#deptPg').hide();
+        $('#mainPg').hide();
+        $('#locPg').show();
+    });
+
     $('#depBkBtn').click(function(){
         $('#profile').hide();
         $('#deptPg').hide();
@@ -948,16 +1126,42 @@ $('.vwDep').click(function(){
         });
     });
 
-});
+// 
 
-// ******************* Mange locations ****************************************
-$('.vwLoc').click(function(){
-    $('#profile').hide();
-    $('#deptPg').hide();
-    $('#mainPg').hide();
-    $('#locPg').show();
+    // ******************* Manage locations ****************************************
+    $('#resetLocList').click(function(){
+        resetLocs();
+    });
 
-    resetLocs();
+    $('#viewStfBtn2').click(function(){
+        $('#profile').hide();
+        $('#deptPg').hide();
+        $('#locPg').hide();
+        $('#mainPg').show();
+    });
+
+    // $('#locBkBtn').click(function(){
+    //     $('#profile').hide();
+    //     $('#deptPg').hide();
+    //     $('#locPg').hide();
+    //     $('#mainPg').show();
+    // }); 
+
+    $('#deptBtn').click(function(){
+        $('#profile').hide();
+        $('#locPg').hide();
+        $('#mainPg').hide();
+        $('#deptPg').show()
+    });
+
+    $('#mngLocBtn').click(function(){
+        $('#profile').hide();
+        $('#deptPg').hide();
+        $('#mainPg').hide();
+        $('#locPg').show();
+
+        resetLocs();
+    });
 
     // to edit a record from the location list table, on edit button click:
     $("#locTbl").on('click', '.editBtn', function() {
@@ -1010,46 +1214,175 @@ $('.vwLoc').click(function(){
 
     }); 
 
-    // to delete a record from the location list table, on edit button click:
+    // to delete a record from the location list table:
     $("#locTbl").on('click', '.delBtn', function() {
         var locID = $(this).parents('p').attr('id');
         var locTxt = $(this).parents('p').text();
-        locTxt = locTxt.trim();
-
+        locTxt = locTxt.trim();        
         var delLoc = $(this).closest('tr');
-        $(delLoc).hide();
 
-        $('#delSpan').html('Delete ' + locTxt + ' ?');
-        $('#deleteModalLabel').html('Delete Location');
+        // find out if the record has any department dependencies first:
+        var delChk;
+        $.ajax({
+            url:"libs/php/getDepartmentsByLoc.php",
+            type: "POST",
+            dataType: 'json',
+            data: {
+                locationID: locID
+            },
+            success: function(response){                                    
+               var dat = response.data;
 
-        $('#deleteModal').modal("show");
-
-        $('#delStfNo').click(function(){
-            $(delLoc).show();
-        });
-
-        $('#delStfYes').click(function(){
-            $(delLoc).remove();
-
-            $.ajax({
-                url:"libs/php/deleteLocation.php",
-                type: "POST",
-                dataType: 'json',
-                data: {
-                    id: locID
-                },
-                success: function(response){                                    
-                    $('#dsfeedbk').html('Location successfully deleted.');  
+               if (dat.length > 0){
+                    delChk = 'ties';
                     
-                    $('#deleteModal').on('hidden.bs.modal', function(){
-                        $('#dsfeedbk').html('');
+                    $.ajax({
+                        url:"libs/php/getLocationsExcept.php", // brings up list of all locations except the one to be deleted
+                        type: "POST",
+                        dataType: 'json',
+                        data: {
+                            id: locID
+                        },
+                        success: function(response){
+                            var dat = response.data;            
+
+                            // clear current dropdown contents:
+                            if (dat.length > 0) {
+                                $('#newOtherSelect').html('');                
+                            }
+            
+                            var choices = "<option>Select new location ...</option>";
+                            for (var i = 0; i < dat.length; i++){
+                                choices = choices + '<option value = "' + dat[i].id + '">' + dat[i].name + '</option>';
+                            }
+                            
+                            $('#newOtherSelect').html(choices);
+                        },
+                        error: function(jqXHR){
+                            console.log(jqXHR, 'Something is wrong');
+                        }
                     });
-                },
-                error: function(jqXHR){
-                    console.log(jqXHR, 'Something is wrong');
-                }
-            });                         
-        });
+
+                    $('#newOtherSelect').hide();
+                    $('#setNew').hide();
+                    $('#hasDependModal').modal('show');
+
+                    $('#moveBtn').click(function(){
+                        $('#newOtherSelect').show();
+                        $('#setNew').show();
+
+                        $('#setNew').click(function(){
+                            var newLocID = $('#newOtherSelect').val();
+                            // update the affected department ids with the new one:
+                            $.ajax({
+                                url:"libs/php/updateBatchDept.php",
+                                type: "POST",
+                                dataType: 'json',
+                                data: {
+                                    newID: newLocID,
+                                    oldID: locID
+                                },
+                                success: function(response){
+                                                                    
+                                    $('#newOtherFeedbk').html(' New location set successfully.');
+
+                                    $('#hasDependModal').on('hidden.bs.modal', function(){
+                                        $('#newOtherFeedbk').html('');
+
+                                        $(delLoc).hide();
+
+                                        $('#delSpan').html('Delete ' + locTxt + ' ?');
+                                        $('#deleteModalLabel').html('Delete Location');
+                                
+                                        $('#deleteModal').modal("show");
+                                
+                                        $('#delStfNo').click(function(){
+                                            $(delLoc).show();
+                                        });
+                                
+                                        $('#delStfYes').click(function(){
+                                            $(delLoc).remove();
+                                
+                                            $.ajax({
+                                                url:"libs/php/deleteLocation.php",
+                                                type: "POST",
+                                                dataType: 'json',
+                                                data: {
+                                                    id: locID
+                                                },
+                                                success: function(response){                                    
+                                                    $('#dsfeedbk').html('Location successfully deleted.');  
+                                                    
+                                                    $('#deleteModal').on('hidden.bs.modal', function(){
+                                                        $('#dsfeedbk').html('');
+                                                    });
+                                                },
+                                                error: function(jqXHR){
+                                                    console.log(jqXHR, 'Something is wrong');
+                                                }
+                                            });                         
+                                        });
+
+                                    });
+                                },
+                                error: function(jqXHR){
+                                    console.log(jqXHR, 'Something is wrong');
+                                }
+                            });
+                        });
+
+                    });
+
+                    $('#goBkBtn').click(function(){
+                        $('#hasDependModal').modal('hide');
+                        $('#locPg').hide();
+                        $('#deptPg').show();
+                    });                
+
+               } else {
+                    delChk = 'okay';
+
+                    $(delLoc).hide();
+
+                    $('#delSpan').html('Delete ' + locTxt + ' ?');
+                    $('#deleteModalLabel').html('Delete Location');
+            
+                    $('#deleteModal').modal("show");
+            
+                    $('#delStfNo').click(function(){
+                        $(delLoc).show();
+                    });
+            
+                    $('#delStfYes').click(function(){
+                        $(delLoc).remove();
+            
+                        $.ajax({
+                            url:"libs/php/deleteLocation.php",
+                            type: "POST",
+                            dataType: 'json',
+                            data: {
+                                id: locID
+                            },
+                            success: function(response){                                    
+                                $('#dsfeedbk').html('Location successfully deleted.');  
+                                
+                                $('#deleteModal').on('hidden.bs.modal', function(){
+                                    $('#dsfeedbk').html('');
+                                });
+                            },
+                            error: function(jqXHR){
+                                console.log(jqXHR, 'Something is wrong');
+                            }
+                        });                         
+                    });
+               } // end else               
+            },
+            error: function(jqXHR){
+                console.log(jqXHR, 'Something is wrong');
+            }
+        });        
+
+        // **************************************************************************** end dependency check
     });     
     
     // adding a location:
@@ -1083,29 +1416,22 @@ $('.vwLoc').click(function(){
         });
     });
 
-    $('#resetLocList').click(function(){
-        resetLocs();
-    });
-
-    $('#viewStfBtn2').click(function(){
-        $('#profile').hide();
-        $('#deptPg').hide();
-        $('#locPg').hide();
-        $('#mainPg').show();
-    });
-
-    // $('#viewDeptsBtn').click(function(){
-    //     $('#locPg').hide();
-    //     $('#mainPg').hide();
-    //     $('#profile').hide();
-    //     $('#deptPg').show();
+    // $('#resetLocList').click(function(){
+    //     resetLocs();
     // });
 
-    $('#locBkBtn').click(function(){
-        $('#profile').hide();
-        $('#deptPg').hide();
-        $('#locPg').hide();
-        $('#mainPg').show();
-    }); 
+    // $('#viewStfBtn2').click(function(){
+    //     $('#profile').hide();
+    //     $('#deptPg').hide();
+    //     $('#locPg').hide();
+    //     $('#mainPg').show();
+    // });
+
+    // $('#locBkBtn').click(function(){
+    //     $('#profile').hide();
+    //     $('#deptPg').hide();
+    //     $('#locPg').hide();
+    //     $('#mainPg').show();
+    // }); 
 });
  
