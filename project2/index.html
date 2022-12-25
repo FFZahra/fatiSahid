@@ -19,8 +19,6 @@
         <div class="resultsPg container-fluid" id="mainPg">
             <div class="row headr mainPgHdr">
                 <div class="col"><span class="hdrTxt">&#127804;&ensp;Fresh Flowers</span> 
-                    <!-- <div class="col-sm-4 col-md-5"></div> ,  &ensp;&#127804; -->
-                    <!-- <div class="col"> -->
                     <button type="button" class="btn btn-outline-success hdright mngBtns" id="resetList" data-bs-toggle="tooltip" title="Reset List" aria-label="List reset button"><i class="fa-solid fa-rotate-left fa-fw"></i></button>
                     <button type="button" class="btn btn-outline-success hdright mngBtns" id="addStaff" data-bs-toggle="tooltip" title="Add Employee" aria-label="Add employee button"><i class="fa-solid fa-user-plus fa-fw"></i></button>
                     <button type="button" class="btn btn-outline-success hdright mngBtns" id="mngDepBtn" data-bs-toggle="tooltip" title="Manage departments" aria-label="Manage departments button"><i class="fa-solid fa-building fa-fw"></i></button>              
@@ -63,11 +61,10 @@
         <!-- ********************************************************************************************************************************************************** -->
         <div class="stfProfile container-fluid" id="profile">
             <div class="row headr"> 
-                <!-- <div class="col-1 py-1"><button type="button" class="btn backBtn" id="profileBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div>  -->                            
-                <div class="col-12"><button type="button" class="btn btn-outline-success mngBtns" id="prof2mainBtn" data-bs-toggle="tooltip" title="View Employees" aria-label="view employees button"><i class="fa-solid fa-user fa-fw"></i></button>
-                <!-- <button type="button" class="btn btn-outline-success hdright mngBtns" id="toDepBtn" data-bs-toggle="tooltip" title="View Departments" aria-label="view departments button"><i class="fa-regular fa-building fa-fw"></i></button>
-                <button type="button" class="btn btn-outline-success hdright mngBtns" id="toLocBtn" data-bs-toggle="tooltip" title="View Locations" aria-label="view locations button"><i class="fa-solid fa-location-dot fa-fw"></i></button> -->                
-            </div>
+                <div class="col-12"><button type="button" class="btn btn-outline-success hdright mngBtns" id="prof2mainBtn" data-bs-toggle="tooltip" title="View Employees" aria-label="view employees button"><i class="fa-solid fa-user fa-fw"></i></button>
+                    <button type="button" class="btn btn-outline-success hdright mngBtns" id="pfDepBtn" data-bs-toggle="tooltip" title="View Departments" aria-label="view departments button"><i class="fa-regular fa-building fa-fw"></i></button>
+                    <button type="button" class="btn btn-outline-success hdright mngBtns" id="pfLocBtn" data-bs-toggle="tooltip" title="View Locations" aria-label="view locations button"><i class="fa-solid fa-location-dot fa-fw"></i></button>                
+                </div>
             </div>
             <div class="row homePic justify-content-center text-center pt-5">                                 
                 <div class="circleBox"></div>
@@ -175,13 +172,12 @@
         </div>
         <!-- ********************************************************************************************************************************************************** -->       
         <div class="mngPg container-fluid" id="deptPg">
-            <div class="row headr1">
-                <!-- <div class="col-1 py-1"><button type="button" class="btn backBtn" id="depBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div> -->
-                <div class="col"><h3 class="hdrTxt">&#127804;&ensp;Fresh Flowers</h3>
+            <div class="row headr">
+                <div class="col"><span class="hdrTxt">&#127804;&ensp;Fresh Flowers</span>
                     <button type="button" class="btn btn-outline-success hdright mngBtns" id="resetDeptList" data-bs-toggle="tooltip" title="Reset List" aria-label="List reset button"><i class="fa-solid fa-rotate-left fa-fw"></i></button>
                     <button type="button" class="btn btn-outline-success hdright mngBtns" id="addDept" data-bs-toggle="tooltip" title="Add Department" aria-label="Add department button"><i class="fa-solid fa-building fa-fw"></i><sup><i class="fa-solid fa-plus fa-fw"></i></sup></button>
-                    <button type="button" class="btn btn-outline-success hdright mngBtns" id="depBkBtn" data-bs-toggle="tooltip" title="View Employees" aria-label="view employees button"><i class="fa-solid fa-user fa-fw"></i></button>              
-                    <button type="button" class="btn btn-outline-success hdright mngBtns" id="locBtn" data-bs-toggle="tooltip" title="View Locations" aria-label="view locations button"><i class="fa-solid fa-location-dot fa-fw"></i></button>
+                    <button type="button" class="btn btn-outline-success hdright mngBtns" id="toMainBtn" data-bs-toggle="tooltip" title="View Employees" aria-label="view employees button"><i class="fa-solid fa-user fa-fw"></i></button>              
+                    <button type="button" class="btn btn-outline-success hdright mngBtns" id="toLocBtn" data-bs-toggle="tooltip" title="View Locations" aria-label="view locations button"><i class="fa-solid fa-location-dot fa-fw"></i></button>
                 </div>   
             </div> 
             <div class="container filterDiv">
@@ -210,10 +206,8 @@
         </div>
         <!-- ********************************************************************************************************************************************************** -->
         <div class="mngPg container-fluid" id="locPg">
-            <div class="row headr1">
-                <!-- <div class="col-1 py-1"><button type="button" class="btn backBtn" id="locBkBtn" aria-label="Back button"><i class="fa-solid fa-angle-left fa-fw"></i></button></div> -->
-                <div class="col">
-                    <h3 class="hdrTxt">&#127804;&ensp;Fresh Flowers</h3>
+            <div class="row headr">
+                <div class="col"><span class="hdrTxt">&#127804;&ensp;Fresh Flowers</span>
                     <button type="button" class="btn btn-outline-success hdright mngBtns" id="resetLocList" data-bs-toggle="tooltip" title="Reset Location List" aria-label="List reset button"><i class="fa-solid fa-rotate-left fa-fw"></i></button>
                     <button type="button" class="btn btn-outline-success hdright mngBtns" id="addLoc" data-bs-toggle="tooltip" title="Add Location" aria-label="Add location button"><i class="fa-solid fa-location-dot fa-fw"></i><sup><i class="fa-solid fa-plus fa-fw"></i></sup></button>
                     <button type="button" class="btn btn-outline-success hdright mngBtns" id="viewStfBtn2" data-bs-toggle="tooltip" title="View Employees" aria-label="view employees button"><i class="fa-solid fa-user fa-fw"></i></button>              

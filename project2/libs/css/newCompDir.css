@@ -55,7 +55,7 @@ html, body {
     /* display: inline-block; */
 }
 
-.hdright, #prof2mainBtn {    
+.hdright {    
     float: right;
 }
 

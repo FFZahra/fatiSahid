@@ -30,17 +30,8 @@ var aLocModal = new bootstrap.Modal(document.getElementById('aLocModal'));
 var hasDepend = new bootstrap.Modal(document.getElementById('hasDependModal'));
 
 // ******************************
-
-$('#resetList').click(function(){
-    stfReset();
-});
-
-// ******************************
-
 function getStfID(){
     // capture the personnel id:
-
-    // var stfId = $('input[name=' + radionm + ']:checked').val();
     var stfId = $('input[type="radio"]:checked').val();
     console.log(stfId); 
     return stfId;
@@ -66,39 +57,28 @@ function stfReset(){
         dataType: 'json',    
         success: function(response){
             var names = response.data;
+            var pgList, currLett, surnameInitial;
             
-            // add in initial list of staff alphabetically ***
-            pglist = "";
-            var currLett;
-            var i = 0;
-            // var nullKount = 0;
-            while (i < 20){
-                if (names[i].lastName === null){
-                    i++;
-                    // nullKount++;
-                    continue;
+            if (names.length > 0){
+                currLett = names[0].lastName.slice(0,1).toUpperCase();
+                pgList = '<tr><td class="text-left font-weight-bold"><h5 class="listHdr">' + currLett + '</h5></td></tr>';
+                for (i = 0; i < names.length; i++){
+                    surnameInitial = names[i].lastName.slice(0,1).toUpperCase();
+                    if (surnameInitial === currLett) {
+                        pgList = pgList + '<tr><td class="form-check">&emsp;<input class="form-check-input tblRadio" type="radio" name="mainListRadio" id="mainListRadio" value=' + names[i].id + '><label class="form-check-label" for="mainListRadio">&ensp;' + names[i].firstName + '&ensp;' + names[i].lastName + '&emsp;<button class="button editBtn"><i class="fa-solid fa-pen-to-square fa-fw"></i></button>&emsp;<button class="button delBtn"><i class="fa-regular fa-trash-can"></i></button></label></td></tr>';
+                    } else {
+                        currLett = surnameInitial;
+                        pgList = pgList + '<tr><td class="text-left font-weight-bold"><h5 class="listHdr">' + currLett + '</h5></td></tr>';
+                        pgList = pgList + '<tr><td class="form-check">&emsp;<input class="form-check-input tblRadio" type="radio" name="mainListRadio" id="mainListRadio" value=' + names[i].id + '><label class="form-check-label" for="mainListRadio">&ensp;' + names[i].firstName + '&ensp;' + names[i].lastName + '&emsp;<button class="button editBtn"><i class="fa-solid fa-pen-to-square fa-fw"></i></button>&emsp;<button class="button delBtn"><i class="fa-regular fa-trash-can"></i></button></label></td></tr>';
+                    }
                 }
-                surnameInitial = names[i].lastName.slice(0,1);
-                
-                currLett = surnameInitial.toUpperCase();
 
-                pglist = pglist + "<tr><td class='text-left font-weight-bold'><h5 class='listHdr'>" + currLett + "</h5></td></tr>";
-
-                while (names[i].lastName.slice(0,1) === currLett){
-                    pglist = pglist + '<tr id="recRw"><td class="form-check">&emsp;<input class="form-check-input tblRadio" type="radio" name="mainListRadio" id="mainListRadio" value=' + names[i].id + '><label class="form-check-label" for="mainListRadio">&ensp;' + names[i].firstName + '&ensp;' + names[i].lastName + '&emsp;<button class="button editBtn"><i class="fa-solid fa-pen-to-square fa-fw"></i></button>&emsp;<button class="button delBtn"><i class="fa-regular fa-trash-can"></i></button></label></td></tr>';                                                       
-                    i++;    
-                    if (i === names.length){                        
-                        // console.log('null recs1: ', nullKount);
-                        break;
-                    };                            
-                };                
-                // console.log('null recs2: ', nullKount);
-            };
-            
-            // console.log('null recs3: ', nullKount);
+            } else {
+                pgList = 'Sorry no Employee records.';
+            }
 
             $('#mainList').html('');
-            $('#mainList').html(pglist);
+            $('#mainList').html(pgList);
             $('#srchBx').val('');
 
             $('input[name="mainListRadio"]').click(function(){
@@ -114,27 +94,6 @@ function stfReset(){
         }
     });
 } // end stfReset()
-
-$('#prof2mainBtn').click(function(){
-    $('#profile').hide();
-    $('#deptPg').hide();
-    $('#locPg').hide();
-    $('#mainPg').show();
-});   
-
-$('#toDepBtn').click(function(){
-    $('#profile').hide();
-    $('#mainPg').hide();
-    $('#locPg').hide();
-    $('#deptPg').show();
-});
-
-$('#toLocBtn').click(function(){
-    $('#profile').hide();
-    $('#mainPg').hide();
-    $('#deptPg').hide();
-    $('#locPg').show();
-});
 
 function clickNshow(radionm){
     var stfId = $('input[name=' + radionm + ']:checked').val();
@@ -190,12 +149,35 @@ function clickNshow(radionm){
             
             $('#profile').show();
             
-            $('#profileBkBtn').click(function(){
+            // $('#profileBkBtn').click(function(){
+            //     $('#profile').hide();
+            //     $('#deptPg').hide();
+            //     $('#locPg').hide();
+            //     $('#mainPg').show();
+            // });    
+            
+            $('#prof2mainBtn').click(function(){
                 $('#profile').hide();
                 $('#deptPg').hide();
                 $('#locPg').hide();
                 $('#mainPg').show();
-            });                                        
+            });   
+            
+            $('#pfDepBtn').click(function(){
+                $('#profile').hide();
+                $('#mainPg').hide();
+                $('#locPg').hide();
+                $('#deptPg').show();
+                resetDepts();
+            });
+
+            $('#pfLocBtn').click(function(){
+                $('#profile').hide();
+                $('#mainPg').hide();
+                $('#deptPg').hide();
+                $('#locPg').show();
+                resetLocs();
+            });
         },
         error: function(jqXHR){
             console.log('Sorry, something is wrong.')
@@ -250,34 +232,34 @@ function redoProfile(idnum){
             
             $('#profile').show();
             
-            // $('#prof2mainBtn').click(function(){
-            //     $('#profile').hide();
-            //     $('#deptPg').hide();
-            //     $('#locPg').hide();
-            //     $('#mainPg').show();
-            // });   
+            $('#prof2mainBtn').click(function(){
+                $('#profile').hide();
+                $('#deptPg').hide();
+                $('#locPg').hide();
+                $('#mainPg').show();
+            });   
             
-            // $('#toDepBtn').click(function(){
-            //     $('#profile').hide();
-            //     $('#mainPg').hide();
-            //     $('#locPg').hide();
-            //     $('#deptPg').show();
-            // });
+            $('#pfDepBtn').click(function(){
+                $('#profile').hide();
+                $('#mainPg').hide();
+                $('#locPg').hide();
+                $('#deptPg').show();
+                resetDepts();
+            });
 
-            // $('#toLocBtn').click(function(){
-            //     $('#profile').hide();
-            //     $('#mainPg').hide();
-            //     $('#deptPg').hide();
-            //     $('#locPg').show();
-            // });
+            $('#pfLocBtn').click(function(){
+                $('#profile').hide();
+                $('#mainPg').hide();
+                $('#deptPg').hide();
+                $('#locPg').show();
+                resetLocs();
+            });
         },
         error: function(jqXHR){
             console.log('Sorry, something is wrong.')
         }                                       
     });
 } // end redoProfile()
-
-
 
 function deleteStaff(idnum, delTrack){
     var delType = delTrack;
@@ -301,7 +283,7 @@ function deleteStaff(idnum, delTrack){
             console.log(jqXHR, 'Something is wrong');
         }
     }); 
-}
+} // end deleteStaff()
 
 function updateStaff(idnum, hint){
     var track = hint;
@@ -387,6 +369,32 @@ function updateStaff(idnum, hint){
     });
 }  // end updateStaff()
 
+function resetDepts(){
+    $.ajax({
+        url: "libs/php/getAllDepartments.php",
+        type: "GET",
+        dataType: 'json',    
+        success: function(response){
+            var dat = response.data;            
+
+            // clear current table contents:
+            if (dat.length > 0) {
+                $('#deptList').html('');                
+            }
+
+            var depts = "";
+            for (var i = 0; i < dat.length; i++){
+                depts = depts + '<tr><td><p id="' + dat[i].id + '">' + dat[i].name + '&emsp;<button class="button editBtn"><i class="fa-solid fa-pen-to-square fa-fw"></i></button>&emsp;<button class="button delBtn"><i class="fa-regular fa-trash-can"></i></button></p></td></tr>';                
+            }
+            
+            $('#deptList').html(depts);            
+        },
+        error: function(jqXHR){
+            console.log(jqXHR, 'Something is wrong'); 
+        }
+    });        
+} // end resetDepts()
+
 function resetLocs(){
     $.ajax({
         url: "libs/php/getLocations.php",
@@ -420,6 +428,10 @@ $(document).ready(function(){
     $('#mainPg').show();    
 
     stfReset();
+
+    $('#resetList').click(function(){
+        stfReset();
+    });
 
     // filtering by department and location:
     $('#filterBtn2').click(function(){
@@ -529,12 +541,13 @@ $(document).ready(function(){
         });        
 
     });  // end filtering
+});
     
-                
+$(document).ready(function(){                
     // Using the name search :
-    nmMatches = "";
+    // var nmMatches = "";
     $('#srchBtn').click(function(){
-        nmMatches = "";
+        var nmMatches = "";
         var srchTxt = $('#srchBx').val();                    
         srchTxt = srchTxt.trim().toUpperCase();
         var srchLen = srchTxt.length;
@@ -574,8 +587,10 @@ $(document).ready(function(){
                 console.log(jqXHR, 'Something is wrong'); 
             }
         });                      
-    });    
+    });
+}); 
 
+$(document).ready(function(){
     // to remove a row from table on trash-can button click:
     $("#mainTbl").on('click', '.delBtn', function() {
         var eydee = $(this).parents('td').children('input[type="radio"]').val();        
@@ -584,15 +599,18 @@ $(document).ready(function(){
         $(this).closest('tr').remove();  // or, $(this).parents('tr').remove();           
         deleteStaff(eydee, 'no-show');        
     });
+});
 
-
+$(document).ready(function(){
     // to edit a record from the table, on edit button click:
     $("#mainTbl").on('click', '.editBtn', function() {
         var eydee = $(this).parents('td').children('input[type="radio"]').val();
 
         updateStaff(eydee, 'no-repaint');        
     });
+});
 
+$(document).ready(function(){  
     // edit from profile page:
     $('#editStfBtn').click(function(){        
         var idee = getStfID();
@@ -613,9 +631,15 @@ $(document).ready(function(){
 
         $('#delStfYes').click(function(){
             deleteStaff(idee, 'show');
-        });                             
-    });  
-    
+        }); 
+        
+        $('#delStfNo').click(function(){
+            $('#deleteModal').modal("hide");
+        }); 
+    });
+});
+
+$(document).ready(function(){    
     // Add Employee;
     $('#addStaff').click(function(){
         // ---------------------- Fill in dropdown values: ----------------
@@ -679,43 +703,39 @@ $(document).ready(function(){
             }
         });   
     });
-    
+});
 
-    // ******************** Manage departments ***************************************
-    function resetDepts(){
-        $.ajax({
-            url: "libs/php/getAllDepartments.php",
-            type: "GET",
-            dataType: 'json',    
-            success: function(response){
-                var dat = response.data;            
-
-                // clear current table contents:
-                if (dat.length > 0) {
-                    $('#deptList').html('');                
-                }
-
-                var depts = "";
-                for (var i = 0; i < dat.length; i++){
-                    depts = depts + '<tr><td><p id="' + dat[i].id + '">' + dat[i].name + '&emsp;<button class="button editBtn"><i class="fa-solid fa-pen-to-square fa-fw"></i></button>&emsp;<button class="button delBtn"><i class="fa-regular fa-trash-can"></i></button></p></td></tr>';                
-                }
-                
-                $('#deptList').html(depts);            
-            },
-            error: function(jqXHR){
-                console.log(jqXHR, 'Something is wrong'); 
-            }
-        });        
-    } // end resetDepts()
-
+$(document).ready(function(){
+    // ******************** Manage departments *************************************** 
     $('#mngDepBtn').click(function(){
         $('#profile').hide();
         $('#locPg').hide();
         $('#mainPg').hide();
-        $('#deptPg').show();
-        
+        $('#deptPg').show();        
         resetDepts();
     });
+
+    
+    $('#toLocBtn').click(function(){
+        $('#profile').hide();
+        $('#mainPg').hide();
+        $('#deptPg').hide();
+        $('#locPg').show();
+        resetLocs();
+    });
+
+    $('#toMainBtn').click(function(){
+        $('#profile').hide();
+        $('#deptPg').hide();
+        $('#locPg').hide();
+        $('#mainPg').show();
+    }); 
+
+    $('#resetDeptList').click(function(){
+        resetDepts();
+    });
+
+
 
     $('#filterBtn').click(function(){
         $('.multi-collapse').collapse('show');   // $('.multi-collapse').on("show.bs.collapse", function(){
@@ -756,15 +776,20 @@ $(document).ready(function(){
                     locationID: getLocID
                 }, 
                 success: function(response){
-                    var dat = response.data;            
-
-                    var depsByLoc = '';
-                    for (var i = 0; i < dat.length; i++){
-                        depsByLoc = depsByLoc + '<tr><td><p id="' + dat[i].id + '">' + dat[i].name + '&emsp;<button class="button editBtn"><i class="fa-solid fa-pen-to-square fa-fw"></i></button>&emsp;<button class="button delBtn"><i class="fa-regular fa-trash-can"></i></button></p></td></tr>';
+                    var dat = response.data; 
+                    
+                    if (dat.length > 0) {
+                        var depsByLoc = '';
+                        for (var i = 0; i < dat.length; i++){
+                            depsByLoc = depsByLoc + '<tr><td><p id="' + dat[i].id + '">' + dat[i].name + '&emsp;<button class="button editBtn"><i class="fa-solid fa-pen-to-square fa-fw"></i></button>&emsp;<button class="button delBtn"><i class="fa-regular fa-trash-can"></i></button></p></td></tr>';
+                        }
+                        
+                        $('#deptList').html('');
+                        $('#deptList').html(depsByLoc);
+                    } else {
+                        $('#deptList').html('');
+                        $('#deptList').html(' Sorry, no departments for this location.');
                     }
-
-                    $('#deptList').html('');
-                    $('#deptList').html(depsByLoc);
 
                     $('.multi-collapse').collapse('hide');
 
@@ -774,6 +799,71 @@ $(document).ready(function(){
                 }
             });
 
+        });
+    });
+
+    // adding a department:
+    $('#addDept').click(function(){
+        
+        // fill in the locations dropdown:
+        $.ajax({
+            url: "libs/php/getLocations.php",
+            type: "GET",
+            dataType: 'json',    
+            success: function(response){
+                var dat = response.data;            
+
+                // clear current dropdown contents:
+                if (dat.length > 0) {
+                    $('#addLocSelect').html('');                
+                }
+
+                var choices = "<option>&emsp;</option>";
+                for (var i = 0; i < dat.length; i++){
+                    choices = choices + '<option value = "' + dat[i].id + '">' + dat[i].name + '</option>';
+                }
+                
+                $('#addLocSelect').html(choices);                
+            },
+            error: function(jqXHR){
+                console.log(jqXHR, 'Something is wrong');
+            }
+        });
+        
+        $('#aDepModal').modal('show');
+        $('#aDep').focus();
+
+        $('#addLocSelect').change(function(){
+            $('#aLocID').val($('#addLocSelect').val());
+        });
+
+        $('#newDep').click(function(){
+            var dnam = $('#aDep').val();
+            var locid = $('#aLocID').val();
+
+            $.ajax({
+                url:"libs/php/insertDepartment.php",
+                type: "POST",
+                dataType: 'json',
+                data: {
+                    name: dnam,
+                    locationID: locid
+                },
+                success: function(response){
+
+                    $('#adfeedbk').html('New department successfully added.');
+
+                    $('#aDepModal').on('hidden.bs.modal', function(){
+                        $('#adfeedbk').html('');
+                        $('#aDep').val('');
+                        $('#aLocID').val('');
+                    });
+
+                },
+                error: function(jqXHR){
+                    console.log(jqXHR, 'Something is wrong');
+                }
+            });
         });
     });
 
@@ -813,6 +903,7 @@ $(document).ready(function(){
                         
                         $('#places').html(choices);
                         $('#places').val($('#locId').val());
+                        console.log($('#locId').val(), $('#places').val(), $('#places').text());
 
                         $('#eDepModal').modal('show');
 
@@ -951,6 +1042,7 @@ $(document).ready(function(){
                                 
                                         $('#delStfNo').click(function(){
                                             $(delRow).show();
+                                            $('#deleteModal').modal("hide");
                                         });
                                 
                                         $('#delStfYes').click(function(){
@@ -1004,6 +1096,7 @@ $(document).ready(function(){
 
                     $('#delStfNo').click(function(){
                         $(delRow).show();
+                        $('#deleteModal').modal("hide");
                     });
 
                     $('#delStfYes').click(function(){
@@ -1035,100 +1128,19 @@ $(document).ready(function(){
             }
         });
     });
+});
 
-    $('#resetDeptList').click(function(){
-        resetDepts();
-    });
-
-    // $('#viewStfBtn').click(function(){
-    //     $('#profile').hide();
-    //     $('#deptPg').hide();
-    //     $('#locPg').hide();
-    //     $('#mainPg').show();
-    // });
-
-    $('#locBtn').click(function(){
+$(document).ready(function(){
+    // ******************* Manage locations ****************************************
+    $('#mngLocBtn').click(function(){
         $('#profile').hide();
         $('#deptPg').hide();
         $('#mainPg').hide();
         $('#locPg').show();
+
+        resetLocs();
     });
 
-    $('#depBkBtn').click(function(){
-        $('#profile').hide();
-        $('#deptPg').hide();
-        $('#locPg').hide();
-        $('#mainPg').show();
-    }); 
-
-    // adding a department:
-    $('#addDept').click(function(){
-        
-        // fill in the locations dropdown:
-        $.ajax({
-            url: "libs/php/getLocations.php",
-            type: "GET",
-            dataType: 'json',    
-            success: function(response){
-                var dat = response.data;            
-
-                // clear current dropdown contents:
-                if (dat.length > 0) {
-                    $('#addLocSelect').html('');                
-                }
-
-                var choices = "<option>&emsp;</option>";
-                for (var i = 0; i < dat.length; i++){
-                    choices = choices + '<option value = "' + dat[i].id + '">' + dat[i].name + '</option>';
-                }
-                
-                $('#addLocSelect').html(choices);                
-            },
-            error: function(jqXHR){
-                console.log(jqXHR, 'Something is wrong');
-            }
-        });
-        
-        $('#aDepModal').modal('show');
-        $('#aDep').focus();
-
-        $('#addLocSelect').change(function(){
-            $('#aLocID').val($('#addLocSelect').val());
-        });
-
-        $('#newDep').click(function(){
-            var dnam = $('#aDep').val();
-            var locid = $('#aLocID').val();
-
-            $.ajax({
-                url:"libs/php/insertDepartment.php",
-                type: "POST",
-                dataType: 'json',
-                data: {
-                    name: dnam,
-                    locationID: locid
-                },
-                success: function(response){
-
-                    $('#adfeedbk').html('New department successfully added.');
-
-                    $('#aDepModal').on('hidden.bs.modal', function(){
-                        $('#adfeedbk').html('');
-                        $('#aDep').val('');
-                        $('#aLocID').val('');
-                    });
-
-                },
-                error: function(jqXHR){
-                    console.log(jqXHR, 'Something is wrong');
-                }
-            });
-        });
-    });
-
-// 
-
-    // ******************* Manage locations ****************************************
     $('#resetLocList').click(function(){
         resetLocs();
     });
@@ -1154,13 +1166,35 @@ $(document).ready(function(){
         $('#deptPg').show()
     });
 
-    $('#mngLocBtn').click(function(){
-        $('#profile').hide();
-        $('#deptPg').hide();
-        $('#mainPg').hide();
-        $('#locPg').show();
+    // adding a location:
+    $('#addLoc').click(function(){                
+        $('#aLocModal').modal('show');
+        $('#aLoc').focus();
 
-        resetLocs();
+        $('#saveLoc').click(function(){
+            var lnam = $('#aLoc').val();
+
+            $.ajax({
+                url:"libs/php/addLocation.php",
+                type: "POST",
+                dataType: 'json',
+                data: {
+                    name: lnam
+                },
+                success: function(response){
+
+                    $('#alfeedbk').html('New location successfully created.');
+
+                    $('#aLocModal').on('hidden.bs.modal', function(){
+                        $('#aLoc').val('');
+                        $('#alfeedbk').html('');
+                    });
+                },
+                error: function(jqXHR){
+                    console.log(jqXHR, 'Something is wrong');
+                }
+            });
+        });
     });
 
     // to edit a record from the location list table, on edit button click:
@@ -1298,6 +1332,7 @@ $(document).ready(function(){
                                 
                                         $('#delStfNo').click(function(){
                                             $(delLoc).show();
+                                            $('#deleteModal').modal("hide");
                                         });
                                 
                                         $('#delStfYes').click(function(){
@@ -1337,6 +1372,7 @@ $(document).ready(function(){
                         $('#hasDependModal').modal('hide');
                         $('#locPg').hide();
                         $('#deptPg').show();
+                        resetDepts();
                     });                
 
                } else {
@@ -1351,6 +1387,7 @@ $(document).ready(function(){
             
                     $('#delStfNo').click(function(){
                         $(delLoc).show();
+                        $('#deleteModal').modal("hide");
                     });
             
                     $('#delStfYes').click(function(){
@@ -1384,54 +1421,5 @@ $(document).ready(function(){
 
         // **************************************************************************** end dependency check
     });     
-    
-    // adding a location:
-    $('#addLoc').click(function(){                
-        $('#aLocModal').modal('show');
-        $('#aLoc').focus();
-
-        $('#saveLoc').click(function(){
-            var lnam = $('#aLoc').val();
-
-            $.ajax({
-                url:"libs/php/addLocation.php",
-                type: "POST",
-                dataType: 'json',
-                data: {
-                    name: lnam
-                },
-                success: function(response){
-
-                    $('#alfeedbk').html('New location successfully created.');
-
-                    $('#aLocModal').on('hidden.bs.modal', function(){
-                        $('#aLoc').val('');
-                        $('#alfeedbk').html('');
-                    });
-                },
-                error: function(jqXHR){
-                    console.log(jqXHR, 'Something is wrong');
-                }
-            });
-        });
-    });
-
-    // $('#resetLocList').click(function(){
-    //     resetLocs();
-    // });
-
-    // $('#viewStfBtn2').click(function(){
-    //     $('#profile').hide();
-    //     $('#deptPg').hide();
-    //     $('#locPg').hide();
-    //     $('#mainPg').show();
-    // });
-
-    // $('#locBkBtn').click(function(){
-    //     $('#profile').hide();
-    //     $('#deptPg').hide();
-    //     $('#locPg').hide();
-    //     $('#mainPg').show();
-    // }); 
 });
  
