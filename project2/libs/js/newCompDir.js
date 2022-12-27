@@ -112,8 +112,6 @@ function clickNshow(radionm){
             $('#deptPg').hide();
             $('#locPg').hide();
             $('#mainPg').hide();
-            // $('#profile').show();
-            // var cookie = cookienm;
 
             var thm = Math.floor(Math.random() *5 ) + 1;
             var profileThm;
@@ -148,13 +146,6 @@ function clickNshow(radionm){
             $('#pLoc').html(dat.location);  
             
             $('#profile').show();
-            
-            // $('#profileBkBtn').click(function(){
-            //     $('#profile').hide();
-            //     $('#deptPg').hide();
-            //     $('#locPg').hide();
-            //     $('#mainPg').show();
-            // });    
             
             $('#prof2mainBtn').click(function(){
                 $('#profile').hide();
@@ -502,7 +493,7 @@ $(document).ready(function(){
                 selectList = "<tr><td class='text-left font-weight-bold'><h5 class='listHdr'>No departments in this location</h5></td></tr>";
 
                 $('#mainList').html(selectList); 
-                // $('.trio-collapse').collapse('hide');
+                
                 $('.trio-collapse').collapse('toggle'); 
             } else {
                 $.ajax({
@@ -513,17 +504,23 @@ $(document).ready(function(){
                         departmentID: getDepID                
                     },
                     success: function(response){
-                        var dat = response.data;                                     
+                        var dat = response.data;  
+                        // --------------------------------------------------------
                         
-                        selectList = "<tr><td class='text-left font-weight-bold'><h5 class='listHdr'>" + depTxt + "&emsp;Department&emsp;Employees</h5></td></tr>";
-    
-                        for (let i = 0; i < dat.length; i++){     
-                            selectList = selectList + '<tr><td class="form-check">&emsp;<input class="form-check-input tblRadio" type="radio" name="stfFilterRadio" id="stfFilterRadio" value=' + dat[i].id + '><label class="form-check-label" for="stfFilterRadio">&ensp;' + dat[i].firstName + '&ensp;' + dat[i].lastName + '&emsp;<button class="button editBtn"><i class="fa-solid fa-pen-to-square fa-fw"></i></button>&emsp;<button class="button delBtn"><i class="fa-regular fa-trash-can"></i></button></label></td></tr>';                            
+                            var selectList = "<tr><td class='text-left font-weight-bold'><h5 class='listHdr'>" + depTxt + "&emsp;Department&emsp;Employees</h5></td></tr>";
+                        if (dat.length > 0) {
+                            for (let i = 0; i < dat.length; i++){     
+                                selectList = selectList + '<tr><td class="form-check">&emsp;<input class="form-check-input tblRadio" type="radio" name="stfFilterRadio" id="stfFilterRadio" value=' + dat[i].id + '><label class="form-check-label" for="stfFilterRadio">&ensp;' + dat[i].firstName + '&ensp;' + dat[i].lastName + '&emsp;<button class="button editBtn"><i class="fa-solid fa-pen-to-square fa-fw"></i></button>&emsp;<button class="button delBtn"><i class="fa-regular fa-trash-can"></i></button></label></td></tr>';                            
+                            }
+                            
+                            $('#mainList').html('');
+                            $('#mainList').html(selectList);
+                        } else {
+                            selectList = selectList + '<tr><td>Sorry, no employees in this department.</td></tr>'
+                            $('#mainList').html('');
+                            $('#mainList').html(selectList);
                         }
-                          
-                        console.log(depTxt);
-    
-                        $('#mainList').html(selectList); 
+                            
                         $('.trio-collapse').collapse('hide');
                         
                         $('input[name="stfFilterRadio"]').click(function(){
@@ -956,9 +953,7 @@ $(document).ready(function(){
         console.log('id', eydee);
 
         var depNm = $(this).parents('p').text();
-        // console.log('modified dept1: ', depNm);
-        depNm = depNm.trim();    
-        // console.log('modified dept2: ', depNm);
+        depNm = depNm.trim(); 
 
         var delRow = $(this).closest('tr'); 
         // find out if the record has any employee dependencies first:   
@@ -1080,6 +1075,7 @@ $(document).ready(function(){
 
                     $('#goBkBtn').click(function(){
                         $('#hasDependModal').modal('hide');
+                        $('#deleteModal').modal("hide");
                         $('#deptPg').hide();
                         $('#mainPg').show();
                     }); 
@@ -1137,7 +1133,6 @@ $(document).ready(function(){
         $('#deptPg').hide();
         $('#mainPg').hide();
         $('#locPg').show();
-
         resetLocs();
     });
 
@@ -1152,18 +1147,12 @@ $(document).ready(function(){
         $('#mainPg').show();
     });
 
-    // $('#locBkBtn').click(function(){
-    //     $('#profile').hide();
-    //     $('#deptPg').hide();
-    //     $('#locPg').hide();
-    //     $('#mainPg').show();
-    // }); 
-
     $('#deptBtn').click(function(){
         $('#profile').hide();
         $('#locPg').hide();
         $('#mainPg').hide();
         $('#deptPg').show()
+        resetDepts();
     });
 
     // adding a location:
@@ -1370,6 +1359,7 @@ $(document).ready(function(){
 
                     $('#goBkBtn').click(function(){
                         $('#hasDependModal').modal('hide');
+                        $('#deleteModal').modal("hide");
                         $('#locPg').hide();
                         $('#deptPg').show();
                         resetDepts();
@@ -1417,8 +1407,7 @@ $(document).ready(function(){
             error: function(jqXHR){
                 console.log(jqXHR, 'Something is wrong');
             }
-        });        
-
+        });  
         // **************************************************************************** end dependency check
     });     
 });

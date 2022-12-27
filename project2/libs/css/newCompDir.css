@@ -209,7 +209,7 @@ html, body {
 }
 
 #pEmail {
-    font-size: 1.2em;
+    font-size: 1.4em;
     margin-top: 5vh;
 }
 
@@ -274,13 +274,25 @@ select:disabled {
 
 @media only screen and (max-width: 620px) {
    * {
-      font-size: .8rem;
-    }   
+      font-size: .85rem;
+    }  
+    
+    table {
+        transform: scale(0.95);
+    }
   }
 
 @media only screen and (max-width: 480px) {
     * {
-        font-size: 70%;
+        font-size: .8rem;
+    }
+
+    table {
+        transform: scale(0.9);
+    }
+
+    .btn-close, .feedbk {
+        font-size: larger;
     }
 }
 /* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
