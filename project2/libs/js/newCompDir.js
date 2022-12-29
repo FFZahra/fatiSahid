@@ -33,7 +33,7 @@ var hasDepend = new bootstrap.Modal(document.getElementById('hasDependModal'));
 function getStfID(){
     // capture the personnel id:
     var stfId = $('input[type="radio"]:checked').val();
-    console.log(stfId); 
+    // console.log(stfId); 
     return stfId;
 }
     
@@ -152,6 +152,7 @@ function clickNshow(radionm){
                 $('#deptPg').hide();
                 $('#locPg').hide();
                 $('#mainPg').show();
+                stfReset();
             });   
             
             $('#pfDepBtn').click(function(){
@@ -228,6 +229,7 @@ function redoProfile(idnum){
                 $('#deptPg').hide();
                 $('#locPg').hide();
                 $('#mainPg').show();
+                stfReset();
             });   
             
             $('#pfDepBtn').click(function(){
@@ -337,16 +339,21 @@ function updateStaff(idnum, hint){
                     },
                     success: function(response){
                         $('#usfeedbk').html('Record successfully updated.');
-                        console.log('idee is ', idnum);
+                        // console.log('idee is ', idnum);
 
-                        console.log('Tracker is ', track);
+                        // console.log('Tracker is ', track);
                         if (track === 'repaint'){
                             redoProfile(idnum);
-                        }                        
 
-                        $('#editModal').on('hidden.bs.modal', function(){
-                            $('#usfeedbk').html('');
-                        });
+                            $('#editModal').on('hidden.bs.modal', function(){
+                                $('#usfeedbk').html('');
+                            });
+                        } else {
+                            $('#editModal').on('hidden.bs.modal', function(){
+                                $('#usfeedbk').html('');
+                                stfReset();
+                            });
+                        }                          
                     },
                     error: function(jqXHR){
                         console.log(jqXHR, 'Something is wrong');
@@ -593,8 +600,27 @@ $(document).ready(function(){
         var eydee = $(this).parents('td').children('input[type="radio"]').val();        
         var stfNm = $(this).parent().text();
         stfNm = stfNm.trim();        
-        $(this).closest('tr').remove();  // or, $(this).parents('tr').remove();           
-        deleteStaff(eydee, 'no-show');        
+        var rmRow = $(this).closest('tr');       // or, $(this).parents('tr');   
+        $(rmRow).hide();        
+        // deleteStaff(eydee, 'no-show');   
+        
+        // ££££££££££££££££££££££££££££££££££
+
+        $('#delSpan').html('Delete ' + stfNm + ' ?');
+
+        $('#deleteModal').modal("show");
+
+        $('#delStfYes').click(function(){
+            $(rmRow).remove();   
+            deleteStaff(eydee, 'show'); 
+            stfReset();
+        }); 
+        
+        $('#delStfNo').click(function(){
+            $(rmRow).show();   
+            $('#deleteModal').modal("hide");
+            stfReset();
+        }); 
     });
 });
 
@@ -603,7 +629,8 @@ $(document).ready(function(){
     $("#mainTbl").on('click', '.editBtn', function() {
         var eydee = $(this).parents('td').children('input[type="radio"]').val();
 
-        updateStaff(eydee, 'no-repaint');        
+        updateStaff(eydee, 'no-repaint');   
+        stfReset();     
     });
 });
 
@@ -679,18 +706,20 @@ $(document).ready(function(){
                         },
                         success: function(response){
                             $('#asfeedbk').html('New record successfully added.');
+
+                            $('#addModal').on('hidden.bs.modal', function(){
+                                $('#afnm').val('');
+                                $('#alnm').val('');
+                                $('#adsgnm').val('');
+                                $('#aeml').val('');
+                                $('#asfeedbk').html('');
+                            });
+
+                            stfReset();
                         },
                         error: function(jqXHR){
                             console.log(jqXHR, 'Something is wrong');
                         }
-                    });
-
-                    $('#addModal').on('hidden.bs.modal', function(){
-                        $('#afnm').val('');
-                        $('#alnm').val('');
-                        $('#adsgnm').val('');
-                        $('#aeml').val('');
-                        $('#asfeedbk').html('');
                     });
                 
                 });
@@ -856,6 +885,8 @@ $(document).ready(function(){
                         $('#aLocID').val('');
                     });
 
+                    resetDepts();
+
                 },
                 error: function(jqXHR){
                     console.log(jqXHR, 'Something is wrong');
@@ -867,7 +898,7 @@ $(document).ready(function(){
     // to edit a record from the dept list table, on edit button click:
     $("#deptTbl").on('click', '.editBtn', function() {
         var depID = $(this).parents('p').attr('id');
-        console.log(depID);
+        // console.log(depID);
 
         $.ajax({
             url:"libs/php/getDepartmentByID.php",
@@ -934,6 +965,7 @@ $(document).ready(function(){
                                 $('#udfeedbk').html('');
                             });                                  
 
+                            resetDepts();
                         },
                         error: function(jqXHR){
                             console.log(jqXHR, 'Something is wrong');
@@ -1056,6 +1088,8 @@ $(document).ready(function(){
                                                     $('#deleteModal').on('hidden.bs.modal', function(){
                                                         $('#dsfeedbk').html('');
                                                     });
+
+                                                    // resetDepts();   trivial - already shows removal from table
                                                 },
                                                 error: function(jqXHR){
                                                     console.log(jqXHR, 'Something is wrong');
@@ -1178,6 +1212,8 @@ $(document).ready(function(){
                         $('#aLoc').val('');
                         $('#alfeedbk').html('');
                     });
+
+                    resetLocs();
                 },
                 error: function(jqXHR){
                     console.log(jqXHR, 'Something is wrong');
@@ -1223,6 +1259,7 @@ $(document).ready(function(){
                                 $('#ulfeedbk').html('');
                             });
 
+                            resetLocs();
                         },
                         error: function(jqXHR){
                             console.log(jqXHR, 'Something is wrong');
@@ -1296,7 +1333,7 @@ $(document).ready(function(){
 
                         $('#setNew').click(function(){
                             var newLocID = $('#newOtherSelect').val();
-                            // update the affected department ids with the new one:
+                            // update the affected location ids with the new one:
                             $.ajax({
                                 url:"libs/php/updateBatchDept.php",
                                 type: "POST",
@@ -1340,11 +1377,14 @@ $(document).ready(function(){
                                                     $('#deleteModal').on('hidden.bs.modal', function(){
                                                         $('#dsfeedbk').html('');
                                                     });
+
+                                                    // resetLocs(); trivial
                                                 },
                                                 error: function(jqXHR){
                                                     console.log(jqXHR, 'Something is wrong');
                                                 }
-                                            });                         
+                                            });                                             
+                                            // resetLocs();
                                         });
 
                                     });
@@ -1396,6 +1436,8 @@ $(document).ready(function(){
                                 $('#deleteModal').on('hidden.bs.modal', function(){
                                     $('#dsfeedbk').html('');
                                 });
+
+                                // resetLocs();  trivial
                             },
                             error: function(jqXHR){
                                 console.log(jqXHR, 'Something is wrong');
@@ -1411,4 +1453,3 @@ $(document).ready(function(){
         // **************************************************************************** end dependency check
     });     
 });
- 
