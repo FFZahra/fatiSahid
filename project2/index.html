@@ -2,31 +2,33 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0 user-scalable=no">
-        <meta name="keywords" content="directory, staff finder, staff lookup, staff directory">        
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="keywords" content="directory, staff finder, staff lookup, staff directory"/>        
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="libs/bootstrap-5.0.2-dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="libs/fontawesome-free-6.1.1-web/css/fontawesome.min.css">
-        <link rel="stylesheet" href="libs/fontawesome-free-6.1.1-web/css/fontawesome.css">
+        <link rel="stylesheet" href="libs/bootstrap-5.0.2-dist/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="libs/fontawesome-free-6.1.1-web/css/fontawesome.min.css"/>
+        <link rel="stylesheet" href="libs/fontawesome-free-6.1.1-web/css/fontawesome.css"/>
         <link rel="stylesheet" href="libs/css/newCompDir.css">
 	    <title>Company Directory</title>
     </head>
-    <body>  <!--  mx-0 px-0 w-100 -->
+    <body> 
         <div class="preloader">
             <img src="libs/img/dirLoader.gif" alt="Loading..."/>
         </div>
         <!-- ********************************************************************************************************************************************************** -->
         <div class="resultsPg container-fluid" id="mainPg">
-            <div class="row headr mainPgHdr">
-                <div class="col"><span class="hdrTxt">&#127804;&ensp;Fresh Flowers</span> 
+            <div class="row headr mainPgHdr mt-2">
+                <div class="col">
+                    <span class="hdrTxt">&#127804;&ensp;Fresh Flowers</span> 
                     <button type="button" class="btn btn-outline-success hdright mngBtns" id="resetList" data-bs-toggle="tooltip" title="Reset List" aria-label="List reset button"><i class="fa-solid fa-rotate-left fa-fw"></i></button>
                     <button type="button" class="btn btn-outline-success hdright mngBtns" id="addStaff" data-bs-toggle="tooltip" title="Add Employee" aria-label="Add employee button"><i class="fa-solid fa-user-plus fa-fw"></i></button>
                     <button type="button" class="btn btn-outline-success hdright mngBtns" id="mngDepBtn" data-bs-toggle="tooltip" title="Manage departments" aria-label="Manage departments button"><i class="fa-solid fa-building fa-fw"></i></button>              
                     <button type="button" class="btn btn-outline-success hdright mngBtns" id="mngLocBtn" data-bs-toggle="tooltip" title="Manage locations" aria-label="Manage locations button"><i class="fa-solid fa-location-dot fa-fw"></i></button>
                 </div> 
             </div>
-            <div class="row searchRow">
-                <div class="col filterDiv">
+            
+            <div class="row filterRow">
+                <div class="col justify-content-center text-center filterDiv d.block d-md-none">
                     <p>
                         <button class="btn btn-outline-success" type="button" data-bs-toggle="collapse tooltip" title="Filters" data-bs-target=".trio-collapse" aria-expanded="false" aria-controls="depFilter locFilter2 doMainPgFilter" id="filterBtn2"><i class="fa-solid fa-filter fa-fw"></i></button>
                     </p>
@@ -47,16 +49,28 @@
                             </div>
                         </div>
                     </div>
-                </div>   
-                <div class="col justify-content-center text-center srchCtrls">                
-                    <input class="border border-success px-5" type="text" id="srchBx" name="srchBx">&nbsp;<button class="btn searchBtn" id="srchBtn" type="button" data-bs-toggle="tooltip" title="Click to search" aria-label="srchBtn button"><i class="fa-solid fa-magnifying-glass fa-fw"></i></button>
+                </div> 
+                
+                <div class="row searchRow">
+                    <div class="col-3 d-none d-md-block"></div>
+                    <div class="col justify-content-center text-center srchCtrls">                
+                        <input class="border border-success px-5" type="text" id="srchBx" name="srchBx">&nbsp;<button class="btn searchBtn" id="srchBtn" type="button" data-bs-toggle="tooltip" title="Click to search" aria-label="srchBtn button"><i class="fa-solid fa-magnifying-glass fa-fw"></i></button>
+                    </div>
                 </div>
             </div>
-            <div class="outputTable border border-success">
-                <table class="table table-outline" id="mainTbl">      
-                    <tbody id="mainList"></tbody>      
-                </table>
-            </div>
+            <div class="row mainBody" id="mainPgBody">
+                <!-- <div class="col-md-1 d-none d-md-block"></div> -->
+                <div class="col-md-3 sideFilter justify-content-center text-center d-none d-md-block">
+                    <div class="row mb-3"><div class="col"><h6 class="text-center"><strong>Filter:</strong></h6></div></div>
+                    <div class="row mb-5"><div class="col justify-content-center text-center sideLocMain"><select class="form-select" aria-label="Location list dropdown" id="locFilterMain" name="locFilterMain"></select></div></div>
+                    <div class="row mb-5"><div class="col justify-content-center sideDepMain"><select class="form-select" aria-label="Department list dropdown" id="depFilterMain" name="depFilterMain"></select></div></div>
+                    <div class="row"><div class="col text-center"><button class="btn applyFilterBtn" type="button" id="applyFilterSide" aria-label="apply filter button">Apply filter</button></div></div>
+                </div>
+                <div class="col-12 col-md-8">
+                    <div class="container outputArea border border-success" id="mainList"></div>
+                </div>
+                <div class="col-md-1 d-none d-md-block"></div>
+            </div>            
         </div>
         <!-- ********************************************************************************************************************************************************** -->
         <div class="stfProfile container-fluid" id="profile">
@@ -79,7 +93,7 @@
                 </table>
             </div>
             <div class="mngDiv justify-content-center text-center mb-3">
-                <button type="button" class="btn editBtn mngBtns pt-0" id="editStfBtn" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square fa-fw"></i></button>&emsp;<button class="button delBtn mngBtns" id="delStfBtn"><i class="fa-regular fa-trash-can fa-fw"></i></button>                  
+                <button type="button" class="btn editBtn mngBtns pt-0" id="editStfBtn" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square fa-fw"></i></button>&emsp;<button class="button delBtn mngBtns" id="delStfBtn" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-regular fa-trash-can fa-fw"></i></button>                  
             </div>
         </div>
         <!-- ********************************************************************************************************************************************************** -->
@@ -91,26 +105,19 @@
                         <h5 class = "modal-title" id = "editModalLabel">Update Employee Details</h5>
                         <button type = "button" class ="btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
                     </div>
-                    
-                    <div class = "modal-body" id="editMdl">
-                        <div class="table-responsive">
-                            <table class=" table table-success editFm" id="editTbl">
-                                <tbody class="editTblBd">
-                                    <tr><td><label for="ufnm">First Name:&emsp;</label><input class="border border-success" type="text" id="ufnm" name="ufnm"></td></tr>
-                                    <tr><td><label for="ulnm">Last Name:&emsp;</label><input class="border border-success" type="text" id="ulnm" name="ulnm"></td></tr>
-                                    <tr><td><label for="udsgnm">Designation:&emsp;</label><input class="border border-success w-50" type="text" id="udsgnm" name="udsgnm"></td></tr>
-                                    <tr><td><label for="ueml">Email:&emsp;</label><input class="border border-success w-50" type="text" id="ueml" name="ueml"></td></tr>
-                                    <!-- <tr><td><label for="udip">Department ID:&emsp;</label><input class="border border-success" type="text" aria-label="Department id" id="udip" name="udip"></td></tr> -->
-                                    <tr><td><label for="udip">Department ID:&emsp;</label><input class="border border-secondary bg-transparent text-dark w-50" type="text" aria-label="Department name read-only" id="udip" name="udip" readonly></td></tr>
-                                    <tr><td><label for="dipnm">Department Name:&emsp;</label><select class="form-select" aria-label="Department list dropdown" id="dipnm" name="dipnm"></select>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>                    
-                    <div class = "modal-footer">
-                        <button class="btn btn-outline-success saveBtn text-center py-2 px-2" type="button" id="updstf">Save</button>
-                        <p class="feedbk" id="usfeedbk"></p>
-                    </div> 
+                    <form id="editFmStf">
+                        <div class = "modal-body">                                       
+                            <div class="form-floating mb-3"><input type="text" class="form-control border border-success" id="ufnm" name="ufnm" placeholder="First name"/><label for="ufnm">First Name</label></div>
+                            <div class="form-floating mb-3"><input type="text" class="form-control border border-success" id="ulnm" name="ulnm" placeholder="Bala"/><label for="ulnm">Last Name</label></div>
+                            <div class="form-floating mb-3"><input class="form-control border border-success" id="udsgnm" name="udsgnm" placeholder="my job"/><label for="udsgnm">Designation</label></div>
+                            <div class="form-floating mb-3"><input type="email" class="form-control border border-success" id="ueml" name="ueml" placeholder="Email"/><label for="ueml">Email</label></div>                                       
+                            <div class="form-floating mb-3"><select class="form-select" aria-label="Department list dropdown" id="dipnm" name="dipnm"></select><label for="dipnm">Department Name</label></div>
+                        </div>                    
+                        <div class = "modal-footer">
+                            <button class="btn btn-sm btn-outline-success saveBtn text-center font-weight-bold" type="submit" id="updstf">Save</button><button type="button" class="btn btn-outline-secondary btn-sm noEdit font-weight-bold" data-bs-dismiss="modal">Cancel</button>
+                            <p class="feedbk" id="usfeedbk"></p>
+                        </div> 
+                    </form>
                 </div>
             </div>
         </div>
@@ -125,14 +132,8 @@
                     </div>
                     
                     <div class = "modal-body" id="deleteMdl">
-                        <div class="table-responsive">
-                            <table class=" table table-success" id="deleteTbl">
-                                <tbody class="deleteTblBd">
-                                    <tr><td><h5 class="text-center text-italic"><i class="fa-solid fa-triangle-exclamation fa-fw bg-warning"></i>&emsp;<span id="delSpan"></span></h5></td></tr>
-                                    <tr><td class="ansBtns"><button class="btn btn-outline-success ansBtn text-center py-2" type="button" id="delStfYes">Yes</button>&emsp;<button class="btn btn-outline-success ansBtn text-center py-2 px-1" type="button" id="delStfNo" data-bs-dismiss = "modal" aria-label = "Close Modal">No</button></td></tr>                                    
-                                </tbody>
-                            </table>
-                        </div>
+                        <div class="row"><div class="col"><h5 class="text-center text-italic"><i class="fa-solid fa-triangle-exclamation fa-fw bg-warning"></i>&emsp;<span id="delSpan"></span></h5></div></div>
+                        <div class="row"><div class="col ansBtns"><button class="btn btn-sm btn-outline-success ansBtn text-center" type="button" id="delStfYes">Yes</button>&emsp;<button class="btn btn-sm btn-outline-success ansBtn text-center" type="button" id="delStfNo" data-bs-dismiss = "modal" aria-label = "Close Modal">No</button></div></div>                                    
                     </div>                    
                     <div class = "modal-footer">                        
                         <p class="feedbk" id="dsfeedbk"></p>
@@ -154,6 +155,7 @@
                         <div class="table-responsive">
                             <table class=" table table-success addFm">
                                 <tbody class="addTblBd">
+                                    <div class="form-floating mb-3"><input type="text" class="form-control border border-success" id="ufnm" name="ufnm" placeholder="First name"/><label for="ufnm">First Name</label></div>
                                     <tr><td><label for="afnm">First Name:&emsp;</label><input class="border border-success" type="text" id="afnm" name="afnm"></td></tr>
                                     <tr><td><label for="alnm">Last Name:&emsp;</label><input class="border border-success" type="text" id="alnm" name="alnm"></td></tr>
                                     <tr><td><label for="adsgnm">Designation:&emsp;</label><input class="border border-success w-50" type="text" id="adsgnm" name="udsgnm"></td></tr>
@@ -171,8 +173,8 @@
             </div>
         </div>
         <!-- ********************************************************************************************************************************************************** -->       
-        <div class="mngPg container-fluid" id="deptPg">
-            <div class="row headr">
+        <div class="mngPg container-fluid mx-3" id="deptPg">
+            <div class="row headr mt-2">
                 <div class="col"><span class="hdrTxt">&#127804;&ensp;Fresh Flowers</span>
                     <button type="button" class="btn btn-outline-success hdright mngBtns" id="resetDeptList" data-bs-toggle="tooltip" title="Reset List" aria-label="List reset button"><i class="fa-solid fa-rotate-left fa-fw"></i></button>
                     <button type="button" class="btn btn-outline-success hdright mngBtns" id="addDept" data-bs-toggle="tooltip" title="Add Department" aria-label="Add department button"><i class="fa-solid fa-building fa-fw"></i><sup><i class="fa-solid fa-plus fa-fw"></i></sup></button>
@@ -180,7 +182,7 @@
                     <button type="button" class="btn btn-outline-success hdright mngBtns" id="toLocBtn" data-bs-toggle="tooltip" title="View Locations" aria-label="view locations button"><i class="fa-solid fa-location-dot fa-fw"></i></button>
                 </div>   
             </div> 
-            <div class="container filterDiv">
+            <div class="container filterDiv d-block d-md-none">
                 <p>
                     <button class="btn btn-outline-success" type="button" data-bs-toggle="collapse tooltip" title="Filters" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="locFilter1 doDepPgFilter" id="filterBtn"><i class="fa-solid fa-filter fa-fw"></i></button>
                 </p>
@@ -196,56 +198,59 @@
                         </div>
                     </div>
                 </div>
-            </div>                   
-            <div class="outputTable border border-success pl-0">
-                <p class="tblCaption">Departments</p>
-                <table class="table table-outline table-striped table-responsive" id="deptTbl">      
-                    <tbody id="deptList"></tbody>      
-                </table>
+            </div> 
+            <div class="row depBody mt-5" id="deptPgBody">
+                <!-- <div class="col-md-1 d-none d-md-block"></div> -->
+                <div class="col-md-3 sideFilter justify-content-center text-center d-none d-md-block">
+                    <div class="row mb-3"><div class="col"><h6 class="text-center"><strong>Filter:</strong></h6></div></div>
+                    <div class="row mb-5"><div class="col justify-content-center text-center sideLocDeptPg"><select class="form-select" aria-label="Location list dropdown" id="locFilterDeptPg" name="locFilterDeptPg"></select></div></div>
+                    <div class="row"><div class="col text-center"><button class="btn applyFilterBtn" type="button" id="doFilterSide" aria-label="apply filter button">Apply filter</button></div></div>
+                </div>
+                <div class="col-12 col-md-8 mr-3">
+                    <p class="tblCaption">Departments</p>
+                    <div class="container outputArea border border-success pt-2 pl-5" id="deptList"></div>
+                </div>
+                <div class="col-md-1 d-none d-md-block"></div>
             </div>
         </div>
         <!-- ********************************************************************************************************************************************************** -->
-        <div class="mngPg container-fluid" id="locPg">
-            <div class="row headr">
+        <div class="mngPg container-fluid mx-3" id="locPg">
+            <div class="row headr mt-2">
                 <div class="col"><span class="hdrTxt">&#127804;&ensp;Fresh Flowers</span>
                     <button type="button" class="btn btn-outline-success hdright mngBtns" id="resetLocList" data-bs-toggle="tooltip" title="Reset Location List" aria-label="List reset button"><i class="fa-solid fa-rotate-left fa-fw"></i></button>
-                    <button type="button" class="btn btn-outline-success hdright mngBtns" id="addLoc" data-bs-toggle="tooltip" title="Add Location" aria-label="Add location button"><i class="fa-solid fa-location-dot fa-fw"></i><sup><i class="fa-solid fa-plus fa-fw"></i></sup></button>
+                    <button type="button" class="btn btn-outline-success hdright mngBtns" id="addLoc" data-bs-toggle="modal" data-toggle="tooltip" title="Add Location" data-bs-target="#aLocModal" aria-label="Add location button"><i class="fa-solid fa-location-dot fa-fw"></i><sup><i class="fa-solid fa-plus fa-fw"></i></sup></button>
                     <button type="button" class="btn btn-outline-success hdright mngBtns" id="viewStfBtn2" data-bs-toggle="tooltip" title="View Employees" aria-label="view employees button"><i class="fa-solid fa-user fa-fw"></i></button>              
                     <button type="button" class="btn btn-outline-success hdright mngBtns" id="deptBtn" data-bs-toggle="tooltip" title="View Departments" aria-label="view departments button"><i class="fa-regular fa-building fa-fw"></i></button>
                 </div>   
-            </div>        
-            <div class="outputTable border border-success">
-                <p class="tblCaption">Locations</p>
-                <table class="table table-outline table-striped table-responsive" id="locTbl">      
-                    <tbody id="locList"></tbody>      
-                </table>
+            </div>
+            <div class="row locBody mt-5" id="locPgBody">
+                <div class="col-md-2 d-none d-md-block"></div>
+                <div class="col-12 col-md-8 mr-3">
+                    <p class="tblCaption">Locations</p>
+                    <div class="container outputArea border border-success pt-2 pl-5" id="locList"></div>
+                </div>
+                <div class="col-md-2 d-none d-md-block"></div>
             </div>
         </div>
         <!-- ********************************************************************************************************************************************************** -->
         <!-- Edit Dept Modal -->
         <div class ="modal fade" id ="eDepModal" data-bs-backdrop="static" keyboard="false" tabindex ="-1" role ="dialog" aria-labelledby =" eDepModalLabel" aria-hidden ="true">
-            <div class = "modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class = "modal-dialog modal modal-dialog-centered modal-dialog-scrollable" role="document">
                 <div class = "modal-content">        
                     <div class = "modal-header">
                         <h5 class = "modal-title" id = "eDepModalLabel">Update Department Details</h5>
                         <button type = "button" class ="btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
                     </div>
-                    
-                    <div class = "modal-body" id="eDepMdl">
-                        <div class="table-responsive">
-                            <table class=" table table-success editFm" id="eDepTbl">
-                                <tbody class="eDepTblBd">
-                                    <tr><td><label for="depnm">Department:&emsp;</label><input class="border border-success" type="text" id="depnm" name="depnm"></td></tr>                                   
-                                    <tr><td><label for="locId">Location ID:&emsp;</label><input class="border border-secondary bg-transparent text-dark w-50" type="text" aria-label="Department id read-only" id="locId" name="locId" readonly></td></tr>
-                                    <tr><td><label for="places">Location:&emsp;</label><select class="form-select" aria-label="Location list dropdown" id="places" name="places"></select>
-                                </tbody>
-                            </table>
+                    <form id="eDepForm">
+                        <div class = "modal-body">                            
+                            <div class="form-floating mb-3"><input class="form-control border border-success" type="text" id="depnm" name="depnm"><label for="depnm">Department</label></div>     
+                            <div class="form-floating justify-content-center text-center mb-3"><select class="form-select w-100" aria-label="Location list dropdown" id="places" name="places"></select><label for="places">Location</label></div>                                 
+                        </div>                    
+                        <div class = "modal-footer">
+                            <button class="btn btn-sm btn-outline-success saveBtn text-center" type="submit" id="updept">Save</button><button type="button" class="btn btn-sm btn-outline-secondary noEdit font-weight-bold" data-bs-dismiss="modal">Cancel</button>
+                            <p class="feedbk" id="udfeedbk"></p>
                         </div>
-                    </div>                    
-                    <div class = "modal-footer">
-                        <button class="btn btn-outline-success saveBtn text-center py-2 px-2" type="button" id="updept">Save</button>
-                        <p class="feedbk" id="udfeedbk"></p>
-                    </div> 
+                    </form> 
                 </div>
             </div>
         </div>
@@ -258,78 +263,111 @@
                         <h5 class = "modal-title" id = "aDepModalLabel">New Department Details</h5>
                         <button type = "button" class ="btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
                     </div>
+                    <form id="aDepForm">
+                        <div class = "modal-body">
+                            <div class="form-floating mb-3"><input class="form-control border border-success" type="text" id="aDep" name="aDep"/><label for="aDep">Department</label></div>
+                            <div class="form-floating text-center mb-3"><select class="form-select" aria-label="Location list dropdown" id="addLocSelect" name="addLocSelect"></select><label for="addLocSelect">Location</label></div>
+                            <!-- <div class="form-floating text-center mb-3"><select class="form-select" aria-label="Location list dropdown" id="places" name="places"></select><label for="places">Location</label></div>  -->
+                                <!-- <div class="form-floating mb-3"><input type="text" class="form-control border border-success" id="ufnm" name="ufnm" placeholder="First name"/><label for="ufnm">First Name</label></div> -->       
+                        </div>                    
+                        <div class = "modal-footer">
+                            <button class="btn btn-sm btn-outline-success saveBtn text-center" type="button" id="newDep">Save</button><button type="button" class="btn btn-sm btn-outline-secondary noEdit font-weight-bold" data-bs-dismiss="modal">Cancel</button>
+                            <p class="feedbk" id="adfeedbk"></p>
+                        </div>
+                    </form> 
+                </div>
+            </div>
+        </div>
+         <!-- ********************************************************************************************************************************************************** -->
+         <!-- Delete Dept Modal -->
+         <div class ="modal fade" id ="delDepModal" data-bs-backdrop="static" keyboard="false" tabindex ="-1" role ="dialog" aria-labelledby ="delDepModalLabel" aria-hidden ="true">
+            <div class = "modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class = "modal-content">        
+                    <div class = "modal-header">
+                        <h5 class = "modal-title" id = "delDepModalLabel">Delete Department</h5>
+                        <button type = "button" class ="btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+                    </div>
                     
                     <div class = "modal-body">
-                        <div class="table-responsive">
-                            <table class=" table table-success addFm">
-                                <tbody class="addDepTblBd">
-                                    <tr><td><label for="aDep">Department:&emsp;</label><input class="border border-success" type="text" id="aDep" name="aDep" autofocus></td></tr>                                   
-                                    <tr><td><label for="aLocID">Location ID:&emsp;</label><input class="border border-secondary bg-transparent text-dark w-50" type="text" aria-label="Department id read-only" id="aLocID" name="aLocID" readonly></td></tr>
-                                    <tr><td><label for="addLocSelect">Location:&emsp;</label><select class="form-select" aria-label="Location list dropdown" id="addLocSelect" name="addLocSelect"></select>
-                                </tbody>
-                            </table>
-                        </div>
+                        <div class="row"><div class="col"><h5 class="text-center text-italic"><i class="fa-solid fa-triangle-exclamation fa-fw bg-warning"></i>&emsp;<span id="delDepSpan"></span></h5></div></div><br>
+                        <div class="row"><div class="col ansBtns"><button class="btn btn-sm btn-outline-success ansBtn text-center" type="button" id="delDepYes">Yes</button>&emsp;<button class="btn btn-sm btn-outline-success ansBtn text-center" type="button" id="delDepNo" data-bs-dismiss = "modal" aria-label = "Close Modal">No</button></div></div><br>                    
                     </div>                    
-                    <div class = "modal-footer">
-                        <button class="btn btn-outline-success saveBtn text-center py-2 px-2" type="button" id="newDep">Save</button>
-                        <p class="feedbk" id="adfeedbk"></p>
+
+                    <div class = "modal-footer">                        
+                        <p class="feedbk" id="ddfeedbk"></p>
                     </div> 
                 </div>
             </div>
         </div>
-        <!-- ********************************************************************************************************************************************************** -->
+        <!-- ********************************************************************************************************************************************************** -->           
         <!-- Edit Location Modal -->
         <div class ="modal fade" id ="eLocModal" data-bs-backdrop="static" keyboard="false" tabindex ="-1" role ="dialog" aria-labelledby =" eLocModalLabel" aria-hidden ="true">
-            <div class = "modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class = "modal-dialog modal modal-dialog-centered modal-dialog-scrollable" role="document">
                 <div class = "modal-content">        
                     <div class = "modal-header">
                         <h5 class = "modal-title" id = "eLocModalLabel">Update Location Details</h5>
                         <button type = "button" class ="btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
                     </div>
-                    
-                    <div class = "modal-body" id="eLocMdl">
-                        <div class="table-responsive">
-                            <table class=" table table-success editFm" id="eLocTbl">
-                                <tbody class="eLocTblBd">
-                                    <tr><td><label for="locnm">Location:&emsp;</label><input class="border border-success" type="text" id="locnm" name="locnm" focusable="true" autofocus></td></tr>   
-                                </tbody>
-                            </table>
+                    <form id="eLocForm">
+                        <div class = "modal-body" id="eLocMdl">
+                            <div class="form-floating">
+                                <input class="form-control border border-success" type="text" id="locnm" name="locnm" placeholder="Location name"/><label for="locnm">Location</label>
+                                   
+                            </div>
+                        </div>                                       
+                        <div class = "modal-footer">
+                            <!-- <button class="btn btn-outline-success saveBtn text-center py-2 px-2" type="button" id="upLoc">Save</button> -->
+                            <button class="btn btn-sm btn-outline-success saveBtn text-center" type="submit" id="editLoc">Save</button><button type="button" class="btn btn-sm btn-outline-secondary noBtn" data-bs-dismiss="modal">Cancel</button>
+                            <p class="feedbk" id="ulfeedbk"></p>
                         </div>
-                    </div>                    
-                    <div class = "modal-footer">
-                        <button class="btn btn-outline-success saveBtn text-center py-2 px-2" type="button" id="upLoc">Save</button>
-                        <p class="feedbk" id="ulfeedbk"></p>
-                    </div> 
+                    </form>  
                 </div>
             </div>
         </div>
         <!-- ********************************************************************************************************************************************************** -->
         <!-- Add Location Modal -->
         <div class ="modal fade" id ="aLocModal" data-bs-backdrop="static" keyboard="false" tabindex ="-1" role ="dialog" aria-labelledby =" aLocModalLabel" aria-hidden ="true">
-            <div class = "modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class = "modal-dialog modal modal-dialog-centered modal-dialog-scrollable" role="document">
                 <div class = "modal-content">        
                     <div class = "modal-header">
                         <h5 class = "modal-title" id = "aLocModalLabel">New Location Details</h5>
                         <button type = "button" class ="btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
                     </div>
-                    
+                    <form id="addLocForm">
+                        <div class = "modal-body">
+                            <div class="form-floating">
+                                <input class="form-control border border-success" type="text" id="aLoc" name="aLoc" placeholder="Location name"/><label for="aLoc">Location</label>                            
+                            </div>
+                        </div>                    
+                        <div class = "modal-footer">
+                            <button class="btn btn-outline-success saveBtn text-center" type="submit" id="addLoc">Save</button><button type="button" class="btn btn-outline-secondary btn noBtn" data-bs-dismiss="modal">Cancel</button>
+                            <p class="feedbk" id="alfeedbk"></p>
+                        </div> 
+                    </form>
+                </div>
+            </div>
+        </div>
+         <!-- ********************************************************************************************************************************************************** -->
+         <!-- Delete Location Modal -->
+         <div class ="modal fade" id ="delLocModal" data-bs-backdrop="static" keyboard="false" tabindex ="-1" role ="dialog" aria-labelledby =" delLocModalLabel" aria-hidden ="true">
+            <div class = "modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class = "modal-content">        
+                    <div class = "modal-header">
+                        <h5 class = "modal-title" id = "delLocModalLabel">Delete Location</h5>
+                        <button type = "button" class ="btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+                    </div>
+                    <!-- py-2 px-1 -->
                     <div class = "modal-body">
-                        <div class="table-responsive">
-                            <table class=" table table-success">
-                                <tbody class="addLocTblBd">
-                                    <tr><td><label for="aLoc">Location:&emsp;</label><input class="border border-success" type="text" id="aLoc" name="aLoc" focusable="true" autofocus="true"></td></tr> 
-                                </tbody>
-                            </table>
-                        </div>
+                        <div class="row"><div class="col"><h5 class="text-center text-italic"><i class="fa-solid fa-triangle-exclamation fa-fw bg-warning"></i>&emsp;<span id="delLocSpan"></span></h5></div></div><br>
+                        <div class="row"><div class="col ansBtns"><button class="btn btn-sm btn-outline-success ansBtn text-center" type="button" id="delLocYes">Yes</button>&emsp;<button class="btn btn-sm btn-outline-success ansBtn text-center" type="button" id="delLocNo" data-bs-dismiss = "modal" aria-label = "Close Modal">No</button></div></div><br>
                     </div>                    
-                    <div class = "modal-footer">
-                        <button class="btn btn-outline-success saveBtn text-center py-2 px-2" type="button" id="saveLoc">Save</button>
-                        <p class="feedbk" id="alfeedbk"></p>
+                    <div class = "modal-footer">                        
+                        <p class="feedbk" id="dlfeedbk"></p>
                     </div> 
                 </div>
             </div>
         </div>
-        <!-- ********************************************************************************************************************************************************** -->
+        <!-- ********************************************************************************************************************************************************** -->      
         <!-- hasDepend Modal -->
         <div class ="modal fade" id ="hasDependModal" data-bs-backdrop="static" keyboard="false" tabindex ="-1" role ="dialog" aria-labelledby =" hasDependModalLabel" aria-hidden ="true">
             <div class = "modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">

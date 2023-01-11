@@ -30,12 +30,12 @@ var aLocModal = new bootstrap.Modal(document.getElementById('aLocModal'));
 var hasDepend = new bootstrap.Modal(document.getElementById('hasDependModal'));
 
 // ******************************
-function getStfID(){
-    // capture the personnel id:
-    var stfId = $('input[type="radio"]:checked').val();
-    // console.log(stfId); 
-    return stfId;
-}
+// function getStfID(){
+//     // capture the personnel id:
+//     var stfId = $('input[type="radio"]:checked').val();
+//     // console.log(stfId); 
+//     return stfId;
+// }
     
 function stfReset(){
     // clear any null recs:
@@ -61,15 +61,15 @@ function stfReset(){
             
             if (names.length > 0){
                 currLett = names[0].lastName.slice(0,1).toUpperCase();
-                pgList = '<tr><td class="text-left font-weight-bold"><h5 class="listHdr">' + currLett + '</h5></td></tr>';
+                pgList = '<div class="row"><div class="col-12 text-left font-weight-bold"><h5 class="listHdr">' + currLett + '</h5></div></div>';
                 for (i = 0; i < names.length; i++){
                     surnameInitial = names[i].lastName.slice(0,1).toUpperCase();
                     if (surnameInitial === currLett) {
-                        pgList = pgList + '<tr><td class="form-check">&emsp;<input class="form-check-input tblRadio" type="radio" name="mainListRadio" id="mainListRadio" value=' + names[i].id + '><label class="form-check-label" for="mainListRadio">&ensp;' + names[i].firstName + '&ensp;' + names[i].lastName + '&emsp;<button class="button editBtn"><i class="fa-solid fa-pen-to-square fa-fw"></i></button>&emsp;<button class="button delBtn"><i class="fa-regular fa-trash-can"></i></button></label></td></tr>';
+                        pgList = pgList + '<div class="row"><div class="col-1 form-check"><input class="form-check-input tblRadio" type="radio" name="mainListRadio" id="mainListRadio" value=' + names[i].id + '/></div><div class="col-3"><label class="form-check-label" for="mainListRadio"><h5>' + names[i].firstName + "&emsp;" + '</h5></div><div class="col-3"><h5>' + names[i].lastName + '</h5></label></div><div class="col"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + names[i].id + '" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' + names[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delMain delBtn" id="' + names[i].id + '"  data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="' + names[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
                     } else {
                         currLett = surnameInitial;
-                        pgList = pgList + '<tr><td class="text-left font-weight-bold"><h5 class="listHdr">' + currLett + '</h5></td></tr>';
-                        pgList = pgList + '<tr><td class="form-check">&emsp;<input class="form-check-input tblRadio" type="radio" name="mainListRadio" id="mainListRadio" value=' + names[i].id + '><label class="form-check-label" for="mainListRadio">&ensp;' + names[i].firstName + '&ensp;' + names[i].lastName + '&emsp;<button class="button editBtn"><i class="fa-solid fa-pen-to-square fa-fw"></i></button>&emsp;<button class="button delBtn"><i class="fa-regular fa-trash-can"></i></button></label></td></tr>';
+                        pgList = pgList + '<div class="row"><div class="col-12 text-left font-weight-bold"><h5 class="listHdr">' + currLett + '</h5></div></div>';
+                        pgList = pgList + '<div class="row"><div class="col-1 form-check"><input class="form-check-input tblRadio" type="radio" name="mainListRadio" id="mainListRadio" value=' + names[i].id + '/></div><div class="col-3"><label class="form-check-label" for="mainListRadio"><h5>' + names[i].firstName + "&emsp;" + '</h5></div><div class="col-3"><h5>' + names[i].lastName + '</h5></label></div><div class="col"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + names[i].id + '" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' + names[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delMain delBtn" id="' + names[i].id + '"  data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="' + names[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
                     }
                 }
 
@@ -80,6 +80,9 @@ function stfReset(){
             $('#mainList').html('');
             $('#mainList').html(pgList);
             $('#srchBx').val('');
+
+            resetLocs('main');
+            $('#depFilterMain').attr('disabled', true);
 
             $('input[name="mainListRadio"]').click(function(){
                 $('input[name="snmListRadio"]').checked = false;
@@ -107,7 +110,7 @@ function clickNshow(radionm){
         },
         success: function(response){
             var dat = response.data[0];
-            console.log(dat.firstName, dat.lastName);
+            // console.log(dat.firstName, dat.lastName);
 
             $('#deptPg').hide();
             $('#locPg').hide();
@@ -143,7 +146,11 @@ function clickNshow(radionm){
             $('#pDsg').html(dat.designation);
             $('#pDep').html(dat.department + ' Department');
             $('#pEmail').html(dat.email);
-            $('#pLoc').html(dat.location);  
+            $('#pLoc').html(dat.location); 
+            
+            $('#delStfBtn').attr('data-id', stfId);
+            $('#editStfBtn').attr('data-id', stfId);
+            // console.log($('#delStfBtn').attr('data-id'), 'profile del btn data-id');
             
             $('#profile').show();
             
@@ -153,6 +160,8 @@ function clickNshow(radionm){
                 $('#locPg').hide();
                 $('#mainPg').show();
                 stfReset();
+                resetLocs('main');
+                resetDepts('main');
             });   
             
             $('#pfDepBtn').click(function(){
@@ -160,7 +169,8 @@ function clickNshow(radionm){
                 $('#mainPg').hide();
                 $('#locPg').hide();
                 $('#deptPg').show();
-                resetDepts();
+                resetDepts('dep');
+                resetLocs('dep');
             });
 
             $('#pfLocBtn').click(function(){
@@ -168,7 +178,7 @@ function clickNshow(radionm){
                 $('#mainPg').hide();
                 $('#deptPg').hide();
                 $('#locPg').show();
-                resetLocs();
+                resetLocs('loc');
             });
         },
         error: function(jqXHR){
@@ -220,7 +230,11 @@ function redoProfile(idnum){
             $('#pDsg').html(pdat.designation);
             $('#pDep').html(pdat.department + ' Department');
             $('#pEmail').html(pdat.email);
-            $('#pLoc').html(pdat.location);  
+            $('#pLoc').html(pdat.location);
+
+            $('#delStfBtn').attr('data-id', idnum);
+            // console.log($('#delStfBtn').attr('data-id'), 'profile del btn data-id');
+            $('#editStfBtn').attr('data-id', idnum);
             
             $('#profile').show();
             
@@ -230,6 +244,8 @@ function redoProfile(idnum){
                 $('#locPg').hide();
                 $('#mainPg').show();
                 stfReset();
+                resetLocs('main');
+                resetDepts('main');
             });   
             
             $('#pfDepBtn').click(function(){
@@ -237,7 +253,8 @@ function redoProfile(idnum){
                 $('#mainPg').hide();
                 $('#locPg').hide();
                 $('#deptPg').show();
-                resetDepts();
+                resetDepts('dep');
+                resetLocs('dep');
             });
 
             $('#pfLocBtn').click(function(){
@@ -245,7 +262,7 @@ function redoProfile(idnum){
                 $('#mainPg').hide();
                 $('#deptPg').hide();
                 $('#locPg').show();
-                resetLocs();
+                resetLocs('loc');
             });
         },
         error: function(jqXHR){
@@ -263,14 +280,18 @@ function deleteStaff(idnum, delTrack){
         data: {
             id: idnum
         },
-        success: function(response){      
-            if (delType === 'show') {
-                $('#dsfeedbk').html('Record successfully deleted.');                  
+        success: function(response){                 
+            $('#dsfeedbk').html('Record successfully deleted.');                  
 
-                $('#deleteModal').on('hidden.bs.modal', function(){ 
-                    $('#dsfeedbk').html('');
-                });
-            };
+            $('#deleteModal').on('hidden.bs.modal', function(){ 
+                $('#dsfeedbk').html('');
+                if (delType === 'profilePg') {   
+                    $('#profile').hide();
+                    $('#mainPg').show();
+                    stfReset(); 
+                    resetLocs('main');              
+                };
+            });    
         },
         error: function(jqXHR){
             console.log(jqXHR, 'Something is wrong');
@@ -279,6 +300,7 @@ function deleteStaff(idnum, delTrack){
 } // end deleteStaff()
 
 function updateStaff(idnum, hint){
+    
     var track = hint;
     $.ajax({
         url:"libs/php/getPersonnelByID.php",
@@ -287,87 +309,90 @@ function updateStaff(idnum, hint){
         data: {
             id: idnum
         },
-        success: function(response){         
-            var dat = response.data.personnel[0];
-            var dpdat = response.data.department;
-            $('#ufnm').val(dat.firstName);
-            $('#ulnm').val(dat.lastName);
-            $('#udsgnm').val(dat.jobTitle);
-            $('#ueml').val(dat.email);
-            $('#udip').val(dat.departmentID);
+        success: function(response){  
+            if (response.status.description === "success"){
+                var dat = response.data.personnel[0];
+                var dpdat = response.data.department;
+                $('#ufnm').val(dat.firstName);
+                $('#ulnm').val(dat.lastName);
+                $('#udsgnm').val(dat.jobTitle);
+                $('#ueml').val(dat.email);
+                var dpid = dat.departmentID;
+                console.log(dpid, 'dept id');
 
-            // ---------------------- Fill in dropdown values: ----------------
-            // clear current dropdown contents:
-            if (dpdat.length > 0) {
-                $('#dipnm').html('');                
-            }
+                // ---------------------- Fill in dropdown values: ----------------
+                // clear current dropdown contents:
+                if (dpdat.length > 0) {
+                    $('#dipnm').html('');                
+                }
 
-            var choices = "<option>&emsp;</option>";
-            for (var i = 0; i < dpdat.length; i++){
-                choices = choices + '<option value = "' + dpdat[i].id + '">' + dpdat[i].name + '</option>';
-            }
-            
-            $('#dipnm').html(choices);
-            var dpnam = $('#udip').val(); 
-            $('#dipnm').val(dpnam); 
+                var choices = "<option>&emsp;</option>";
+                for (var i = 0; i < dpdat.length; i++){
+                    choices = choices + '<option value = "' + dpdat[i].id + '">' + dpdat[i].name + '</option>';
+                }
+                
+                $('#dipnm').html(choices);                
+                $('#dipnm').val(dpid); 
 
-            $('#editModal').modal("show"); 
+                $('#editFmStf').on("submit", function(e) {
+                    // stop the default browser behviour                
+                    e.preventDefault();
 
-            $('#dipnm').change(function(){
-                var newID = $('#dipnm').val();
-                $('#udip').val(newID);
-            });
+                    var fval = $('#ufnm').val();
+                    var lval = $('#ulnm').val();
+                    var dsgval = $('#udsgnm').val();
+                    var emval = $('#ueml').val();
+                    var dipval = $('#dipnm').val();
 
-            $('#updstf').click(function(){
-                var fval = $('#ufnm').val();
-                var lval = $('#ulnm').val();
-                var dsgval = $('#udsgnm').val();
-                var emval = $('#ueml').val();
-                var dipval = $('#udip').val();
+                    $.ajax({
+                        url:"libs/php/updatePersonnel.php",
+                        type: "POST",
+                        dataType: 'json',
+                        data: {
+                            firstName: fval,
+                            lastName: lval,
+                            jobTitle: dsgval,
+                            email: emval,
+                            departmentID: dipval,
+                            id: idnum
+                        },
+                        success: function(response){
+                            $('#usfeedbk').html('Record successfully updated.');
+                            // console.log('idee is ', idnum);
 
-                $.ajax({
-                    url:"libs/php/updatePersonnel.php",
-                    type: "POST",
-                    dataType: 'json',
-                    data: {
-                        firstName: fval,
-                        lastName: lval,
-                        jobTitle: dsgval,
-                        email: emval,
-                        departmentID: dipval,
-                        id: idnum
-                    },
-                    success: function(response){
-                        $('#usfeedbk').html('Record successfully updated.');
-                        // console.log('idee is ', idnum);
+                            // console.log('Tracker is ', track);
+                            if (track === 'repaint'){
+                                redoProfile(idnum);
+                            }                        
 
-                        // console.log('Tracker is ', track);
-                        if (track === 'repaint'){
-                            redoProfile(idnum);
-
-                            $('#editModal').on('hidden.bs.modal', function(){
-                                $('#usfeedbk').html('');
-                            });
-                        } else {
                             $('#editModal').on('hidden.bs.modal', function(){
                                 $('#usfeedbk').html('');
                                 stfReset();
+                                resetLocs('main');
+                                resetDepts('main');
                             });
-                        }                          
-                    },
-                    error: function(jqXHR){
-                        console.log(jqXHR, 'Something is wrong');
-                    }
+                        },
+                        error: function(jqXHR){
+                            console.log(jqXHR, 'Something is wrong');
+                        }
+                    });
                 });
-            });                                                                                        
+                       
+            } else {
+
+                $('#editModal.modal-title').replaceWith("Error retrieving data");
+        
+                }            
+                    
         },
-        error: function(jqXHR){
-            console.log(jqXHR, 'Something is wrong');
+        error: function (jqXHR, textStatus, errorThrown) {
+            $('#editModal.modal-title').replaceWith("Error retrieving data");
         }
     });
 }  // end updateStaff()
 
-function resetDepts(){
+function resetDepts(caller){
+    var source = caller;
     $.ajax({
         url: "libs/php/getAllDepartments.php",
         type: "GET",
@@ -377,23 +402,32 @@ function resetDepts(){
 
             // clear current table contents:
             if (dat.length > 0) {
-                $('#deptList').html('');                
-            }
+                // if (source === 'main'){
+                //     $('#depFilterMain').html(''); 
+                // }
 
-            var depts = "";
-            for (var i = 0; i < dat.length; i++){
-                depts = depts + '<tr><td><p id="' + dat[i].id + '">' + dat[i].name + '&emsp;<button class="button editBtn"><i class="fa-solid fa-pen-to-square fa-fw"></i></button>&emsp;<button class="button delBtn"><i class="fa-regular fa-trash-can"></i></button></p></td></tr>';                
-            }
+                // if (source === 'dep'){
+                    $('#deptList').html(''); 
+                // }               
+            }                    
             
-            $('#deptList').html(depts);            
+            if (source === 'dep'){
+                var depts = "";
+                for (var i = 0; i < dat.length; i++){                
+                    depts = depts + '<div class="row"><div class="col-7 col-xl-5"><p id="' + dat[i].id + '"><h5>' + dat[i].name + '</h5></p></div><div class="col"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + dat[i].id + '" data-bs-toggle="modal" data-bs-target="#eDepModal" data-id="' + dat[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delBtn" id="' + dat[i].id + '" data-id="' + dat[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
+                }   
+
+                $('#deptList').html(depts); 
+            }          
         },
         error: function(jqXHR){
-            console.log(jqXHR, 'Something is wrong'); 
+            console.log(jqXHR, 'Something is wrong');                 
         }
     });        
 } // end resetDepts()
 
-function resetLocs(){
+function resetLocs(caller){
+    var source = caller;
     $.ajax({
         url: "libs/php/getLocations.php",
         type: "GET",
@@ -403,15 +437,45 @@ function resetLocs(){
 
             // clear current table contents:
             if (dat.length > 0) {
-                $('#locList').html('');                
+                if (source === 'main'){
+                    $('#locFilterMain').html(''); 
+                }
+
+                if (source === 'dep'){
+                    $('#locFilterDeptPg').html(''); 
+                }
+
+                if (source === 'loc'){
+                    $('#locList').html(''); 
+                }                               
+            }            
+
+            if (source === 'main'){
+                var loks = "<option>Locations ...</option>";
+                for (var i = 0; i < dat.length; i++){
+                    loks = loks + '<option value = "' + dat[i].id + '">' + dat[i].name + '</option>';
+                }
+
+                $('#locFilterMain').html(loks);
             }
 
-            var sites = "";
-            for (var i = 0; i < dat.length; i++){
-                sites = sites + '<tr><td><p id="' + dat[i].id + '">' + dat[i].name + '&emsp;<button class="button editBtn"><i class="fa-solid fa-pen-to-square fa-fw"></i></button>&emsp;<button class="button delBtn"><i class="fa-regular fa-trash-can"></i></button></p></td></tr>';
+            if (source === 'dep'){
+                var loks = "<option>Locations ...</option>";
+                for (var i = 0; i < dat.length; i++){
+                    loks = loks + '<option value = "' + dat[i].id + '">' + dat[i].name + '</option>';
+                }
+
+                $('#locFilterDeptPg').html(loks); 
             }
-            
-            $('#locList').html(sites);
+
+            if (source === 'loc'){
+                var sites = "";
+                for (var i = 0; i < dat.length; i++){
+                    sites = sites + '<div class="row"><div class="col-7 col-xl-5"><p id="' + dat[i].id + '"><h5>' + dat[i].name + '</h5></p></div><div class="col"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + dat[i].id + '" data-bs-toggle="modal" data-bs-target="#eLocModal" data-id="' + dat[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delBtn" id="' + dat[i].id + '" data-id="' + dat[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
+                }
+
+                $('#locList').html(sites);
+            } 
         },
         error: function(jqXHR){
             console.log(jqXHR, 'Something is wrong');
@@ -426,12 +490,97 @@ $(document).ready(function(){
     $('#mainPg').show();    
 
     stfReset();
+    resetLocs('main');
+    // resetDepts('main');
 
     $('#resetList').click(function(){
         stfReset();
+        $('#depFilterMain').attr('disabled', true);
     });
 
-    // filtering by department and location:
+    // ******************************* side filter functions: *************************************************
+    $('#locFilterMain').change(function(){
+        var getLocID = $('#locFilterMain').val();
+    
+        $.ajax({
+            url: "libs/php/getDepartmentsByLoc.php",
+            type: "POST",
+            dataType: 'json',   
+            data: {
+                locationID: getLocID
+            }, 
+            success: function(response){
+                var dat = response.data;            
+
+                var depis = '<option>Departments ...</option>';
+                for (var i = 0; i < dat.length; i++){
+                    depis = depis + '<option value = "' + dat[i].id + '">' + dat[i].name + '</option>';
+                }
+
+                $('#depFilterMain').html('');
+                $('#depFilterMain').html(depis);
+
+                $('#depFilterMain').attr('disabled', false);
+
+            },
+            error: function(jqXHR){
+                console.log(jqXHR, 'Something is wrong');
+            }
+        });
+    });
+
+    $('#applyFilterSide').click(function(){
+        $('#srchBx').val('');
+            var sideDepID = $('#depFilterMain').val();
+            var depTxt = $('#depFilterMain option:selected').text();
+
+            if (depTxt === 'Departments ...'){
+                filteredStf = '<div class="row"><div class="col-12 text-left font-weight-bold"><h5 class="listHdr">No departments in this location</h5></div></div>'; 
+
+                $('#mainList').html(''); 
+                $('#mainList').html(filteredStf); 
+            
+            } else {
+                $.ajax({
+                    url:"libs/php/getPersonnelByDep.php",
+                    type: "POST",
+                    dataType: 'json',
+                    data: {
+                        departmentID: sideDepID                
+                    },
+                    success: function(response){
+                        var dat = response.data;  
+
+                        var selectStfList = '<div class="row"><div class="col-12 text-left font-weight-bold"><h5 class="listHdr">' + depTxt + '&emsp;Department&emsp;Employees</h5></div></div>';                            
+                        if (dat.length > 0) {
+                            for (let i = 0; i < dat.length; i++){     
+                                selectStfList = selectStfList + '<div class="row"><div class="col-1 form-check"><input class="form-check-input tblRadio" type="radio" name="stfFilterRadio" id="stfFilterRadio" value=' + dat[i].id + '/></div><div class="col-3"><label class="form-check-label" for="stfFilterRadio"><h5>' + dat[i].firstName + "&emsp;" + '</h5></div><div class="col-3"><h5>' + dat[i].lastName + '</h5></label></div><div class="col"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" data-bs-toggle="modal" id="' + dat[i].id + '" data-bs-target="#editModal"  data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="' + dat[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delMain delBtn" id="' + dat[i].id + '" data-id="' + dat[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>'; 
+                            }
+                            
+                            $('#mainList').html('');
+                            $('#mainList').html(selectStfList);
+                        } else {
+                            selectStfList = selectStfList + '<div class="row"><div class="col"><h5>Sorry, no employees in this department.</h5></div></div>'
+                            $('#mainList').html('');
+                            $('#mainList').html(selectStfList);
+                        }
+                        
+                        $('input[name="stfFilterRadio"]').click(function(){
+                            $('input[name="mainListRadio"]').checked = false;
+                            $('input[name="snmListRadio"]').checked = false;
+                            $('input[name="stfFilterRadio"]').checked = true;
+                            clickNshow("stfFilterRadio");
+                        }); 
+                    },
+                    error: function(jqXHR){
+                        console.log(jqXHR, 'Something is wrong');
+                    }
+                });  
+            }
+    });
+    // ************** end side filter functions ************************************************
+
+    // filtering by department and location (Collapse filter):
     $('#filterBtn2').click(function(){
         $('.trio-collapse').collapse('show');   
 
@@ -493,13 +642,14 @@ $(document).ready(function(){
         });
        
         $('#applyFilterBtn2').click(function(){
+            $('#srchBx').val('');
             var getDepID = $('#depFilterSelect').val();
             var depTxt = $('#depFilterSelect option:selected').text();
 
             if (depTxt === 'Department filter ...'){
-                selectList = "<tr><td class='text-left font-weight-bold'><h5 class='listHdr'>No departments in this location</h5></td></tr>";
+                selectStfList = '<div class="row"><div class="col-12 text-left font-weight-bold"><h5 class="listHdr">No departments in this location</h5></div></div>'; 
 
-                $('#mainList').html(selectList); 
+                $('#mainList').html(selectStfList); 
                 
                 $('.trio-collapse').collapse('toggle'); 
             } else {
@@ -512,20 +662,19 @@ $(document).ready(function(){
                     },
                     success: function(response){
                         var dat = response.data;  
-                        // --------------------------------------------------------
-                        
-                            var selectList = "<tr><td class='text-left font-weight-bold'><h5 class='listHdr'>" + depTxt + "&emsp;Department&emsp;Employees</h5></td></tr>";
+
+                        var selectStfList = '<div class="row"><div class="col-12 text-left font-weight-bold"><h5 class="listHdr">' + depTxt + '&emsp;Department&emsp;Employees</h5></div></div>';                            
                         if (dat.length > 0) {
                             for (let i = 0; i < dat.length; i++){     
-                                selectList = selectList + '<tr><td class="form-check">&emsp;<input class="form-check-input tblRadio" type="radio" name="stfFilterRadio" id="stfFilterRadio" value=' + dat[i].id + '><label class="form-check-label" for="stfFilterRadio">&ensp;' + dat[i].firstName + '&ensp;' + dat[i].lastName + '&emsp;<button class="button editBtn"><i class="fa-solid fa-pen-to-square fa-fw"></i></button>&emsp;<button class="button delBtn"><i class="fa-regular fa-trash-can"></i></button></label></td></tr>';                            
+                                selectStfList = selectStfList + '<div class="row"><div class="col-1 form-check"><input class="form-check-input tblRadio" type="radio" name="stfFilterRadio" id="stfFilterRadio" value=' + dat[i].id + '/></div><div class="col-3"><label class="form-check-label" for="stfFilterRadio"><h5>' + dat[i].firstName + "&emsp;" + '</h5></div><div class="col-3"><h5>' + dat[i].lastName + '</h5></label></div><div class="col"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" data-bs-toggle="modal" id="' + dat[i].id + '" data-bs-target="#editModal"  data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="' + dat[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delMain delBtn" id="' + dat[i].id + '" data-id="' + dat[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>'; 
                             }
                             
                             $('#mainList').html('');
-                            $('#mainList').html(selectList);
+                            $('#mainList').html(selectStfList);
                         } else {
-                            selectList = selectList + '<tr><td>Sorry, no employees in this department.</td></tr>'
+                            selectStfList = selectStfList + '<div class="row"><div class="col"><h5>Sorry, no employees in this department.</h5></div></div>'
                             $('#mainList').html('');
-                            $('#mainList').html(selectList);
+                            $('#mainList').html(selectStfList);
                         }
                             
                         $('.trio-collapse').collapse('hide');
@@ -549,7 +698,6 @@ $(document).ready(function(){
     
 $(document).ready(function(){                
     // Using the name search :
-    // var nmMatches = "";
     $('#srchBtn').click(function(){
         var nmMatches = "";
         var srchTxt = $('#srchBx').val();                    
@@ -567,16 +715,16 @@ $(document).ready(function(){
                     for (i = 0; i < names.length; i++){
                         var lnm = names[i].lastName.toUpperCase();
                         if (lnm.slice(0,srchLen) === srchTxt){
-                            nmMatches = nmMatches + '<tr><td class="form-check">&emsp;<input class="form-check-input tblRadio" type="radio" name="snmListRadio" id="snmListRadio" value=' + names[i].id + '><label class="form-check-label" for="snmListRadio">&ensp;' + names[i].firstName + '&ensp;' + names[i].lastName + '&emsp;<button class="button editBtn"><i class="fa-solid fa-pen-to-square fa-fw"></i></button>&emsp;<button class="button delBtn"><i class="fa-regular fa-trash-can"></i></button></label></td></tr>';
+                            nmMatches = nmMatches + '<div class="row"><div class="col-1 form-check"><input class="form-check-input tblRadio" type="radio" name="snmListRadio" id="snmListRadio" value=' + names[i].id + '/></div><div class="col-3"><label class="form-check-label" for="snmListRadio"><h5>' + names[i].firstName + "&emsp;" + '</h5></div><div class="col-3"><h5>' + names[i].lastName + '</h5></label></div><div class="col-3"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + names[i].id + '" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' + names[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delMain delBtn" id="' + names[i].id + '"  data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="' + names[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';  
                         };
                     }
         
                     if (nmMatches.length === 0){
                         $('#mainList').html('');
-                        $('#mainList').html('Sorry, no such record found.');
+                        $('#mainList').html('<br><h5>Sorry, no such record found.</h5>');
                     } else {
                         $('#mainList').html('');
-                        $('#mainList').html(nmMatches);
+                        $('#mainList').html('<br>' + nmMatches);
                         
                         $('input[name="snmListRadio"]').click(function(){
                             $('input[name="mainListRadio"]').checked = false;
@@ -595,71 +743,68 @@ $(document).ready(function(){
 }); 
 
 $(document).ready(function(){
-    // to remove a row from table on trash-can button click:
-    $("#mainTbl").on('click', '.delBtn', function() {
-        var eydee = $(this).parents('td').children('input[type="radio"]').val();        
-        var stfNm = $(this).parent().text();
-        stfNm = stfNm.trim();        
-        var rmRow = $(this).closest('tr');       // or, $(this).parents('tr');   
-        $(rmRow).hide();        
-        // deleteStaff(eydee, 'no-show');   
-        
-        // ££££££££££££££££££££££££££££££££££
+     $('#editModal').on('show.bs.modal', function(e) {
+        var eydee = $(e.relatedTarget).attr('data-id');
+        var btnID = $(e.relatedTarget).attr('id');
+        // console.log(eydee, 'edit-stf id');
+        // console.log(btnID, 'edit btn id');
 
-        $('#delSpan').html('Delete ' + stfNm + ' ?');
-
-        $('#deleteModal').modal("show");
-
-        $('#delStfYes').click(function(){
-            $(rmRow).remove();   
-            deleteStaff(eydee, 'show'); 
-            stfReset();
-        }); 
-        
-        $('#delStfNo').click(function(){
-            $(rmRow).show();   
-            $('#deleteModal').modal("hide");
-            stfReset();
-        }); 
+        if (btnID === 'editStfBtn'){
+            updateStaff(eydee, 'repaint');
+        } else {
+            updateStaff(eydee, 'no-repaint'); 
+        }
     });
 });
 
+// to remove a row from table or profile page
 $(document).ready(function(){
-    // to edit a record from the table, on edit button click:
-    $("#mainTbl").on('click', '.editBtn', function() {
-        var eydee = $(this).parents('td').children('input[type="radio"]').val();
+    $('#deleteModal').on('show.bs.modal', function(e) {
+        var eydee = $(e.relatedTarget).attr('data-id');
+        console.log('id: ', eydee);
 
-        updateStaff(eydee, 'no-repaint');   
-        stfReset();     
-    });
-});
+        var btnID = $(e.relatedTarget).attr('id');
+        console.log('btn id:', btnID);
 
-$(document).ready(function(){  
-    // edit from profile page:
-    $('#editStfBtn').click(function(){        
-        var idee = getStfID();
+        if (btnID === 'delStfBtn'){
+            var stfNms = $("input[type='radio']:checked").parents('div[class="row"]').text();
+            stfNms = stfNms.trim();
+            console.log('delete from profile stfNms', $(stfNms));
 
-        updateStaff(idee, 'repaint');      
-    });           
-    
-    // delete from profile page:
-    $('#delStfBtn').click(function(){        
-        var idee = getStfID();
+            $('#delSpan').html('Delete&emsp; ' + stfNms + ' ?');
+            
+            $('#delStfYes').click(function(){
+                deleteStaff(eydee, 'profilePg');            
+            }); 
+            
+            $('#delStfNo').click(function(){
+                $('#deleteModal').modal("hide");
+            }); 
+        } else {
+            var stfNm = $(e.relatedTarget).parents('div[class="row"]').text();        
+            stfNm = stfNm.trim();  
+            // console.log('stfNm', $(stfNm));
 
-        var stfNms = $("input[type='radio']:checked").parent().text();
-        stfNms = stfNms.trim();
+            var rmRow = $(e.relatedTarget).parents('div[class="row"]');             
+            $(rmRow).hide();            
 
-        $('#delSpan').html('Delete ' + stfNms + ' ?');
+            $('#delSpan').html('Delete&emsp; ' + stfNm + ' ?');
 
-        $('#deleteModal').modal("show");
+            $('#delStfYes').click(function(){
+                $(rmRow).remove();   
+                deleteStaff(eydee, 'main'); 
+                stfReset();
+            }); 
+            
+            $('#delStfNo').click(function(){
+                $(rmRow).show();   
+                $('#deleteModal').modal("hide");
+                stfReset();
+            }); 
+        }
 
-        $('#delStfYes').click(function(){
-            deleteStaff(idee, 'show');
-        }); 
         
-        $('#delStfNo').click(function(){
-            $('#deleteModal').modal("hide");
-        }); 
+
     });
 });
 
@@ -706,20 +851,19 @@ $(document).ready(function(){
                         },
                         success: function(response){
                             $('#asfeedbk').html('New record successfully added.');
-
-                            $('#addModal').on('hidden.bs.modal', function(){
-                                $('#afnm').val('');
-                                $('#alnm').val('');
-                                $('#adsgnm').val('');
-                                $('#aeml').val('');
-                                $('#asfeedbk').html('');
-                            });
-
-                            stfReset();
                         },
                         error: function(jqXHR){
                             console.log(jqXHR, 'Something is wrong');
                         }
+                    });
+
+                    $('#addModal').on('hidden.bs.modal', function(){
+                        $('#afnm').val('');
+                        $('#alnm').val('');
+                        $('#adsgnm').val('');
+                        $('#aeml').val('');
+                        $('#asfeedbk').html('');
+                        stfReset();
                     });
                 
                 });
@@ -738,7 +882,8 @@ $(document).ready(function(){
         $('#locPg').hide();
         $('#mainPg').hide();
         $('#deptPg').show();        
-        resetDepts();
+        resetDepts('dep');
+        resetLocs('dep');
     });
 
     
@@ -747,7 +892,7 @@ $(document).ready(function(){
         $('#mainPg').hide();
         $('#deptPg').hide();
         $('#locPg').show();
-        resetLocs();
+        resetLocs('loc');
     });
 
     $('#toMainBtn').click(function(){
@@ -755,13 +900,14 @@ $(document).ready(function(){
         $('#deptPg').hide();
         $('#locPg').hide();
         $('#mainPg').show();
+        resetDepts('main');
+        resetLocs('main');
     }); 
 
     $('#resetDeptList').click(function(){
-        resetDepts();
+        resetDepts('dep');
+        resetLocs('dep');
     });
-
-
 
     $('#filterBtn').click(function(){
         $('.multi-collapse').collapse('show');   // $('.multi-collapse').on("show.bs.collapse", function(){
@@ -807,7 +953,7 @@ $(document).ready(function(){
                     if (dat.length > 0) {
                         var depsByLoc = '';
                         for (var i = 0; i < dat.length; i++){
-                            depsByLoc = depsByLoc + '<tr><td><p id="' + dat[i].id + '">' + dat[i].name + '&emsp;<button class="button editBtn"><i class="fa-solid fa-pen-to-square fa-fw"></i></button>&emsp;<button class="button delBtn"><i class="fa-regular fa-trash-can"></i></button></p></td></tr>';
+                            depsByLoc = depsByLoc + '<div class="row"><div class="col-7 col-xl-5"><p id="' + dat[i].id + '"><h5>' + dat[i].name + '</h5></p></div><div class="col"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + dat[i].id + '" data-bs-toggle="modal" data-bs-target="#eDepModal" data-id="' + dat[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delBtn" id="' + dat[i].id + '" data-id="' + dat[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
                         }
                         
                         $('#deptList').html('');
@@ -828,6 +974,41 @@ $(document).ready(function(){
         });
     });
 
+    // *********************** side filter function ******************************************************
+    $('#doFilterSide').click(function(){
+        var sideLocID = $('#locFilterDeptPg').val();
+
+        $.ajax({
+            url: "libs/php/getDepartmentsByLoc.php",
+            type: "POST",
+            dataType: 'json',   
+            data: {
+                locationID: sideLocID
+            }, 
+            success: function(response){
+                var dat = response.data; 
+                
+                if (dat.length > 0) {
+                    var sideDeps = '';
+                    for (var i = 0; i < dat.length; i++){
+                        sideDeps = sideDeps + '<div class="row"><div class="col-7 col-xl-5"><p id="' + dat[i].id + '"><h5>' + dat[i].name + '</h5></p></div><div class="col"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + dat[i].id + '" data-bs-toggle="modal" data-bs-target="#eDepModal" data-id="' + dat[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delBtn" id="' + dat[i].id + '" data-id="' + dat[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
+                    }
+                    
+                    $('#deptList').html('');
+                    $('#deptList').html(sideDeps);
+                } else {
+                    $('#deptList').html('');
+                    $('#deptList').html('<br><h5>Sorry, no departments for this location.</h5>');
+                }
+
+            },
+            error: function(jqXHR){
+                console.log(jqXHR, 'Something is wrong');
+            }
+        });
+    });
+    // ****************************************** end side filter functions ************************************************************
+    
     // adding a department:
     $('#addDept').click(function(){
         
@@ -857,15 +1038,12 @@ $(document).ready(function(){
         });
         
         $('#aDepModal').modal('show');
-        $('#aDep').focus();
 
-        $('#addLocSelect').change(function(){
-            $('#aLocID').val($('#addLocSelect').val());
-        });
-
-        $('#newDep').click(function(){
+        $('#aDepForm').on('submit', function(e){
+            e.preventDefault;
+            // $('#newDep').click(function(){
             var dnam = $('#aDep').val();
-            var locid = $('#aLocID').val();
+            var locid = $('#addLocSelect').val();
 
             $.ajax({
                 url:"libs/php/insertDepartment.php",
@@ -885,8 +1063,8 @@ $(document).ready(function(){
                         $('#aLocID').val('');
                     });
 
-                    resetDepts();
-
+                    resetDepts('dep');
+                    resetLocs('dep');
                 },
                 error: function(jqXHR){
                     console.log(jqXHR, 'Something is wrong');
@@ -896,9 +1074,10 @@ $(document).ready(function(){
     });
 
     // to edit a record from the dept list table, on edit button click:
-    $("#deptTbl").on('click', '.editBtn', function() {
-        var depID = $(this).parents('p').attr('id');
-        // console.log(depID);
+    $('#eDepModal').on('show.bs.modal', function(e) {
+        // $("#deptTbl").on('click', '.editBtn', function() {
+        var depID = $(e.relatedTarget).attr('data-id');
+        console.log(depID);
 
         $.ajax({
             url:"libs/php/getDepartmentByID.php",
@@ -910,7 +1089,7 @@ $(document).ready(function(){
             success: function(response){         
                 var dat = response.data[0];
                 $('#depnm').val(dat.name);
-                $('#locId').val(dat.locationID);
+                var locId = dat.locationID;
 
                 $.ajax({
                     url: "libs/php/getLocations.php",
@@ -930,23 +1109,19 @@ $(document).ready(function(){
                         }
                         
                         $('#places').html(choices);
-                        $('#places').val($('#locId').val());
-                        console.log($('#locId').val(), $('#places').val(), $('#places').text());
-
-                        $('#eDepModal').modal('show');
-
-                        $('#places').change(function(){
-                            $('#locId').val($('#places').val());
-                        });
+                        $('#places').val(locId);
+                        console.log(locId, $('#places').val(), $('#places').text());
                     },
                     error: function(jqXHR){
                         console.log(jqXHR, 'Something is wrong');
                     }
                 });
 
-                $('#updept').click(function(){
+                $('#eDepForm').on('submit', function(e){
+                    e.preventDefault();
+                    
                     var nmval = $('#depnm').val();
-                    var locval = $('#locId').val();
+                    var locval = $('#places').val();
 
                     $.ajax({
                         url:"libs/php/updateDepartment.php",
@@ -965,7 +1140,8 @@ $(document).ready(function(){
                                 $('#udfeedbk').html('');
                             });                                  
 
-                            resetDepts();
+                            resetDepts('dep');
+                            resetLocs('dep');
                         },
                         error: function(jqXHR){
                             console.log(jqXHR, 'Something is wrong');
@@ -980,17 +1156,18 @@ $(document).ready(function(){
     });
 
     // to remove a row from dept list table on trash-can button click:
-    $("#deptTbl").on('click', '.delBtn', function() {  
-        var eydee = $(this).parents('p').attr('id');
-        console.log('id', eydee);
+    $("#deptList").on('click', '.delBtn', function() {  
+        var eydee = $(this).attr('data-id');
+        // console.log('id: ', eydee);
 
-        var depNm = $(this).parents('p').text();
+        var depNm = $(this).parents('div[class="row"]').text();
         depNm = depNm.trim(); 
+        console.log(depNm, 'depNm');
 
-        var delRow = $(this).closest('tr'); 
-        // find out if the record has any employee dependencies first:   
+        var delRow = $(this).parents('div[class="row"]');
 
-        var delChk;
+        // find out if the record has any employee dependencies first: 
+        
         $.ajax({
             url:"libs/php/getPersonnelByDep.php",
             type: "POST",
@@ -1002,7 +1179,7 @@ $(document).ready(function(){
                 var dat = response.data;
 
                 if (dat.length > 0){
-                    delChk = 'ties';  // department not cleared, has dependencies
+                    var delChk = 'ties';  // department not cleared, has dependencies
 
                     $.ajax({
                         url:"libs/php/getDepartmentsExcept.php", // brings up list of all departments except the one to be deleted
@@ -1034,7 +1211,7 @@ $(document).ready(function(){
                     $('#newOtherSelect').hide();
                     $('#setNew').text('Set new department');
                     $('#setNew').hide();
-                    $('#line1').html('Employees exist under this location');
+                    $('#line1').html('Employees exist under this department');
                     $('#line2').html('<strong>Move</strong> to new department &ensp;<b>OR</b>&ensp; <strong>Go Back</strong> to edit new departments separately');
                     $('#hasDependModal').modal('show');
 
@@ -1062,17 +1239,17 @@ $(document).ready(function(){
 
                                         $(delRow).hide();
             
-                                        $('#delSpan').html('Delete ' + depNm + ' ?');
-                                        $('#deleteModalLabel').html('Delete Department');
+                                        $('#delDepSpan').html('Delete ' + depNm + ' ?');
+                                        $('#delDepModalLabel').html('Delete Department');
                                 
-                                        $('#deleteModal').modal("show");
+                                        $('#delDepModal').modal("show");
                                 
-                                        $('#delStfNo').click(function(){
+                                        $('#delDepNo').click(function(){
                                             $(delRow).show();
-                                            $('#deleteModal').modal("hide");
+                                            $('#delDepModal').modal("hide");
                                         });
                                 
-                                        $('#delStfYes').click(function(){
+                                        $('#delDepYes').click(function(){
                                             $(delRow).remove();
                                             $.ajax({
                                                 url:"libs/php/deleteDepartmentByID.php",
@@ -1083,13 +1260,14 @@ $(document).ready(function(){
                                                 },
                                                 success: function(response){  
                                 
-                                                    $('#dsfeedbk').html('Department successfully deleted.');    
+                                                    $('#ddfeedbk').html('Department successfully deleted.');    
                                                     
-                                                    $('#deleteModal').on('hidden.bs.modal', function(){
-                                                        $('#dsfeedbk').html('');
+                                                    $('#delDepModal').on('hidden.bs.modal', function(){
+                                                        $('#ddfeedbk').html('');
                                                     });
 
-                                                    // resetDepts();   trivial - already shows removal from table
+                                                    resetDepts('dep');
+                                                    resetLocs('dep');
                                                 },
                                                 error: function(jqXHR){
                                                     console.log(jqXHR, 'Something is wrong');
@@ -1112,6 +1290,8 @@ $(document).ready(function(){
                         $('#deleteModal').modal("hide");
                         $('#deptPg').hide();
                         $('#mainPg').show();
+                        stfReset();
+                        resetLocs('main');
                     }); 
 
                 } else {
@@ -1119,17 +1299,17 @@ $(document).ready(function(){
 
                     $(delRow).hide();
         
-                    $('#delSpan').html('Delete ' + depNm + ' ?');
-                    $('#deleteModalLabel').html('Delete Department');
+                    $('#delDepSpan').html('Delete ' + depNm + ' ?');
+                    $('#delDepModalLabel').html('Delete Department');
 
-                    $('#deleteModal').modal("show");
+                    $('#delDepModal').modal("show");
 
-                    $('#delStfNo').click(function(){
+                    $('#delDepNo').click(function(){
                         $(delRow).show();
-                        $('#deleteModal').modal("hide");
+                        $('#delDepModal').modal("hide");
                     });
 
-                    $('#delStfYes').click(function(){
+                    $('#delDepYes').click(function(){
                         $(delRow).remove();
                         $.ajax({
                             url:"libs/php/deleteDepartmentByID.php",
@@ -1140,11 +1320,14 @@ $(document).ready(function(){
                             },
                             success: function(response){  
 
-                                $('#dsfeedbk').html('Department successfully deleted.');    
+                                $('#ddfeedbk').html('Department successfully deleted.');    
                                 
-                                $('#deleteModal').on('hidden.bs.modal', function(){
-                                    $('#dsfeedbk').html('');
+                                $('#delDepModal').on('hidden.bs.modal', function(){
+                                    $('#ddfeedbk').html('');
                                 });
+
+                                resetDepts('dep');
+                                resetLocs('dep');
                             },
                             error: function(jqXHR){
                                 console.log(jqXHR, 'Something is wrong');
@@ -1167,11 +1350,11 @@ $(document).ready(function(){
         $('#deptPg').hide();
         $('#mainPg').hide();
         $('#locPg').show();
-        resetLocs();
+        resetLocs('loc');
     });
 
     $('#resetLocList').click(function(){
-        resetLocs();
+        resetLocs('loc');
     });
 
     $('#viewStfBtn2').click(function(){
@@ -1179,6 +1362,7 @@ $(document).ready(function(){
         $('#deptPg').hide();
         $('#locPg').hide();
         $('#mainPg').show();
+        resetLocs('main');
     });
 
     $('#deptBtn').click(function(){
@@ -1186,15 +1370,19 @@ $(document).ready(function(){
         $('#locPg').hide();
         $('#mainPg').hide();
         $('#deptPg').show()
-        resetDepts();
+        resetDepts('dep');
+        resetLocs('dep');
     });
 
     // adding a location:
-    $('#addLoc').click(function(){                
-        $('#aLocModal').modal('show');
-        $('#aLoc').focus();
+    $('#aLocModal').on('show.bs.modal', function(e) {
+        // $('#addLoc').click(function(){                
+        // $('#aLocModal').modal('show');
 
-        $('#saveLoc').click(function(){
+        $('#addLocForm').on("submit", function(e) {
+         
+            // stop the default browser behviour                
+            e.preventDefault();
             var lnam = $('#aLoc').val();
 
             $.ajax({
@@ -1213,7 +1401,7 @@ $(document).ready(function(){
                         $('#alfeedbk').html('');
                     });
 
-                    resetLocs();
+                    resetLocs('loc');
                 },
                 error: function(jqXHR){
                     console.log(jqXHR, 'Something is wrong');
@@ -1223,9 +1411,9 @@ $(document).ready(function(){
     });
 
     // to edit a record from the location list table, on edit button click:
-    $("#locTbl").on('click', '.editBtn', function() {
-        var locID = $(this).parents('p').attr('id');
-        // console.log('Locations: ', locID);
+    $('#eLocModal').on('show.bs.modal', function(e) {
+        var locID = $(e.relatedTarget).attr('data-id');
+        console.log('Locations: ', locID);
 
         $.ajax({
             url:"libs/php/getLocationByID.php",
@@ -1238,9 +1426,10 @@ $(document).ready(function(){
                 var dat = response.data[0];
                 $('#locnm').val(dat.name);
 
-                $('#eLocModal').modal('show');
+                // $('#eLocModal').modal('show');
 
-                $('#upLoc').click(function(){
+                $('#eLocForm').on("submit", function(e) {
+                    e.preventDefault();
                     var locval = $('#locnm').val();
 
                     $.ajax({
@@ -1259,7 +1448,7 @@ $(document).ready(function(){
                                 $('#ulfeedbk').html('');
                             });
 
-                            resetLocs();
+                            resetLocs('loc');
                         },
                         error: function(jqXHR){
                             console.log(jqXHR, 'Something is wrong');
@@ -1275,14 +1464,18 @@ $(document).ready(function(){
     }); 
 
     // to delete a record from the location list table:
-    $("#locTbl").on('click', '.delBtn', function() {
-        var locID = $(this).parents('p').attr('id');
-        var locTxt = $(this).parents('p').text();
-        locTxt = locTxt.trim();        
-        var delLoc = $(this).closest('tr');
+    $("#locList").on('click', '.delBtn', function() { 
+        // $('#delLocModal').on('show.bs.modal', function(e) {
+        var locID = $(this).attr('data-id');
+        console.log('id: ', locID);
+
+        var locTxt = $(this).parents('div[class="row"]').text();
+        locTxt = locTxt.trim();
+
+        var delLoc = $(this).parents('div[class="row"]');
 
         // find out if the record has any department dependencies first:
-        var delChk;
+        var chkLoc;
         $.ajax({
             url:"libs/php/getDepartmentsByLoc.php",
             type: "POST",
@@ -1292,9 +1485,11 @@ $(document).ready(function(){
             },
             success: function(response){                                    
                var dat = response.data;
+               console.log(dat);
 
                if (dat.length > 0){
-                    delChk = 'ties';
+                    chkLoc = 'ties';
+                    console.log(chkLoc, 'chkLoc');
                     
                     $.ajax({
                         url:"libs/php/getLocationsExcept.php", // brings up list of all locations except the one to be deleted
@@ -1324,7 +1519,10 @@ $(document).ready(function(){
                     });
 
                     $('#newOtherSelect').hide();
+                    $('#setNew').text('Set new location');
                     $('#setNew').hide();
+                    $('#line1').html('Departments exist under this location');
+                    $('#line2').html('<strong>Move</strong> to new location &ensp;<b>OR</b>&ensp; <strong>Go Back</strong> to edit new locations separately');
                     $('#hasDependModal').modal('show');
 
                     $('#moveBtn').click(function(){
@@ -1351,17 +1549,17 @@ $(document).ready(function(){
 
                                         $(delLoc).hide();
 
-                                        $('#delSpan').html('Delete ' + locTxt + ' ?');
-                                        $('#deleteModalLabel').html('Delete Location');
+                                        $('#delLocSpan').html('Delete ' + locTxt + ' ?');
+                                        $('#delLocModalLabel').html('Delete Location');
                                 
-                                        $('#deleteModal').modal("show");
+                                        $('#delLocModal').modal("show");
                                 
-                                        $('#delStfNo').click(function(){
+                                        $('#delLocNo').click(function(){
                                             $(delLoc).show();
-                                            $('#deleteModal').modal("hide");
+                                            $('#delLocModal').modal("hide");
                                         });
                                 
-                                        $('#delStfYes').click(function(){
+                                        $('#delLocYes').click(function(){
                                             $(delLoc).remove();
                                 
                                             $.ajax({
@@ -1372,19 +1570,18 @@ $(document).ready(function(){
                                                     id: locID
                                                 },
                                                 success: function(response){                                    
-                                                    $('#dsfeedbk').html('Location successfully deleted.');  
+                                                    $('#dlfeedbk').html('Location successfully deleted.');  
                                                     
-                                                    $('#deleteModal').on('hidden.bs.modal', function(){
-                                                        $('#dsfeedbk').html('');
+                                                    $('#delLocModal').on('hidden.bs.modal', function(){
+                                                        $('#dlfeedbk').html('');
                                                     });
 
-                                                    // resetLocs(); trivial
+                                                    resetLocs('loc');
                                                 },
                                                 error: function(jqXHR){
                                                     console.log(jqXHR, 'Something is wrong');
                                                 }
-                                            });                                             
-                                            // resetLocs();
+                                            }); 
                                         });
 
                                     });
@@ -1402,25 +1599,26 @@ $(document).ready(function(){
                         $('#deleteModal').modal("hide");
                         $('#locPg').hide();
                         $('#deptPg').show();
-                        resetDepts();
+                        resetDepts('dep');
+                        resetLocs('dep');
                     });                
 
                } else {
-                    delChk = 'okay';
+                    chkLoc = 'okay';
 
                     $(delLoc).hide();
 
-                    $('#delSpan').html('Delete ' + locTxt + ' ?');
-                    $('#deleteModalLabel').html('Delete Location');
+                    $('#delLocSpan').html('Delete ' + locTxt + ' ?');
+                    $('#delLocModalLabel').html('Delete Location');
             
-                    $('#deleteModal').modal("show");
+                    $('#delLocModal').modal("show");
             
-                    $('#delStfNo').click(function(){
+                    $('#delLocNo').click(function(){
                         $(delLoc).show();
-                        $('#deleteModal').modal("hide");
+                        $('#delLocModal').modal("hide");
                     });
             
-                    $('#delStfYes').click(function(){
+                    $('#delLocYes').click(function(){
                         $(delLoc).remove();
             
                         $.ajax({
@@ -1431,13 +1629,13 @@ $(document).ready(function(){
                                 id: locID
                             },
                             success: function(response){                                    
-                                $('#dsfeedbk').html('Location successfully deleted.');  
+                                $('#dlfeedbk').html('Location successfully deleted.');  
                                 
-                                $('#deleteModal').on('hidden.bs.modal', function(){
-                                    $('#dsfeedbk').html('');
+                                $('#delLocModal').on('hidden.bs.modal', function(){
+                                    $('#dlfeedbk').html('');
                                 });
 
-                                // resetLocs();  trivial
+                                resetLocs('loc');
                             },
                             error: function(jqXHR){
                                 console.log(jqXHR, 'Something is wrong');
@@ -1450,6 +1648,6 @@ $(document).ready(function(){
                 console.log(jqXHR, 'Something is wrong');
             }
         });  
-        // **************************************************************************** end dependency check
+        // ************************************************** end dependency check *****************************
     });     
 });
