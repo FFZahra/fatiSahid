@@ -28,14 +28,6 @@ var aLocModal = new bootstrap.Modal(document.getElementById('aLocModal'));
 
 // **** hasDepend modal  **********
 var hasDepend = new bootstrap.Modal(document.getElementById('hasDependModal'));
-
-// ******************************
-// function getStfID(){
-//     // capture the personnel id:
-//     var stfId = $('input[type="radio"]:checked').val();
-//     // console.log(stfId); 
-//     return stfId;
-// }
     
 function stfReset(){
     // clear any null recs:
@@ -161,7 +153,6 @@ function clickNshow(radionm){
                 $('#mainPg').show();
                 stfReset();
                 resetLocs('main');
-                resetDepts('main');
             });   
             
             $('#pfDepBtn').click(function(){
@@ -169,7 +160,7 @@ function clickNshow(radionm){
                 $('#mainPg').hide();
                 $('#locPg').hide();
                 $('#deptPg').show();
-                resetDepts('dep');
+                resetDepts();
                 resetLocs('dep');
             });
 
@@ -245,7 +236,6 @@ function redoProfile(idnum){
                 $('#mainPg').show();
                 stfReset();
                 resetLocs('main');
-                resetDepts('main');
             });   
             
             $('#pfDepBtn').click(function(){
@@ -253,7 +243,7 @@ function redoProfile(idnum){
                 $('#mainPg').hide();
                 $('#locPg').hide();
                 $('#deptPg').show();
-                resetDepts('dep');
+                resetDepts();
                 resetLocs('dep');
             });
 
@@ -369,7 +359,6 @@ function updateStaff(idnum, hint){
                                 $('#usfeedbk').html('');
                                 stfReset();
                                 resetLocs('main');
-                                resetDepts('main');
                             });
                         },
                         error: function(jqXHR){
@@ -391,8 +380,8 @@ function updateStaff(idnum, hint){
     });
 }  // end updateStaff()
 
-function resetDepts(caller){
-    var source = caller;
+function resetDepts(){
+    // var source = caller;
     $.ajax({
         url: "libs/php/getAllDepartments.php",
         type: "GET",
@@ -401,24 +390,18 @@ function resetDepts(caller){
             var dat = response.data;            
 
             // clear current table contents:
-            if (dat.length > 0) {
-                // if (source === 'main'){
-                //     $('#depFilterMain').html(''); 
-                // }
-
-                // if (source === 'dep'){
-                    $('#deptList').html(''); 
-                // }               
+            if (dat.length > 0) {                
+                $('#deptList').html('');                         
             }                    
             
-            if (source === 'dep'){
-                var depts = "";
-                for (var i = 0; i < dat.length; i++){                
-                    depts = depts + '<div class="row"><div class="col-7 col-xl-5"><p id="' + dat[i].id + '"><h5>' + dat[i].name + '</h5></p></div><div class="col"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + dat[i].id + '" data-bs-toggle="modal" data-bs-target="#eDepModal" data-id="' + dat[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delBtn" id="' + dat[i].id + '" data-id="' + dat[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
-                }   
+           
+            var depts = "";
+            for (var i = 0; i < dat.length; i++){                
+                depts = depts + '<div class="row"><div class="col-7 col-xl-5"><p id="' + dat[i].id + '"><h5>' + dat[i].name + '</h5></p></div><div class="col"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + dat[i].id + '" data-bs-toggle="modal" data-bs-target="#eDepModal" data-id="' + dat[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delBtn" id="' + dat[i].id + '" data-id="' + dat[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
+            }   
 
-                $('#deptList').html(depts); 
-            }          
+            $('#deptList').html(depts); 
+                     
         },
         error: function(jqXHR){
             console.log(jqXHR, 'Something is wrong');                 
@@ -491,7 +474,6 @@ $(document).ready(function(){
 
     stfReset();
     resetLocs('main');
-    // resetDepts('main');
 
     $('#resetList').click(function(){
         stfReset();
@@ -769,7 +751,7 @@ $(document).ready(function(){
         if (btnID === 'delStfBtn'){
             var stfNms = $("input[type='radio']:checked").parents('div[class="row"]').text();
             stfNms = stfNms.trim();
-            console.log('delete from profile stfNms', $(stfNms));
+            console.log('delete from profile stfNms', stfNms);
 
             $('#delSpan').html('Delete&emsp; ' + stfNms + ' ?');
             
@@ -809,8 +791,9 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){    
-    // Add Employee;
-    $('#addStaff').click(function(){
+    // Add Employee:
+    $('#addModal').on('show.bs.modal', function(e) {
+        // $('#addStaff').click(function(){
         // ---------------------- Fill in dropdown values: ----------------
         $.ajax({
             url: "libs/php/getAllDepartments.php",
@@ -830,9 +813,11 @@ $(document).ready(function(){
                 }
                 
                 $('#depts').html(choices);
-                $('#addModal').modal('show');                
+                // $('#addModal').modal('show');                
 
-                $('#aStf').click(function(){
+                $('#addStfFm').on('submit', function(e){
+                    e.preventDefault();
+
                     var fval = $('#afnm').val();
                     var lval = $('#alnm').val();
                     var dsgval = $('#adsgnm').val();
@@ -864,6 +849,7 @@ $(document).ready(function(){
                         $('#aeml').val('');
                         $('#asfeedbk').html('');
                         stfReset();
+                        resetLocs('main');
                     });
                 
                 });
@@ -882,7 +868,7 @@ $(document).ready(function(){
         $('#locPg').hide();
         $('#mainPg').hide();
         $('#deptPg').show();        
-        resetDepts('dep');
+        resetDepts();
         resetLocs('dep');
     });
 
@@ -900,12 +886,11 @@ $(document).ready(function(){
         $('#deptPg').hide();
         $('#locPg').hide();
         $('#mainPg').show();
-        resetDepts('main');
         resetLocs('main');
     }); 
 
     $('#resetDeptList').click(function(){
-        resetDepts('dep');
+        resetDepts();
         resetLocs('dep');
     });
 
@@ -1040,7 +1025,7 @@ $(document).ready(function(){
         $('#aDepModal').modal('show');
 
         $('#aDepForm').on('submit', function(e){
-            e.preventDefault;
+            e.preventDefault();
             // $('#newDep').click(function(){
             var dnam = $('#aDep').val();
             var locid = $('#addLocSelect').val();
@@ -1063,7 +1048,7 @@ $(document).ready(function(){
                         $('#aLocID').val('');
                     });
 
-                    resetDepts('dep');
+                    resetDepts();
                     resetLocs('dep');
                 },
                 error: function(jqXHR){
@@ -1140,7 +1125,7 @@ $(document).ready(function(){
                                 $('#udfeedbk').html('');
                             });                                  
 
-                            resetDepts('dep');
+                            resetDepts();
                             resetLocs('dep');
                         },
                         error: function(jqXHR){
@@ -1266,7 +1251,7 @@ $(document).ready(function(){
                                                         $('#ddfeedbk').html('');
                                                     });
 
-                                                    resetDepts('dep');
+                                                    resetDepts();
                                                     resetLocs('dep');
                                                 },
                                                 error: function(jqXHR){
@@ -1326,7 +1311,7 @@ $(document).ready(function(){
                                     $('#ddfeedbk').html('');
                                 });
 
-                                resetDepts('dep');
+                                resetDepts();
                                 resetLocs('dep');
                             },
                             error: function(jqXHR){
@@ -1370,7 +1355,7 @@ $(document).ready(function(){
         $('#locPg').hide();
         $('#mainPg').hide();
         $('#deptPg').show()
-        resetDepts('dep');
+        resetDepts();
         resetLocs('dep');
     });
 
@@ -1599,7 +1584,7 @@ $(document).ready(function(){
                         $('#deleteModal').modal("hide");
                         $('#locPg').hide();
                         $('#deptPg').show();
-                        resetDepts('dep');
+                        resetDepts();
                         resetLocs('dep');
                     });                
 
