@@ -100,16 +100,20 @@ html, body {
 .editBtn, .delBtn {
     border-width: 3px;
     background-color: whitesmoke;
-    align-self: flex-end;
-    /* float: right; */
+    /* align-self: flex-end; */
+    float: right;
 }
 
-.editBtn {
+#editStfBtn, #delStfBtn {
+    justify-self: center;
+}
+
+.editBtn, #editStfBtn {
     color: green;  
     border-color: orange;  
 }
 
-.delBtn {
+.delBtn, #delStfBtn {
     color: orange;
     border-color: green;
 }
@@ -273,6 +277,15 @@ select:disabled {
     border-width: 2px;
     font-weight: 700;
 }
+
+.sideFilter {
+    justify-content: center;
+}
+
+/* div, p {
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+} */
 
 /* @media only screen and (max-width: 760px) {
    * {

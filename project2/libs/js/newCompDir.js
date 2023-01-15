@@ -57,11 +57,12 @@ function stfReset(){
                 for (i = 0; i < names.length; i++){
                     surnameInitial = names[i].lastName.slice(0,1).toUpperCase();
                     if (surnameInitial === currLett) {
-                        pgList = pgList + '<div class="row"><div class="col-1 form-check"><input class="form-check-input tblRadio" type="radio" name="mainListRadio" id="mainListRadio" value=' + names[i].id + '/></div><div class="col-3"><label class="form-check-label" for="mainListRadio"><h5>' + names[i].firstName + "&emsp;" + '</h5></div><div class="col-3"><h5>' + names[i].lastName + '</h5></label></div><div class="col"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + names[i].id + '" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' + names[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delMain delBtn" id="' + names[i].id + '"  data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="' + names[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
+                        pgList = pgList + '<div class="row"><div class="clickable recRow col-3 col-xl-2" id="' + names[i].id + '"><h5>' + names[i].firstName + "&emsp;" + '</h5></div><div class="col-3 col-xl-2"><h5>' + names[i].lastName + '</h5></div><div class="col d-xs-none d-md-block"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + names[i].id + '" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' + names[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delMain delBtn" id="' + names[i].id + '"  data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="' + names[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
                     } else {
                         currLett = surnameInitial;
                         pgList = pgList + '<div class="row"><div class="col-12 text-left font-weight-bold"><h5 class="listHdr">' + currLett + '</h5></div></div>';
-                        pgList = pgList + '<div class="row"><div class="col-1 form-check"><input class="form-check-input tblRadio" type="radio" name="mainListRadio" id="mainListRadio" value=' + names[i].id + '/></div><div class="col-3"><label class="form-check-label" for="mainListRadio"><h5>' + names[i].firstName + "&emsp;" + '</h5></div><div class="col-3"><h5>' + names[i].lastName + '</h5></label></div><div class="col"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + names[i].id + '" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' + names[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delMain delBtn" id="' + names[i].id + '"  data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="' + names[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
+                        // pgList = pgList + '<div class="row"><div class="col-1 form-check"><input class="form-check-input tblRadio" type="radio" name="mainListRadio" id="mainListRadio" value=' + names[i].id + '/></div><div class="col-3"><label class="form-check-label" for="mainListRadio"><h5>' + names[i].firstName + "&emsp;" + '</h5></div><div class="col-3"><h5>' + names[i].lastName + '</h5></label></div><div class="col d-xs-none d-sm-block"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + names[i].id + '" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' + names[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delMain delBtn" id="' + names[i].id + '"  data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="' + names[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
+                        pgList = pgList + '<div class="row"><div class="clickable recRow col-3 col-xl-2" id="' + names[i].id + '"><h5>' + names[i].firstName + "&emsp;" + '</h5></div><div class="col-3 col-xl-2"><h5>' + names[i].lastName + '</h5></div><div class="col d-xs-none d-md-block"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + names[i].id + '" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' + names[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delMain delBtn" id="' + names[i].id + '"  data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="' + names[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
                     }
                 }
 
@@ -76,13 +77,11 @@ function stfReset(){
             resetLocs('main');
             $('#depFilterMain').attr('disabled', true);
 
-            $('input[name="mainListRadio"]').click(function(){
-                $('input[name="snmListRadio"]').checked = false;
-                $('input[name="stfFilterRadio"]').checked = false;
-                $('input[name="mainListRadio"]').checked = true;
-                clickNshow("mainListRadio");
+            // $(".recRow").on('click', '.editBtn', function() {
+            $(".recRow").on('click', function(){
+                var recID = $(this).attr('id');
+                clickNshow(recID);
             });
-            
         },
         error: function(jqXHR){
             console.log(jqXHR, 'Something is wrong'); 
@@ -90,8 +89,10 @@ function stfReset(){
     });
 } // end stfReset()
 
-function clickNshow(radionm){
-    var stfId = $('input[name=' + radionm + ']:checked').val();
+// function clickNshow(radionm){
+function clickNshow(num){
+    // var stfId = $('input[name=' + radionm + ']:checked').val();
+    var stfId = num;
 
     $.ajax({
         url:"libs/php/getPersonnelProfileByID.php",
@@ -143,6 +144,10 @@ function clickNshow(radionm){
             $('#delStfBtn').attr('data-id', stfId);
             $('#editStfBtn').attr('data-id', stfId);
             // console.log($('#delStfBtn').attr('data-id'), 'profile del btn data-id');
+
+            var getNames = dat.firstName + '&emsp;' + dat.lastName;
+            $('#delStfBtn').attr('name', getNames);
+            $('#editStfBtn').attr('name', getNames);
             
             $('#profile').show();
             
@@ -226,6 +231,10 @@ function redoProfile(idnum){
             $('#delStfBtn').attr('data-id', idnum);
             // console.log($('#delStfBtn').attr('data-id'), 'profile del btn data-id');
             $('#editStfBtn').attr('data-id', idnum);
+
+            var getNames = pdat.firstName + '&emsp;' + pdat.lastName;
+            $('#delStfBtn').attr('name', getNames);
+            $('#editStfBtn').attr('name', getNames);
             
             $('#profile').show();
             
@@ -536,7 +545,8 @@ $(document).ready(function(){
                         var selectStfList = '<div class="row"><div class="col-12 text-left font-weight-bold"><h5 class="listHdr">' + depTxt + '&emsp;Department&emsp;Employees</h5></div></div>';                            
                         if (dat.length > 0) {
                             for (let i = 0; i < dat.length; i++){     
-                                selectStfList = selectStfList + '<div class="row"><div class="col-1 form-check"><input class="form-check-input tblRadio" type="radio" name="stfFilterRadio" id="stfFilterRadio" value=' + dat[i].id + '/></div><div class="col-3"><label class="form-check-label" for="stfFilterRadio"><h5>' + dat[i].firstName + "&emsp;" + '</h5></div><div class="col-3"><h5>' + dat[i].lastName + '</h5></label></div><div class="col"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" data-bs-toggle="modal" id="' + dat[i].id + '" data-bs-target="#editModal"  data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="' + dat[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delMain delBtn" id="' + dat[i].id + '" data-id="' + dat[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>'; 
+                                // selectStfList = selectStfList + '<div class="row"><div class="col-1 form-check"><input class="form-check-input tblRadio" type="radio" name="stfFilterRadio" id="stfFilterRadio" value=' + dat[i].id + '/></div><div class="col-3"><label class="form-check-label" for="stfFilterRadio"><h5>' + dat[i].firstName + "&emsp;" + '</h5></div><div class="col-3"><h5>' + dat[i].lastName + '</h5></label></div><div class="col d-xs-none d-sm-block"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" data-bs-toggle="modal" id="' + dat[i].id + '" data-bs-target="#editModal"  data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="' + dat[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delMain delBtn" id="' + dat[i].id + '" data-id="' + dat[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>'; 
+                                selectStfList = selectStfList + '<div class="row"><div class="clickable recRow col-3 col-xl-2" id="' + dat[i].id + '"><h5>' + dat[i].firstName + "&emsp;" + '</h5></div><div class="col-3 col-xl-2"><h5>' + dat[i].lastName + '</h5></div><div class="col d-xs-none d-md-block"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + dat[i].id + '" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' + dat[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delMain delBtn" id="' + dat[i].id + '"  data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="' + dat[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
                             }
                             
                             $('#mainList').html('');
@@ -547,12 +557,10 @@ $(document).ready(function(){
                             $('#mainList').html(selectStfList);
                         }
                         
-                        $('input[name="stfFilterRadio"]').click(function(){
-                            $('input[name="mainListRadio"]').checked = false;
-                            $('input[name="snmListRadio"]').checked = false;
-                            $('input[name="stfFilterRadio"]').checked = true;
-                            clickNshow("stfFilterRadio");
-                        }); 
+                        $(".recRow").on('click', function(){
+                            var recID = $(this).attr('id');
+                            clickNshow(recID);
+                        });
                     },
                     error: function(jqXHR){
                         console.log(jqXHR, 'Something is wrong');
@@ -648,7 +656,8 @@ $(document).ready(function(){
                         var selectStfList = '<div class="row"><div class="col-12 text-left font-weight-bold"><h5 class="listHdr">' + depTxt + '&emsp;Department&emsp;Employees</h5></div></div>';                            
                         if (dat.length > 0) {
                             for (let i = 0; i < dat.length; i++){     
-                                selectStfList = selectStfList + '<div class="row"><div class="col-1 form-check"><input class="form-check-input tblRadio" type="radio" name="stfFilterRadio" id="stfFilterRadio" value=' + dat[i].id + '/></div><div class="col-3"><label class="form-check-label" for="stfFilterRadio"><h5>' + dat[i].firstName + "&emsp;" + '</h5></div><div class="col-3"><h5>' + dat[i].lastName + '</h5></label></div><div class="col"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" data-bs-toggle="modal" id="' + dat[i].id + '" data-bs-target="#editModal"  data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="' + dat[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delMain delBtn" id="' + dat[i].id + '" data-id="' + dat[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>'; 
+                                // selectStfList = selectStfList + '<div class="row"><div class="col-1 form-check"><input class="form-check-input tblRadio" type="radio" name="stfFilterRadio" id="stfFilterRadio" value=' + dat[i].id + '/></div><div class="col-3"><label class="form-check-label" for="stfFilterRadio"><h5>' + dat[i].firstName + "&emsp;" + '</h5></div><div class="col-3"><h5>' + dat[i].lastName + '</h5></label></div><div class="col d-xs-none d-sm-block"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" data-bs-toggle="modal" id="' + dat[i].id + '" data-bs-target="#editModal" data-id="' + dat[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delMain delBtn" id="' + dat[i].id + '" data-id="' + dat[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>'; 
+                                selectStfList = selectStfList + '<div class="row"><div class="clickable recRow col-3 col-xl-2" id="' + dat[i].id + '"><h5>' + dat[i].firstName + "&emsp;" + '</h5></div><div class="col-3 col-xl-2"><h5>' + dat[i].lastName + '</h5></div><div class="col d-xs-none d-md-block"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + dat[i].id + '" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' + dat[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delMain delBtn" id="' + dat[i].id + '"  data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="' + dat[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
                             }
                             
                             $('#mainList').html('');
@@ -660,13 +669,11 @@ $(document).ready(function(){
                         }
                             
                         $('.trio-collapse').collapse('hide');
-                        
-                        $('input[name="stfFilterRadio"]').click(function(){
-                            $('input[name="mainListRadio"]').checked = false;
-                            $('input[name="snmListRadio"]').checked = false;
-                            $('input[name="stfFilterRadio"]').checked = true;
-                            clickNshow("stfFilterRadio");
-                        }); 
+
+                        $(".recRow").on('click', function(){
+                            var recID = $(this).attr('id');
+                            clickNshow(recID);
+                        });
                     },
                     error: function(jqXHR){
                         console.log(jqXHR, 'Something is wrong');
@@ -697,7 +704,8 @@ $(document).ready(function(){
                     for (i = 0; i < names.length; i++){
                         var lnm = names[i].lastName.toUpperCase();
                         if (lnm.slice(0,srchLen) === srchTxt){
-                            nmMatches = nmMatches + '<div class="row"><div class="col-1 form-check"><input class="form-check-input tblRadio" type="radio" name="snmListRadio" id="snmListRadio" value=' + names[i].id + '/></div><div class="col-3"><label class="form-check-label" for="snmListRadio"><h5>' + names[i].firstName + "&emsp;" + '</h5></div><div class="col-3"><h5>' + names[i].lastName + '</h5></label></div><div class="col-3"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + names[i].id + '" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' + names[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delMain delBtn" id="' + names[i].id + '"  data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="' + names[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';  
+                            // nmMatches = nmMatches + '<div class="row"><div class="col-1 form-check"><input class="form-check-input tblRadio" type="radio" name="snmListRadio" id="snmListRadio" value=' + names[i].id + '/></div><div class="col-3"><label class="form-check-label" for="snmListRadio"><h5>' + names[i].firstName + "&emsp;" + '</h5></div><div class="col-3"><h5>' + names[i].lastName + '</h5></label></div><div class="col d-xs-none d-sm-block"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + names[i].id + '" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' + names[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delMain delBtn" id="' + names[i].id + '"  data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="' + names[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';  
+                            nmMatches = nmMatches + '<div class="row"><div class="clickable recRow col-3 col-xl-2" id="' + names[i].id + '"><h5>' + names[i].firstName + "&emsp;" + '</h5></div><div class="col-3 col-xl-2"><h5>' + names[i].lastName + '</h5></div><div class="col d-xs-none d-md-block"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + names[i].id + '" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' + names[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delMain delBtn" id="' + names[i].id + '"  data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="' + names[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
                         };
                     }
         
@@ -708,12 +716,10 @@ $(document).ready(function(){
                         $('#mainList').html('');
                         $('#mainList').html('<br>' + nmMatches);
                         
-                        $('input[name="snmListRadio"]').click(function(){
-                            $('input[name="mainListRadio"]').checked = false;
-                            $('input[name="stfFilterRadio"]').checked = false;
-                            $('input[name="snmListRadio"]').checked = true;
-                            clickNshow("snmListRadio");
-                        });                       
+                        $(".recRow").on('click', function(){
+                            var recID = $(this).attr('id');
+                            clickNshow(recID);
+                        });
                     };                        
                 };     
             },
@@ -749,7 +755,8 @@ $(document).ready(function(){
         console.log('btn id:', btnID);
 
         if (btnID === 'delStfBtn'){
-            var stfNms = $("input[type='radio']:checked").parents('div[class="row"]').text();
+            // var stfNms = $("input[type='radio']:checked").parents('div[class="row"]').text();
+            var stfNms = $(e.relatedTarget).attr('name');
             stfNms = stfNms.trim();
             console.log('delete from profile stfNms', stfNms);
 
