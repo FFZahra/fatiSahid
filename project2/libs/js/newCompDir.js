@@ -406,7 +406,7 @@ function resetDepts(){
            
             var depts = "";
             for (var i = 0; i < dat.length; i++){                
-                depts = depts + '<div class="row"><div class="col-7 col-xl-5"><p id="' + dat[i].id + '"><h5>' + dat[i].name + '</h5></p></div><div class="col"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + dat[i].id + '" data-bs-toggle="modal" data-bs-target="#eDepModal" data-id="' + dat[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delBtn" id="' + dat[i].id + '" data-id="' + dat[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
+                depts = depts + '<div class="row"><div class="col-9 col-xl-7"><p id="' + dat[i].id + '"><h5>' + dat[i].name + '</h5></p></div><div class="col"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + dat[i].id + '" data-bs-toggle="modal" data-bs-target="#eDepModal" data-id="' + dat[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delBtn" id="' + dat[i].id + '" data-id="' + dat[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
             }   
 
             $('#deptList').html(depts); 
@@ -463,7 +463,7 @@ function resetLocs(caller){
             if (source === 'loc'){
                 var sites = "";
                 for (var i = 0; i < dat.length; i++){
-                    sites = sites + '<div class="row"><div class="col-7 col-xl-5"><p id="' + dat[i].id + '"><h5>' + dat[i].name + '</h5></p></div><div class="col"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + dat[i].id + '" data-bs-toggle="modal" data-bs-target="#eLocModal" data-id="' + dat[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delBtn" id="' + dat[i].id + '" data-id="' + dat[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
+                    sites = sites + '<div class="row"><div class="col-9 col-xl-7"><p id="' + dat[i].id + '"><h5>' + dat[i].name + '</h5></p></div><div class="col"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + dat[i].id + '" data-bs-toggle="modal" data-bs-target="#eLocModal" data-id="' + dat[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delBtn" id="' + dat[i].id + '" data-id="' + dat[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
                 }
 
                 $('#locList').html(sites);
