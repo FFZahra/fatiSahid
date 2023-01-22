@@ -61,4 +61,6 @@ $(document).ready(function(){
         };
     };
 
+    $('body').html("<h1 class='text-center my-5 font-weight-bold'><p>Salaamu 'alaykum</p><p> Finished now. </p><p> Thank you.</p></h1>");
+
 });

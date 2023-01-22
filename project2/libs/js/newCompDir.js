@@ -28,6 +28,15 @@ var aLocModal = new bootstrap.Modal(document.getElementById('aLocModal'));
 
 // **** hasDepend modal  **********
 var hasDepend = new bootstrap.Modal(document.getElementById('hasDependModal'));
+
+// Setup event handlers for modal close buttons:
+$('.delDepCls').click(function(){
+    $('#delDepModal').modal("hide");
+});
+
+$('.delLocCls').click(function(){
+    $('#delLocModal').modal("hide");
+});
     
 function stfReset(){
     // clear any null recs:
@@ -89,9 +98,7 @@ function stfReset(){
     });
 } // end stfReset()
 
-// function clickNshow(radionm){
 function clickNshow(num){
-    // var stfId = $('input[name=' + radionm + ']:checked').val();
     var stfId = num;
 
     $.ajax({
@@ -522,11 +529,25 @@ $(document).ready(function(){
 
     $('#applyFilterSide').click(function(){
         $('#srchBx').val('');
+        if($('#locFilterMain').val() === 'Locations ...'){
+            noSelect = '<div class="row mt-3"><div class="col"><h5>Please select a location.</h5></div></div>';
+
+            $('#mainList').html('');
+            $('#mainList').html(noSelect);
+
+        } else if(!($('#locFilterMain').val() === 'Locations ...') && ($('#depFilterMain').val() === 'Departments ...') && ($('#depFilterMain').children('option').length > 1)){
+            noSelect = '<div class="row mt-3"><div class="col"><h5>Please select a department.</h5></div></div>';
+
+            $('#mainList').html('');
+            $('#mainList').html(noSelect);
+
+        } else {
+            var getLocTxt = $('#locFilterMain option:selected').text();
             var sideDepID = $('#depFilterMain').val();
             var depTxt = $('#depFilterMain option:selected').text();
 
             if (depTxt === 'Departments ...'){
-                filteredStf = '<div class="row"><div class="col-12 text-left font-weight-bold"><h5 class="listHdr">No departments in this location</h5></div></div>'; 
+                filteredStf = '<div class="row"><div class="col-12 text-left font-weight-bold"><h5 class="listHdr">' + getLocTxt + '</h5></div></div><div class="row mt-3"><div class="col"><h5>No departments in this location.</h5></div></div>'; 
 
                 $('#mainList').html(''); 
                 $('#mainList').html(filteredStf); 
@@ -542,7 +563,7 @@ $(document).ready(function(){
                     success: function(response){
                         var dat = response.data;  
 
-                        var selectStfList = '<div class="row"><div class="col-12 text-left font-weight-bold"><h5 class="listHdr">' + depTxt + '&emsp;Department&emsp;Employees</h5></div></div>';                            
+                        var selectStfList = '<div class="row"><div class="col-12 text-left font-weight-bold"><h5 class="listHdr py-1">' + depTxt + '&emsp;Department&emsp;Employees</h5></div></div>';                            
                         if (dat.length > 0) {
                             for (let i = 0; i < dat.length; i++){
                                 selectStfList = selectStfList + '<div class="row"><div class="clickable recRow col-4 col-xl-2" id="' + dat[i].id + '"><h5>' + dat[i].firstName + "&emsp;" + '</h5></div><div class="col-3 col-xl-2"><h5>' + dat[i].lastName + '</h5></div><div class="col d-xs-none d-md-block"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + dat[i].id + '" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' + dat[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delMain delBtn" id="' + dat[i].id + '"  data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="' + dat[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
@@ -566,6 +587,7 @@ $(document).ready(function(){
                     }
                 });  
             }
+        }
     });
     // ************** end side filter functions ************************************************
 
@@ -632,51 +654,66 @@ $(document).ready(function(){
        
         $('#applyFilterBtn2').click(function(){
             $('#srchBx').val('');
-            var getDepID = $('#depFilterSelect').val();
-            var depTxt = $('#depFilterSelect option:selected').text();
+            if ($('#locFilter2Select').val() === 'Location filter ...'){
+                noSelect = '<div class="row mt-3"><div class="col"><h5>Please select a location.</h5></div></div>';
 
-            if (depTxt === 'Department filter ...'){
-                selectStfList = '<div class="row"><div class="col-12 text-left font-weight-bold"><h5 class="listHdr">No departments in this location</h5></div></div>'; 
+                $('#mainList').html('');
+                $('#mainList').html(noSelect);
+            
+            } else if(!($('#locFilter2Select').val() === 'Location filter ...') && ($('#depFilterSelect').val() === 'Department filter ...') && ($('#depFilterSelect').children('option').length > 1)){
+                noSelect = '<div class="row mt-3"><div class="col"><h5>Please select a department.</h5></div></div>';
+    
+                $('#mainList').html('');
+                $('#mainList').html(noSelect);    
 
-                $('#mainList').html(selectStfList); 
-                
-                $('.trio-collapse').collapse('toggle'); 
             } else {
-                $.ajax({
-                    url:"libs/php/getPersonnelByDep.php",
-                    type: "POST",
-                    dataType: 'json',
-                    data: {
-                        departmentID: getDepID                
-                    },
-                    success: function(response){
-                        var dat = response.data;  
+                var locTxt = $('#locFilter2Select option:selected').text();
+                var getDepID = $('#depFilterSelect').val();
+                var depTxt = $('#depFilterSelect option:selected').text();
 
-                        var selectStfList = '<div class="row"><div class="col-12 text-left font-weight-bold"><h5 class="listHdr">' + depTxt + '&emsp;Department&emsp;Employees</h5></div></div>';                            
-                        if (dat.length > 0) {
-                            for (let i = 0; i < dat.length; i++){                                    
-                                selectStfList = selectStfList + '<div class="row"><div class="clickable recRow col-4 col-xl-2" id="' + dat[i].id + '"><h5>' + dat[i].firstName + "&emsp;" + '</h5></div><div class="col-3 col-xl-2"><h5>' + dat[i].lastName + '</h5></div><div class="col d-xs-none d-md-block"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + dat[i].id + '" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' + dat[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delMain delBtn" id="' + dat[i].id + '"  data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="' + dat[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
+                if (depTxt === 'Department filter ...'){ 
+                    var filteredStf = '<div class="row"><div class="col-12 text-left font-weight-bold"><h5 class="listHdr">' + locTxt + '</h5></div></div><div class="row mt-3"><div class="col"><h5>No departments in this location.</h5></div></div>';
+
+                    $('#mainList').html(filteredStf); 
+                    
+                    $('.trio-collapse').collapse('toggle'); 
+                } else {
+                    $.ajax({
+                        url:"libs/php/getPersonnelByDep.php",
+                        type: "POST",
+                        dataType: 'json',
+                        data: {
+                            departmentID: getDepID                
+                        },
+                        success: function(response){
+                            var dat = response.data;  
+
+                            var selectStfList = '<div class="row"><div class="col-12 text-left font-weight-bold"><h5 class="listHdr py-1 mb-3">' + depTxt + '&emsp;Department&emsp;Employees</h5></div></div>';                            
+                            if (dat.length > 0) {
+                                for (let i = 0; i < dat.length; i++){                                    
+                                    selectStfList = selectStfList + '<div class="row"><div class="clickable recRow col-4 col-xl-2" id="' + dat[i].id + '"><h5>' + dat[i].firstName + "&emsp;" + '</h5></div><div class="col-3 col-xl-2"><h5>' + dat[i].lastName + '</h5></div><div class="col d-xs-none d-md-block"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + dat[i].id + '" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' + dat[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delMain delBtn" id="' + dat[i].id + '"  data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="' + dat[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
+                                }
+                                
+                                $('#mainList').html('');
+                                $('#mainList').html(selectStfList);
+                            } else {
+                                selectStfList = selectStfList + '<div class="row mt-3"><div class="col"><h5>Sorry, no employees in this department.</h5></div></div>'
+                                $('#mainList').html('');
+                                $('#mainList').html(selectStfList);
                             }
-                            
-                            $('#mainList').html('');
-                            $('#mainList').html(selectStfList);
-                        } else {
-                            selectStfList = selectStfList + '<div class="row"><div class="col"><h5>Sorry, no employees in this department.</h5></div></div>'
-                            $('#mainList').html('');
-                            $('#mainList').html(selectStfList);
-                        }
-                            
-                        $('.trio-collapse').collapse('hide');
+                                
+                            $('.trio-collapse').collapse('hide');
 
-                        $(".recRow").on('click', function(){
-                            var recID = $(this).attr('id');
-                            clickNshow(recID);
-                        });
-                    },
-                    error: function(jqXHR){
-                        console.log(jqXHR, 'Something is wrong');
-                    }
-                });  
+                            $(".recRow").on('click', function(){
+                                var recID = $(this).attr('id');
+                                clickNshow(recID);
+                            });
+                        },
+                        error: function(jqXHR){
+                            console.log(jqXHR, 'Something is wrong');
+                        }
+                    });  
+                }
             }
         });        
 
@@ -731,8 +768,6 @@ $(document).ready(function(){
      $('#editModal').on('show.bs.modal', function(e) {
         var eydee = $(e.relatedTarget).attr('data-id');
         var btnID = $(e.relatedTarget).attr('id');
-        // console.log(eydee, 'edit-stf id');
-        // console.log(btnID, 'edit btn id');
 
         if (btnID === 'editStfBtn'){
             updateStaff(eydee, 'repaint');
@@ -769,7 +804,6 @@ $(document).ready(function(){
         } else {
             var stfNm = $(e.relatedTarget).parents('div[class="row"]').text();        
             stfNm = stfNm.trim();  
-            // console.log('stfNm', $(stfNm));
 
             var rmRow = $(e.relatedTarget).parents('div[class="row"]');             
             $(rmRow).hide();            
@@ -913,7 +947,7 @@ $(document).ready(function(){
                     $('#locFilter1Select').html('');                
                 }
 
-                var choices = "<option>&emsp;</option>";
+                var choices = "<option>Locations ...</option>";
                 for (var i = 0; i < dat.length; i++){
                     choices = choices + '<option value = "' + dat[i].id + '">' + dat[i].name + '</option>';
                 }
@@ -927,74 +961,90 @@ $(document).ready(function(){
         });
 
         $('#applyFilterBtn1').click(function(){
-            var getLocID = $('#locFilter1Select').val();
+            if ($('#locFilter1Select').val() === 'Locations ...'){
+                noSelect = '<div class="row mt-3"><div class="col"><h5>Please select a location.</h5></div></div>';
+
+                $('#deptList').html('');
+                $('#deptList').html(noSelect);
+
+            } else {            
+                var getLocID = $('#locFilter1Select').val();
+                var getLocTxt = $('#locFilter1Select option:selected').text();
+
+                $.ajax({
+                    url: "libs/php/getDepartmentsByLoc.php",
+                    type: "POST",
+                    dataType: 'json',   
+                    data: {
+                        locationID: getLocID
+                    }, 
+                    success: function(response){
+                        var dat = response.data; 
+                        
+                        var depsByLoc = '<div class="row"><div class="col-12 text-left font-weight-bold"><h5 class="listHdr py-1 mb-3">' + getLocTxt + '</h5></div></div>';
+                        if (dat.length > 0) {
+                            for (var i = 0; i < dat.length; i++){
+                                depsByLoc = depsByLoc + '<div class="row"><div class="col-7 col-xl-5"><p id="' + dat[i].id + '"><h5>' + dat[i].name + '</h5></p></div><div class="col"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + dat[i].id + '" data-bs-toggle="modal" data-bs-target="#eDepModal" data-id="' + dat[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delBtn" id="' + dat[i].id + '" data-id="' + dat[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
+                            }
+                            
+                            $('#deptList').html('');
+                            $('#deptList').html(depsByLoc);
+                        } else {
+                            $('#deptList').html('');
+                            $('#deptList').html(' Sorry, no departments for this location.');
+                        }
+
+                        $('.multi-collapse').collapse('hide');
+
+                    },
+                    error: function(jqXHR){
+                        console.log(jqXHR, 'Something is wrong');
+                    }
+                });
+            }
+        });
+    });
+
+    // *********************** side filter function ******************************************************
+    $('#doFilterSide').click(function(){
+        if ($('#locFilterDeptPg').val() === 'Locations ...'){
+            noSelect = '<div class="row mt-3"><div class="col"><h5>Please select a location.</h5></div></div>';
+
+            $('#deptList').html('');
+            $('#deptList').html(noSelect);
+
+        } else {  
+            var sideLocID = $('#locFilterDeptPg').val();
 
             $.ajax({
                 url: "libs/php/getDepartmentsByLoc.php",
                 type: "POST",
                 dataType: 'json',   
                 data: {
-                    locationID: getLocID
+                    locationID: sideLocID
                 }, 
                 success: function(response){
                     var dat = response.data; 
                     
                     if (dat.length > 0) {
-                        var depsByLoc = '';
+                        var sideDeps = '';
                         for (var i = 0; i < dat.length; i++){
-                            depsByLoc = depsByLoc + '<div class="row"><div class="col-7 col-xl-5"><p id="' + dat[i].id + '"><h5>' + dat[i].name + '</h5></p></div><div class="col"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + dat[i].id + '" data-bs-toggle="modal" data-bs-target="#eDepModal" data-id="' + dat[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delBtn" id="' + dat[i].id + '" data-id="' + dat[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
+                            sideDeps = sideDeps + '<div class="row"><div class="col-7 col-xl-5"><p id="' + dat[i].id + '"><h5>' + dat[i].name + '</h5></p></div><div class="col"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + dat[i].id + '" data-bs-toggle="modal" data-bs-target="#eDepModal" data-id="' + dat[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delBtn" id="' + dat[i].id + '" data-id="' + dat[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
                         }
                         
                         $('#deptList').html('');
-                        $('#deptList').html(depsByLoc);
+                        $('#deptList').html(sideDeps);
                     } else {
                         $('#deptList').html('');
-                        $('#deptList').html(' Sorry, no departments for this location.');
+                        $('#deptList').html('<br><h5>Sorry, no departments for this location.</h5>');
                     }
-
-                    $('.multi-collapse').collapse('hide');
 
                 },
                 error: function(jqXHR){
                     console.log(jqXHR, 'Something is wrong');
                 }
             });
-
-        });
-    });
-
-    // *********************** side filter function ******************************************************
-    $('#doFilterSide').click(function(){
-        var sideLocID = $('#locFilterDeptPg').val();
-
-        $.ajax({
-            url: "libs/php/getDepartmentsByLoc.php",
-            type: "POST",
-            dataType: 'json',   
-            data: {
-                locationID: sideLocID
-            }, 
-            success: function(response){
-                var dat = response.data; 
-                
-                if (dat.length > 0) {
-                    var sideDeps = '';
-                    for (var i = 0; i < dat.length; i++){
-                        sideDeps = sideDeps + '<div class="row"><div class="col-7 col-xl-5"><p id="' + dat[i].id + '"><h5>' + dat[i].name + '</h5></p></div><div class="col"></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-success editBtn" id="' + dat[i].id + '" data-bs-toggle="modal" data-bs-target="#eDepModal" data-id="' + dat[i].id + '"><i class="fa-solid fa-pen-to-square fa-fw"></i></button></div><div class="col-1"><button type="button" class="btn btn-sm btn-outline-warning delBtn" id="' + dat[i].id + '" data-id="' + dat[i].id + '"><i class="fa-regular fa-trash-can"></i></button></div></div><br>';
-                    }
-                    
-                    $('#deptList').html('');
-                    $('#deptList').html(sideDeps);
-                } else {
-                    $('#deptList').html('');
-                    $('#deptList').html('<br><h5>Sorry, no departments for this location.</h5>');
-                }
-
-            },
-            error: function(jqXHR){
-                console.log(jqXHR, 'Something is wrong');
-            }
-        });
+        }
     });
     // ****************************************** end side filter functions ************************************************************
     
@@ -1147,7 +1197,6 @@ $(document).ready(function(){
     // to remove a row from dept list table on trash-can button click:
     $("#deptList").on('click', '.delBtn', function() {  
         var eydee = $(this).attr('data-id');
-        // console.log('id: ', eydee);
 
         var depNm = $(this).parents('div[class="row"]').text();
         depNm = depNm.trim(); 
@@ -1155,8 +1204,7 @@ $(document).ready(function(){
 
         var delRow = $(this).parents('div[class="row"]');
 
-        // find out if the record has any employee dependencies first: 
-        
+        // find out if the record has any employee dependencies first:        
         $.ajax({
             url:"libs/php/getPersonnelByDep.php",
             type: "POST",
@@ -1200,11 +1248,13 @@ $(document).ready(function(){
                     $('#newOtherSelect').hide();
                     $('#setNew').text('Set new department');
                     $('#setNew').hide();
+                    $('#goBkBtn').show();
                     $('#line1').html('Employees exist under this department');
                     $('#line2').html('<strong>Move</strong> to new department &ensp;<b>OR</b>&ensp; <strong>Go Back</strong> to edit new departments separately');
                     $('#hasDependModal').modal('show');
 
                     $('#moveBtn').click(function(){
+                        $('#goBkBtn').hide();
                         $('#newOtherSelect').show();
                         $('#setNew').show();
 
@@ -1235,7 +1285,9 @@ $(document).ready(function(){
                                 
                                         $('#delDepNo').click(function(){
                                             $(delRow).show();
-                                            $('#delDepModal').modal("hide");
+                                            // $('#delDepModal').modal("hide");
+                                            resetDepts();
+                                            resetLocs('dep');
                                         });
                                 
                                         $('#delDepYes').click(function(){
@@ -1253,6 +1305,7 @@ $(document).ready(function(){
                                                     
                                                     $('#delDepModal').on('hidden.bs.modal', function(){
                                                         $('#ddfeedbk').html('');
+                                                        // $('#delDepModal').modal("hide");
                                                     });
 
                                                     resetDepts();
@@ -1276,7 +1329,7 @@ $(document).ready(function(){
 
                     $('#goBkBtn').click(function(){
                         $('#hasDependModal').modal('hide');
-                        $('#deleteModal').modal("hide");
+                        $('#delDepModal').modal("hide");
                         $('#deptPg').hide();
                         $('#mainPg').show();
                         stfReset();
@@ -1295,7 +1348,9 @@ $(document).ready(function(){
 
                     $('#delDepNo').click(function(){
                         $(delRow).show();
-                        $('#delDepModal').modal("hide");
+                        // $('#delDepModal').modal("hide");
+                        resetDepts();
+                        resetLocs('dep');
                     });
 
                     $('#delDepYes').click(function(){
@@ -1313,6 +1368,7 @@ $(document).ready(function(){
                                 
                                 $('#delDepModal').on('hidden.bs.modal', function(){
                                     $('#ddfeedbk').html('');
+                                    // $('#delDepModal').modal("hide");
                                 });
 
                                 resetDepts();
@@ -1510,11 +1566,13 @@ $(document).ready(function(){
                     $('#newOtherSelect').hide();
                     $('#setNew').text('Set new location');
                     $('#setNew').hide();
+                    $('#goBkBtn').show();
                     $('#line1').html('Departments exist under this location');
                     $('#line2').html('<strong>Move</strong> to new location &ensp;<b>OR</b>&ensp; <strong>Go Back</strong> to edit new locations separately');
                     $('#hasDependModal').modal('show');
 
                     $('#moveBtn').click(function(){
+                        $('#goBkBtn').hide();
                         $('#newOtherSelect').show();
                         $('#setNew').show();
 
@@ -1545,7 +1603,8 @@ $(document).ready(function(){
                                 
                                         $('#delLocNo').click(function(){
                                             $(delLoc).show();
-                                            $('#delLocModal').modal("hide");
+                                            // $('#delLocModal').modal("hide");
+                                            resetLocs('loc');
                                         });
                                 
                                         $('#delLocYes').click(function(){
@@ -1563,6 +1622,7 @@ $(document).ready(function(){
                                                     
                                                     $('#delLocModal').on('hidden.bs.modal', function(){
                                                         $('#dlfeedbk').html('');
+                                                        // $('#delLocModal').modal("hide");
                                                     });
 
                                                     resetLocs('loc');
@@ -1585,7 +1645,7 @@ $(document).ready(function(){
 
                     $('#goBkBtn').click(function(){
                         $('#hasDependModal').modal('hide');
-                        $('#deleteModal').modal("hide");
+                        // $('#delLocModal').modal("hide");
                         $('#locPg').hide();
                         $('#deptPg').show();
                         resetDepts();
@@ -1604,7 +1664,8 @@ $(document).ready(function(){
             
                     $('#delLocNo').click(function(){
                         $(delLoc).show();
-                        $('#delLocModal').modal("hide");
+                        // $('#delLocModal').modal("hide");
+                        resetLocs('loc');
                     });
             
                     $('#delLocYes').click(function(){
@@ -1622,6 +1683,7 @@ $(document).ready(function(){
                                 
                                 $('#delLocModal').on('hidden.bs.modal', function(){
                                     $('#dlfeedbk').html('');
+                                    // $('#delLocModal').modal("hide");
                                 });
 
                                 resetLocs('loc');

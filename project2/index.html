@@ -286,12 +286,12 @@
                 <div class = "modal-content">        
                     <div class = "modal-header">
                         <h5 class = "modal-title" id = "delDepModalLabel">Delete Department</h5>
-                        <button type = "button" class ="btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+                        <button type = "button" class ="btn btn-close delDepCls" data-bs-dismiss = "modal" aria-label = "Close"></button>
                     </div>
                     
                     <div class = "modal-body">
                         <div class="row"><div class="col"><h5 class="text-center text-italic"><i class="fa-solid fa-triangle-exclamation fa-fw bg-warning"></i>&emsp;<span id="delDepSpan"></span></h5></div></div><br>
-                        <div class="row"><div class="col ansBtns"><button class="btn btn-sm btn-outline-success ansBtn text-center" type="button" id="delDepYes">Yes</button>&emsp;<button class="btn btn-sm btn-outline-success ansBtn text-center" type="button" id="delDepNo" data-bs-dismiss = "modal" aria-label = "Close Modal">No</button></div></div><br>                    
+                        <div class="row"><div class="col ansBtns"><button class="btn btn-sm btn-outline-success ansBtn text-center" type="button" id="delDepYes">Yes</button>&emsp;<button class="btn btn-sm btn-outline-success ansBtn text-center delDepCls" type="button" id="delDepNo" data-bs-dismiss = "modal" aria-label = "Close Modal">No</button></div></div><br>                    
                     </div>                    
 
                     <div class = "modal-footer">                        
@@ -355,12 +355,11 @@
                 <div class = "modal-content">        
                     <div class = "modal-header">
                         <h5 class = "modal-title" id = "delLocModalLabel">Delete Location</h5>
-                        <button type = "button" class ="btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+                        <button type = "button" class ="btn btn-close delLocCls" data-bs-dismiss = "modal" aria-label = "Close"></button>
                     </div>
-                    <!-- py-2 px-1 -->
                     <div class = "modal-body">
                         <div class="row"><div class="col"><h5 class="text-center text-italic"><i class="fa-solid fa-triangle-exclamation fa-fw bg-warning"></i>&emsp;<span id="delLocSpan"></span></h5></div></div><br>
-                        <div class="row"><div class="col ansBtns"><button class="btn btn-sm btn-outline-success ansBtn text-center" type="button" id="delLocYes">Yes</button>&emsp;<button class="btn btn-sm btn-outline-success ansBtn text-center" type="button" id="delLocNo" data-bs-dismiss = "modal" aria-label = "Close Modal">No</button></div></div><br>
+                        <div class="row"><div class="col ansBtns"><button class="btn btn-sm btn-outline-success ansBtn text-center" type="button" id="delLocYes">Yes</button>&emsp;<button class="btn btn-sm btn-outline-success ansBtn text-center delLocCls" type="button" id="delLocNo" data-bs-dismiss = "modal" aria-label = "Close Modal">No</button></div></div><br>
                     </div>                    
                     <div class = "modal-footer">                        
                         <p class="feedbk" id="dlfeedbk"></p>
@@ -380,7 +379,7 @@
                     
                     <div class = "modal-body">
                         <div class="table-responsive">
-                            <table class=" table table-success">
+                            <table class=" table table-success table-borderless">
                                 <tbody class="mngDepend text-center">
                                     <tr><td><p id="line1">Departments exist under this location</p></td></tr>
                                     <tr><td><p id="line2"><strong>Move</strong> to new location &ensp;OR&ensp; <strong>Go Back</strong> to edit new locations separately</p></td></tr>                                   
