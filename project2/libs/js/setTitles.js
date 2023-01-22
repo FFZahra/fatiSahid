@@ -5,7 +5,7 @@ $(window).on('load', function(){
 // ********************************************
 
 $(document).ready(function(){
-    $('body').html("<h1 class='text-center my-5 font-weight-bold'><p>Salaamu 'alaykum</p><p> Setting in titles ... </p><p> Please wait.</p></h1>");
+    $('body').html("<br><br><h1 class='text-center my-5 font-weight-bold'><p>Salaamu 'alaykum</p><p> Setting in titles ... </p><p> Please wait.</p></h1>");
 
     var dsgpIDs = [    
     [[15, 33, 1, 8, 30, 72, 96, 62, 48, 68, 31], ['Director', 'Snr. Personnel Officer', 'Recruitment Manager', 'Personnel Officer II', 'Administrator', 'Administrator', 'Administrator', 'Administrator', 'Administrator', 'Administrator', 'Administrator']],    
@@ -61,6 +61,6 @@ $(document).ready(function(){
         };
     };
 
-    $('body').html("<h1 class='text-center my-5 font-weight-bold'><p>Salaamu 'alaykum</p><p> Finished now. </p><p> Thank you.</p></h1>");
+    $('body').html("<br><br><h1 class='text-center my-5 font-weight-bold'><p>Salaamu 'alaykum</p><p> Setting in titles ... </p><p> Please wait.</p></h1><br><br><h1 class='text-center my-5 font-weight-bold'><p>Salaamu 'alaykum</p><p> Finished now. </p><p> Thank you.</p></h1>");
 
 });
