@@ -399,8 +399,9 @@ section {
   margin-bottom: 10px;
 }
 
-#contact {
+.contact {
   padding-top: 90px;
+  padding-bottom: 95px;
   margin-top: 50px;
 }
 
@@ -433,6 +434,10 @@ section {
 #skills {
   margin-top: 0;
   padding-top: 0;
+}
+
+.small-title {
+  font-weight: 700;
 }
 
 /*--------------------------------------------------------------
@@ -855,16 +860,16 @@ section {
   color: #fff;
 }
 
-.contact .php-email-form {
+.contact .folio-form {
   width: 100%;
   background: #fff;
 }
 
-.contact .php-email-form .form-group {
+.contact .folio-form .form-group {
   padding-bottom: 8px;
 }
 /* 
-.contact .php-email-form .error-message {
+.contact .folio-form .error-message {
   display: none;
   color: #fff;
   background: #ed3c0d;
@@ -873,11 +878,11 @@ section {
   font-weight: 600;
 } */
 
-.contact .php-email-form .error-message br+br {
+.contact .folio-form .error-message br+br {
   margin-top: 35px;
 }
 
-.contact .php-email-form .sent-message {
+.contact .folio-form .sent-message {
   display: none;
   color: #fff;
   background: #18d26e;
@@ -886,14 +891,18 @@ section {
   font-weight: 600;
 }
 
-.contact .php-email-form .loading {
+.sent-notification {
+  color: #18d26e;
+}
+
+.contact .folio-form .loading {
   display: none;
   background: #fff;
   text-align: center;
   padding: 15px;
 }
 
-.contact .php-email-form .loading:before {
+.contact .folio-form .loading:before {
   content: "";
   display: inline-block;
   border-radius: 50%;
@@ -906,22 +915,22 @@ section {
   animation: animate-loading 1s linear infinite;
 }
 
-.contact .php-email-form input,
-.contact .php-email-form textarea {
+.contact .folio-form input,
+.contact .folio-form textarea {
   border-radius: 5px;
   box-shadow: none;
   font-size: 14px;
 }
 
-.contact .php-email-form input {
+.contact .folio-form input {
   height: 50px;
 }
 
-.contact .php-email-form textarea {
+.contact .folio-form textarea {
   padding: 10px 12px;
 }
 
-.contact .php-email-form button[type=submit] {
+.contact .folio-form button[type=submit] {
   background: #0563bb;
   border: 0;
   padding: 10px 35px;
@@ -932,7 +941,7 @@ section {
   margin-top: 10px;
 }
 
-.contact .php-email-form button[type=submit]:hover {
+.contact .folio-form button[type=submit]:hover {
   background: #0678e3;
 }
 
