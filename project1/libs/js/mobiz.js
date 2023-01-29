@@ -46,10 +46,10 @@ var streetvw = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services
 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 });
 
-var flagsUrl = "https://countryflagsapi.com/svg/" + $('#cntry').val();
+// var flagsUrl = "https://countryflagsapi.com/svg/" + $('#cntry').val();
 
- // Create markers:
- var eqkMarker = L.ExtraMarkers.icon({
+// Create markers:
+var eqkMarker = L.ExtraMarkers.icon({
     icon: 'fa-explosion',               // for earthquakes    
     iconColor: 'black',
     shape: 'star',
@@ -538,7 +538,7 @@ function getOtherData(){
 
                                                                                 // for Wiki modal:
                                                                                 $('#wikiModalLabel').html(cntrynm + ' Wikipedia&emsp;<span class="px-0 mx-0 w-100 flg"></span>');
-                                                                                $('.flg').html("<img height=25 src=" + flagsUrl + " alt=\"flag of \"" + cntrynm + ">");
+                                                                                $('.flg').html("<img height=25 crossorigin=\"anonymous\" src=\"https://countryflagsapi.com/svg/" + $('#cntry').val() + "\" alt=\"flag of \"" + cntrynm + "/>");
                                                                                 $('#wikiBd').html(wkHtml);
                                                                             }
                                                                         },
